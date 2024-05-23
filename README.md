@@ -1,61 +1,40 @@
-# Product Backlog para un foro
+# Product Backlog
 
 1. Registro y Autenticación de Usuarios
 
-   - Como usuario, quiero poder registrarme con un nombre de usuario y contraseña.
-   - Como usuario registrado, quiero poder iniciar sesión con mi usuario y contraseña.
-   - Como usuario registrado, quiero poder cerrar sesión.
-   - Como usuario registrado, quiero poder restablecer mi contraseña si la olvido. ?
+   Los usuarios registrados tienen que poder registrarse con un nombre de usuario y contraseña.
+   Los usuarios registrados tienen que poder iniciar sesión con usuario y contraseña.
+   Los usuarios registrados tienen que poder poder cerrar sesión.
 	
 2. Gestión de Perfil de Usuario
 
-   - Como usuario registrado, quiero poder actualizar mi perfil, incluyendo nombre y foto de perfil.
-   - Como usuario registrado, quiero poder eliminar mi cuenta.
+   Los usuarios registrados tienen que poder actualizar su perfil, incluyendo nombre y foto de perfil.
+   Los usuarios registrados tienen que poder eliminar su cuenta.
+   Los usuarios registrados tienen que poder cambiar su contraseña.
 
-3. Publicación de Contenidos
+4. Publicación de Contenidos
 
-   - Como usuario registrado, quiero poder crear nuevos posts con categoria, título, contenido y opcionalmente una imagen.
-   - Como usuario registrado, quiero poder eliminar mis posts.
+   Los usuarios registrados tienen que poder crear nuevos hilos con título, contenido y opcionalmente una imagen.
+   Los usuarios registrados tienen que poder comentar en un hilo.
 
-4. Visualización de Contenidos
+6. Visualización de Contenidos
 
-   - Como visitante, quiero poder ver una lista de los posts publicados por categoria.
-   - Como visitante, quiero poder ver el contenido completo de un post específico.
-   - Como visitante, quiero poder ver el perfil del autor del post.
-
-5. Comentarios
-
-   - Como usuario registrado, quiero poder comentar en los posts.
-   - Como usuario registrado, quiero poder eliminar mis comentarios.
-
-6. Moderación y Administración
-
-   - Como administrador, quiero poder eliminar posts inapropiados.
-   - Como administrador, quiero poder eliminar comentarios inapropiados.
-   - Como administrador, quiero poder gestionar usuarios (suspender o eliminar usuarios problemáticos).
-
-7. Categorías y Etiquetas
-
-   - Como usuario registrado, quiero poder asignar categorías a mis posts.
-   - Como visitante, quiero poder filtrar posts por categoría.
-
-8. Seguridad y Performance
-
-   - Como administrador, quiero asegurarme de que todas las imágenes subidas se validen correctamente.
-   - Como desarrollador, quiero optimizar la carga de las páginas para mejorar la experiencia del usuario.
+   Los usuarios tienen que poder ver una lista de los hilos de cada categoría.
+   Los usuarios tienen que poder ver el perfil del autor de un post.
 
 ## Tareas Asociadas
 
    - Crear base de datos
    - Hacer conexion de api con base de datos
    - Diseñar y crear el formulario de registro.
-   - Implementar la lógica de validación de usuario y contraseña.
    - Implementar la lógica de creación de nuevo usuario en la base de datos.
-   - Escribir pruebas unitarias.
+   - Implementar la lógica de validación de usuario y contraseña.
+   - Implementar la lógica de cambio de contraseña.
+   - Implementar la lógica de creación de hilos.
+   - Implementar la lógica de creación de respuestas a hilos.
    - Crear template para usar como base en otros templates
    - Crear template para registrarse
    - Crear template para loguearse
    - Crear template para editar usuario
    - Diseñar el CSS global
    - Hacer la conexion con la API
-   - Asegurar responsiveness
