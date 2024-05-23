@@ -26,7 +26,7 @@
 
 | ID  | Tarea                                       | Descripción                                                        | Responsable | Estado    | Prioridad |
 |-----|---------------------------------------------|--------------------------------------------------------------------|-------------|-----------|-----------|
-| 1   | Crear base de datos                         | Diseñar y crear las tablas necesarias en la base de datos          | Equipo DB   | Pendiente | Alta      |
+| 1   | Crear base de datos                         | Diseñar y crear las tablas necesarias en la base de datos          | Backend     | Pendiente | Alta      |
 | 2   | Conexión de API con base de datos           | Configurar la conexión entre la API y la base de datos             | Backend     | Pendiente | Medoa      |
 | 3   | Diseñar formulario de registro              | Crear el formulario de registro para nuevos usuarios               | Frontend    | Pendiente | Media     |
 | 4   | Lógica de creación de nuevo usuario         | Implementar la lógica de registro de nuevos usuarios en la base de datos | Backend | Pendiente | Alta      |
