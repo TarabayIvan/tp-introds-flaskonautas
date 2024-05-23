@@ -1,11 +1,11 @@
-## Product Backlog para un Blog Colaborativo
+# Product Backlog para un foro
 
 1. Registro y Autenticación de Usuarios
 
-   - Como usuario, quiero poder registrarme con un nombre de usuario, correo electrónico y contraseña.
-   - Como usuario registrado, quiero poder iniciar sesión con mi correo electrónico y contraseña.
+   - Como usuario, quiero poder registrarme con un nombre de usuario y contraseña.
+   - Como usuario registrado, quiero poder iniciar sesión con mi usuario y contraseña.
    - Como usuario registrado, quiero poder cerrar sesión.
-   - Como usuario registrado, quiero poder restablecer mi contraseña si la olvido.
+   - Como usuario registrado, quiero poder restablecer mi contraseña si la olvido. ?
 	
 2. Gestión de Perfil de Usuario
 
@@ -44,14 +44,13 @@
    - Como administrador, quiero asegurarme de que todas las imágenes subidas se validen correctamente.
    - Como desarrollador, quiero optimizar la carga de las páginas para mejorar la experiencia del usuario.
 
-# Tareas Asociadas
+## Tareas Asociadas
 
    - Crear base de datos
    - Hacer conexion de api con base de datos
    - Diseñar y crear el formulario de registro.
-   - Implementar la lógica de validación del correo electrónico y contraseña.
+   - Implementar la lógica de validación de usuario y contraseña.
    - Implementar la lógica de creación de nuevo usuario en la base de datos.
-   - Enviar correo electrónico de confirmación.
    - Escribir pruebas unitarias.
    - Crear template para usar como base en otros templates
    - Crear template para registrarse
