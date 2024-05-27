@@ -4,6 +4,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background: #f0f0f0;
+}
 .header {
   min-height: 100vh;
   width: 100%;
@@ -22,6 +25,10 @@ nav {
 }
 nav img {
   width: 150px;
+}
+.user-logo{
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .nav-links {
   flex: 1;
@@ -78,6 +85,7 @@ nav img {
   position: relative;
   cursor: pointer;
 }
+
 .hero-btn:hover {
   border: 1px solid #f44336;
   background: #f44336;
@@ -143,12 +151,16 @@ p {
 }
 .course-col {
   flex-basis: 31%;
-  background-color: #fff3f3;
+  background-color: #ada6f1;
   border-radius: 10px;
   margin-bottom: 5%;
   padding: 50px 12px;
   box-sizing: border-box;
   transition: 0.5s;
+}
+a {
+  text-decoration: none;
+  color: rgb(17,30,73);
 }
 h3 {
   text-align: center;
@@ -156,7 +168,7 @@ h3 {
   margin: 10px 0;
 }
 .course-col:hover {
-  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 0px rgba(156, 45, 25, 0.918);
 }
 @media (max-width: 700px) {
   .row {
@@ -181,7 +193,8 @@ h3 {
 }
 .campus-col img {
   width: 100%;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 }
 .layer {
   background: transparent;
