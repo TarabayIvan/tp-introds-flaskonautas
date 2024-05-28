@@ -34,6 +34,8 @@
 
         <!-- seccion header -->
         <header>
+          {% block header %}
+          {% endblock %}
           <div class="text-box">
             <h1>Varied Topics Forum</h1>
             <p>
@@ -43,7 +45,10 @@
             <a href="" class="hero-btn">Sign up</a>
           </div>
         </header>
+        <!--- body --->
+        {% block body %}
 
+        {% endblock %}
       <!--------- seccion footer --------->
       <footer> 
         <p>Made Width <i class="fa-solid fa-heart"></i> by the &copy; Flaskonautas</p>
