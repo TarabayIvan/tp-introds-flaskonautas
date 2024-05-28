@@ -1,12 +1,13 @@
 CREATE TABLE IF NOT EXISTS users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
-    user VARCHAR(25) NOT NULL,
+    username VARCHAR(25) NOT NULL,
     password VARCHAR(60) NOT NULL,
     security_answer_one VARCHAR(50),
-    security_answer_two VARCHAR(50)
+    security_answer_two VARCHAR(50),
+    UNIQUE (username)
 );
 
-CREATE TABLE IF NOT EXISTS threads (
+CREATE TABLE IF NOT EXISTS posts (
     id_post INT AUTO_INCREMENT PRIMARY KEY,
 	id_user INT,
     category VARCHAR(25) NOT NULL,
@@ -17,10 +18,10 @@ CREATE TABLE IF NOT EXISTS threads (
 );
 
 CREATE TABLE IF NOT EXISTS responses (
-	id_comment INT AUTO_INCREMENT PRIMARY KEY,
+	id_response INT AUTO_INCREMENT PRIMARY KEY,
 	id_user INT,
     id_post INT,
     post VARCHAR(255) NOT NULL,
     FOREIGN KEY (id_user) REFERENCES users(id_user),
-    FOREIGN KEY (id_post) REFERENCES threads(id_post)
+    FOREIGN KEY (id_post) REFERENCES posts(id_post)
 );
