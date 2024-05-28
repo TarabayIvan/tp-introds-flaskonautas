@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foro</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+    <body>
+        <!-- secciomnabvar -->
+        <nav>
+          <a href="index.html"><img src="./images/logoo.png" alt="" /></a>
+          <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+              <li><a href="./index.html">HOME</a></li>
+              <li><a href="./categories.html">CATEGORIES</a></li>
+              <li><a href="./news.html">NEWS</a></li>
+              <li><a href="./user.html"></a><img
+              class="user-logo" id="user-logo" src="/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+              </li>
+            </ul>
+          </div>
+          <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+
+        <!-- seccion header -->
+        <header>
+          <div class="text-box">
+            <h1>Varied Topics Forum</h1>
+            <p>
+              Join the discussion and share your opinions on a variety of topics. <br> Find popular threads and engage with the community.
+            </p>
+            <a href="" class="hero-btn">Sign in</a>
+            <a href="" class="hero-btn">Sign up</a>
+          </div>
+        </header>
+        
+      <!-- seccion categories-->
+      <section class="course">
+        <h1>Topics</h1>
+        <div class="row">
+          <div class="course-col">
+            <a href="/categoria-tecnologia.html">
+              <i class="fas fa-laptop-code"></i>
+              <h3>Technology</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/science">
+              <i class="fas fa-flask"></i>
+              <h3>Science</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/health">
+              <i class="fas fa-heartbeat"></i>
+              <h3>Health & Wellness</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/business">
+              <i class="fas fa-briefcase"></i>
+              <h3>Business</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/education">
+              <i class="fas fa-book"></i>
+              <h3>Education</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/travel">
+              <i class="fas fa-plane"></i>
+              <h3>Travel</h3>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- seccion de importantes-->
+      <section class="campus">
+        <h1>Important Topics of the Day</h1>
+        <p>Stay updated with the most discussed topics in our forum.</p>
+        <div class="row">
+          <div class="campus-col">
+            <img src="./images/tema-1.jpg" alt="">
+            <div class="layer">
+              <h3>Climate Change Discussions</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="./images/tema-2.jpeg" alt="">
+            <div class="layer">
+              <h3>Latest Tech Innovations</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="./images/tema-3.jpg" alt="">
+            <div class="layer">
+              <h3>Health and Wellness Tips</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="./images/tema-1.jpg" alt="">
+            <div class="layer">
+              <h3>Climate Change Discussions</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="./images/tema-2.jpeg" alt="">
+            <div class="layer">
+              <h3>Latest Tech Innovations</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="./images/tema-3.jpg" alt="">
+            <div class="layer">
+              <h3>Health and Wellness Tips</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--------- seccion footer --------->
+      <footer> 
+        <p>Made Width <i class="fa-solid fa-heart"></i> by the &copy; Flaskonautas</p>
+      </footer>
+
+      <script src="script.js"></script>
+    </body>
+</html>
