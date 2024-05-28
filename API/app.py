@@ -23,5 +23,26 @@ def register_user():
         return jsonify({'message': 'El usuario no pudo ser registrado' + str(err.__cause__)})
     return jsonify({'message': 'El usuario se registro correctamente'}), 201
 
+@app.route('/get_posts', methods = ['GET'])
+def posts():
+    connection = engine.connect()
+    query = "SELECT * FROM posts;"
+    try:
+        data = connection.execute(text(query))
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__))
+    posts = []
+    for row in data:
+        entity = {}
+        entity['id_post'] = row.id_post
+        entity['id_user'] = row.id_user
+        entity['category'] = row.category
+        entity['title'] = row.title
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        posts.append(entity)
+    return jsonify(posts), 200
+
 if __name__ == "__main__":
     app.run("127.0.0.1", port="3307")
