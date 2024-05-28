@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foro: Categories</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+    <body>
+      <!-- seccion navbar -->
+      <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="./images/logoo.png" alt="" /></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="./index.html">HOME</a></li>
+                    <li><a href="./categories.html">CATEGORIES</a></li>
+                    <li><a href="./news.html">NEWS</a></li>
+                    <li><a href="./user.html"></a><img class="user-logo" id="user-logo"
+                            src="/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt=""></li>
+                </ul>
+            </div>
+            <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Categories</h1>
+    </section>
+
+      <!-- seccion create post -->
+      <section class="create-post">
+        <h2>Create a New Post</h2>
+        <form action="#" method="post">
+            <div class="post-entry">
+                <textarea name="post-content" id="post-content" cols="30" rows="5" placeholder="Write your post here..."></textarea>
+            </div>
+            <div class="post-options">
+                <label for="post-category">Select a category:</label>
+                <select name="post-category" id="post-category">
+                    <option value="technology">Technology</option>
+                    <option value="science">Science</option>
+                    <option value="health">Health & Wellness</option>
+                    <option value="business">Business</option>
+                    <option value="education">Education</option>
+                    <option value="travel">Travel</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="sports">Sports</option>
+                    <option value="art">Art & Culture</option>
+                    <option value="food">Food & Drink</option>
+                    <option value="environment">Environment</option>
+                    <option value="politics">Politics</option>
+                    <option value="music">Music</option>
+                    <option value="history">Boca Juniors</option>
+                    <option value="language">Language</option>
+                    <option value="photography">Photography</option>
+                    <option value="design">Design</option>
+                    <option value="movies">Movies</option>
+                    <option value="pets">Pets</option>
+                    <option value="finance">Finance</option>
+                    <option value="parenting">Parenting</option>
+                    <option value="psychology">Psychology</option>
+                    <option value="religion">Religion</option>
+                    <option value="fashion">Fashion</option>
+                </select>
+                <input type="file" name="post-image" id="post-image" accept="image/*">
+            </div>
+            <button type="submit">Publish</button>
+        </form>
+    </section>
+    
+
+      <!-- seccion categories -->
+      <section class="course">
+        <div class="row row-category">
+          <div class="course-col">
+            <a href="/categoria-tecnologia.html">
+              <i class="fas fa-laptop-code"></i>
+              <h3>Technology</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/science">
+              <i class="fas fa-flask"></i>
+              <h3>Science</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/health">
+              <i class="fas fa-heartbeat"></i>
+              <h3>Health & Wellness</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/business">
+              <i class="fas fa-briefcase"></i>
+              <h3>Business</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/education">
+              <i class="fas fa-book"></i>
+              <h3>Education</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/travel">
+              <i class="fas fa-plane"></i>
+              <h3>Travel</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/entertainment">
+              <i class="fas fa-film"></i>
+              <h3>Entertainment</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/sports">
+              <i class="fas fa-futbol"></i>
+              <h3>Sports</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/art">
+              <i class="fas fa-palette"></i>
+              <h3>Art & Culture</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/food">
+              <i class="fas fa-utensils"></i>
+              <h3>Food & Drink</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/environment">
+              <i class="fas fa-leaf"></i>
+              <h3>Environment</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/politics">
+              <i class="fas fa-balance-scale"></i>
+              <h3>Politics</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/music">
+              <i class="fas fa-music"></i>
+              <h3>Music</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/boca">
+              <i class="fas fa-futbol-o"></i>
+              <h3>Boca Juniors</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/language">
+              <i class="fas fa-language"></i>
+              <h3>Language</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/photography">
+              <i class="fas fa-camera"></i>
+              <h3>Photography</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/design">
+              <i class="fas fa-paint-brush"></i>
+              <h3>Design</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/movies">
+              <i class="fas fa-film"></i>
+              <h3>Movies</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/pets">
+              <i class="fas fa-paw"></i>
+              <h3>Pets</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/finance">
+              <i class="fas fa-money-bill"></i>
+              <h3>Finance</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/parenting">
+              <i class="fas fa-baby"></i>
+              <h3>Parenting</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/psychology">
+              <i class="fas fa-brain"></i>
+              <h3>Psychology</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/religion">
+              <i class="fas fa-praying-hands"></i>
+              <h3>Religion</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/fashion">
+              <i class="fas fa-tshirt"></i>
+              <h3>Fashion</h3>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!--------- seccion footer --------->
+      <footer> 
+        <h4>About Us</h4>
+        <div class="icons">
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-twitter"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-linkedin"></i>
+        </div>
+        <p>Made Width <i class="fa-solid fa-heart"></i> by the &copy; Flaskonautas</p>
+      </footer>
+
+      <script src="script.js"></script>
+    </body>
+</html>

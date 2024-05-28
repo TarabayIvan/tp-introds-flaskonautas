@@ -1,7 +1,14 @@
-let navLinks = document.getElementById("navLinks");
-function showMenu(){
+const navLinks = document.getElementById("navLinks");
+
+const showMenu = () => {
     navLinks.style.top = '0';
-}
-function hideMenu(){
-    navLinks.style.top = '-800px'
-}
+};
+
+const hideMenu = () => {
+    navLinks.style.top = '-800px';
+};
+
+document.getElementById('user-logo').addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.href = './user.html';
+});
