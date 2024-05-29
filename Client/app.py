@@ -4,7 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 
 app = Flask(__name__)
-API_URL = 'http://localhost:3307/'
+
+API_URL = 'http://localhost:5001'
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -16,7 +17,7 @@ def register():
         passhash = generate_password_hash(password)
         user = {'username': username, 'password': passhash, 'security_answer_one': security_answer_one, 'security_answer_two': security_answer_two}
         if (username and password and security_answer_one and security_answer_two):
-            response = requests.post(API_URL + "register_user", json=user)
+            response = requests.post(API_URL + "/register_user", json=user)
             return redirect('index') # Redirect a index, o a login, o a donde se necesite
     # Crear el funcionamiento con metodo GET
 
