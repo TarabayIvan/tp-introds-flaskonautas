@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(25) NOT NULL,
-    password VARCHAR(60) NOT NULL,
+    password VARCHAR(250) NOT NULL,
     security_answer_one VARCHAR(50),
     security_answer_two VARCHAR(50),
     UNIQUE (username)
