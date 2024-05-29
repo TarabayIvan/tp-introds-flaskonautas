@@ -22,9 +22,36 @@ def register_user():
         conn.commit()
         conn.close()
     except SQLAlchemyError as err:
-        return jsonify({'message': 'El usuario no pudo ser registrado' + str(err.__cause__)})
-    return jsonify({'message': 'El usuario se registro correctamente'}), 201
+        return jsonify({'message': 'El usuario no pudo ser registrado.' + str(err.__cause__)})
+    return jsonify({'message': 'El usuario se registro correctamente.'}), 201
 
+@app.route('/update_password', methods = ['PATCH'])
+def update_password():
+    conn = engine.connect()
+    data = request.get_json() # The function should recieve username, a new *hashed* password, and both security answers
+    query = f"""UPDATE users
+                SET password = '{data['password']}'
+                WHERE username = '{data['username']}';
+            """
+    query_validation = f"SELECT * FROM users WHERE username = '{data['username']}';" # Usernames are unique
+    try:
+        val_result = conn.execute(text(query_validation))
+        if val_result.rowcount!=0:
+            user = val_result.fetchone()
+            if user[3] == data['security_answer_one'] and user[4] == data['security_answer_two']:
+                result = conn.execute(text(query))
+                print(result)
+                conn.commit()
+                conn.close()
+            else:
+                conn.close()
+                return jsonify({'message': "Las respuestas a las preguntas de seguridad son incorrectas."}), 401
+        else:
+            conn.close()
+            return jsonify({'message': "El usuario no existe."}), 404
+    except SQLAlchemyError as err:
+        return jsonify({'message': str(err.__cause__)})
+    return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
 @app.route('/get_posts', methods = ['GET'])
 def get_posts():
