@@ -10,5 +10,5 @@ const hideMenu = () => {
 
 document.getElementById('user-logo').addEventListener('click', (event) => {
     event.preventDefault();
-    window.location.href = './user.html';
+    window.location.href = './user';
 });
