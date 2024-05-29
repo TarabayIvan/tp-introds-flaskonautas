@@ -1,39 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foro: Trendings- News</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <body>
+{%extends "base.html" %}
     
-    <body>
-      <!-- seccion navbar -->
-      <section class="sub-header">
-        <nav>
-            <a href="index.html"><img src="./images/logoo.png" alt="" /></a>
-            <div class="nav-links" id="navLinks">
-                <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
-                <ul>
-                    <li><a href="./index.html">HOME</a></li>
-                    <li><a href="./categories.html">CATEGORIES</a></li>
-                    <li><a href="./news.html">NEWS</a></li>
-                    <li><a href="./user.html"></a><img class="user-logo" id="user-logo"
-                            src="/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt=""></li>
-                </ul>
-            </div>
-            <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
-        </nav>
-        <h1>News</h1>
-    </section>
+{% block header %}
+<div class="text-box">
+    <h1>News</h1>
+</div>
 
+{% endblock %}
+{% block body %}
     <!-- seccion news -->
       <section class="testimonials">
         <h1>Recently Published Posts</h1>
@@ -99,7 +72,7 @@
             </div>
           </div>
           <div class="testimonial-col">
-            <img src="./images/user2.jpg" alt="">
+            <img src="{{url_for ('st  atic',filename='/images/user2.jpg') }}" alt="">
             <div>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, culpa vitae quo quis placeat iure corporis debitis excepturi hic reiciendis?</p>
             <h3>Bruno Lanzillota</h3>
@@ -112,12 +85,5 @@
           </div>
         </div> 
       </section>
-
-      <!-- seccion footer -->
-      <footer>
-        <p>Made Width <i class="fa-solid fa-heart"></i> by the &copy; Flaskonautas</p>
-      </footer>
-
-      <script src="script.js"></script>
-    </body>
-</html>
+{% endblock %}
+     
