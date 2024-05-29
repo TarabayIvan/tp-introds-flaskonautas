@@ -48,5 +48,34 @@ def get_posts():
     return jsonify(posts), 200
 
 
+@app.route('/create_post', methods = ['POST'])
+def create_post():
+    connection = engine.connect()
+    new_post = request.get_json()
+
+    required_fields = ["username", "category", "title", "post", "image_link"] # validar que se reciben los campos necesarios
+    for field in required_fields:
+        if field not in new_post:
+            return jsonify({'message': f'Faltan datos en la solicitud ({field})'}), 400
+
+    query1 = f"SELECT id_user FROM users WHERE username = '{new_post['username']}'" # buscar el id del usuario
+    try:
+        id_user = connection.execute(text(query1)).scalar() # scalar() para obtener el unico valor de la consulta
+
+        if id_user is None:
+            return jsonify({'message': 'El usuario no existe'}), 400
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Se ha producido un error' + str(err.__cause__)}), 400
+
+    query2 = f"""INSERT INTO posts (id_user, category, title, post, image_link) VALUES ('{id_user}', '{new_post["category"]}', '{new_post["title"]}', '{new_post["post"]}', '{new_post["image_link"]}');"""
+    try:
+        connection.execute(text(query2))
+        connection.commit()
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
+    return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
+
+
 if __name__ == "__main__":
-    app.run("127.0.0.1", port="5001")
+    app.run("127.0.0.1", port="5001", debug=True)
