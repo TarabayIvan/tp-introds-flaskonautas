@@ -45,4 +45,4 @@ def posts():
     return jsonify(posts), 200
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", port="3307")
+    app.run("127.0.0.1", port="5001")
