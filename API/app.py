@@ -53,6 +53,7 @@ def update_password():
         return jsonify({'message': str(err.__cause__)})
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
+
 @app.route('/get_posts', methods = ['GET'])
 def get_posts():
     connection = engine.connect()
@@ -90,8 +91,10 @@ def create_post():
         id_user = connection.execute(text(query1)).scalar() # scalar() para obtener el unico valor de la consulta
 
         if id_user is None:
+            connection.close()
             return jsonify({'message': 'El usuario no existe'}), 400
     except SQLAlchemyError as err:
+        connection.close()
         return jsonify({'message': 'Se ha producido un error' + str(err.__cause__)}), 400
 
     query2 = f"""INSERT INTO posts (id_user, category, title, post, image_link) VALUES ('{id_user}', '{new_post["category"]}', '{new_post["title"]}', '{new_post["post"]}', '{new_post["image_link"]}');"""
