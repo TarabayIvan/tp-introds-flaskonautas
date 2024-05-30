@@ -41,3 +41,10 @@
 | 13  | Diseñar CSS global                          | Diseñar el archivo CSS global para el estilo de la aplicación      | Frontend    | Pendiente | Baja      |
 | 14  | Conexión de front-end con la API            | Implementar la lógica para que el front-end se comunique con la API | Frontend    | Pendiente | Alta      |
 
+
+## Hitos del projecto:
+
+30/5 Entrega del backlog, creación de repositori y base de datos
+6/6 Entrega de API a 100% funcional
+13/6 Entrega de funcionalidad casi completa con minimos bugs
+18/6 Entrega de funcionalidad completa sin bugs
