@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 import os
+from werkzeug.security import check_password_hash
 
 
 app = Flask(__name__)
@@ -24,6 +25,33 @@ def register_user():
     except SQLAlchemyError as err:
         return jsonify({'message': 'El usuario no pudo ser registrado.' + str(err.__cause__)})
     return jsonify({'message': 'El usuario se registro correctamente.'}), 201
+
+@app.route('/login_user', methods=['POST'])
+def login_user():
+    conn = engine.connect()
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Username y password son requeridos'}), 400
+
+    # Consultar el usuario por nombre de usuario
+    query = f"SELECT * FROM users WHERE username = '{username}';"
+    try:
+        result = conn.execute(text(query))
+        user = result.fetchone()
+        conn.close()
+        if user:
+            # Verificar la contraseña
+            if check_password_hash(user['password'], password):
+                return jsonify({'message': 'Login exitoso', 'user': {'username': user['username']}}), 200
+            else:
+                return jsonify({'message': 'Credenciales incorrectas'}), 401
+        else:
+            return jsonify({'message': 'Usuario no encontrado'}), 404
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
 
 @app.route('/update_password', methods = ['PATCH'])
 def update_password():
