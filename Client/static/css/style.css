@@ -283,6 +283,39 @@
     border-color: rgb(3, 7, 26);
     transition: .5s;
   }
+
+  /* Sign Up */
+
+  form .secquestions{
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+  }
+
+  .secquestions input{
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+  }
+
+  .secquestions label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .sec_text h3{
+    color: #adadad;
+    padding-top: 20px;
+  }
   
   /* Important Topics */
   
