@@ -82,10 +82,10 @@ def update_password():
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
 
-@app.route('/get_posts', methods = ['GET'])
-def get_posts():
+@app.route('/get_posts/<selected_category>', methods = ['GET'])
+def get_posts(selected_category):
     connection = engine.connect()
-    query = "SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user"
+    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE category LIKE '{selected_category}' ORDER BY id_post DESC"
     try:
         data = connection.execute(text(query))
         connection.close()
@@ -95,7 +95,7 @@ def get_posts():
     for row in data:
         entity = {}
         entity['username'] = row.username
-        entity['id_post'] = row.id_post
+        entity['id_post'] = row.id_post # necesario? (ya se ordena en la query)
         entity['category'] = row.category
         entity['title'] = row.title
         entity['post'] = row.post
