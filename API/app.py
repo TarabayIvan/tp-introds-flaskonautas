@@ -81,6 +81,28 @@ def update_password():
         return jsonify({'message': str(err.__cause__)})
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
+# Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
+@app.route('/get_last_posts', method=['GET'])
+def get_last_posts():
+    connection = engine.connect()
+    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
+    try:
+        data = connection.execute(text(query))
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__)), 400
+    posts = []
+    for row in data:
+        entity = {}
+        entity['username'] = row.username
+        entity['id_post'] = row.id_post
+        entity['category'] = row.category
+        entity['title'] = row.title
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        posts.append(entity)
+    return jsonify(posts), 200
+
 
 @app.route('/get_posts/<selected_category>', methods = ['GET'])
 def get_posts(selected_category):
