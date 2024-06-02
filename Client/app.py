@@ -13,8 +13,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 API_URL = 'http://localhost:5001'
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -22,14 +22,21 @@ def register():
         security_answer_two = request.form.get('security_answer_two')
         passhash = generate_password_hash(password)
         user = {'username': username, 'password': passhash, 'security_answer_one': security_answer_one, 'security_answer_two': security_answer_two}
+        for value in user.values():
+            print(bool(value))
         if (username and password and security_answer_one and security_answer_two):
             response = requests.post(API_URL + "/register_user", json=user)
             if response.status_code == 201:
                 return redirect(url_for('login'))  # Redirige a login luego del registro exitoso.
             else:
                 error_message = "Registro fallido"
-                return render_template('register.html', error=error_message)
-    return render_template('register.html')  # Renderiza el form de registro
+                return render_template('signup.html', error=error_message)
+    return render_template('signup.html')  # Renderiza el form de registro
+
+@app.route("/")
+def index():
+    is_logged = ""
+    return render_template("index.html", is_logged)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
