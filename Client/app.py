@@ -60,9 +60,15 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
 
+@app.route("/c/<selected_category>")
+def category(selected_category):
+    response = requests.get(API_URL + f"/get_posts/{selected_category}")
+    posts = response.json()
+    return render_template("category.html", posts=posts, category=selected_category)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", port="5000")
+    app.run("127.0.0.1", port="5000", debug=True)
