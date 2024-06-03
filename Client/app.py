@@ -83,6 +83,15 @@ def category(selected_category):
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
 
+@app.route("/latest_posts", methods=['GET'])
+def latest_posts():
+    response = requests.get(API_URL + "/get_last_posts")
+    if response.status_code == 200:
+        posts = response.json()
+        return render_template("latest_posts.html", posts=posts)
+    else:
+        return jsonify({"error": "No se pudieron obtener los posts"}), 400
+    
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
