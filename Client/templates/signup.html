@@ -1,9 +1,9 @@
-{%extends "base.html" %}
+{% extends "base.html" %}
 
-    {%block body%}
+    {% block header %}
         <div class="formlogin">
             <h1>Registro</h1>
-            <form action="{{ url_for('signup')}}" method="post">
+            <form action="{{ url_for('signup') }}" method="post">
                 <div class="username">
                     <input type="text" name="user" placeholder="Nombre de usuario" required>
                 </div>
@@ -23,4 +23,4 @@
             </form>
         </div>
 
-    {%endblock%}
+    {% endblock %}
