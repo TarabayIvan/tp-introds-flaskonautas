@@ -104,7 +104,7 @@ def update_password():
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
 # Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
-@app.route('/get_last_posts', method=['GET'])
+@app.route('/get_last_posts', methods=['GET'])
 def get_last_posts():
     connection = engine.connect()
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
