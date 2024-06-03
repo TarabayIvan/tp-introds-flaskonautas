@@ -64,6 +64,19 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
 
+@app.route("/user_data", methods=['GET'])
+def get_user_data():
+    if 'user' in session:
+        user_id = session['user']['id']  # Suponiendo que tienes el ID del usuario en la sesión
+        response = requests.get(API_URL + f"/user/{user_id}")
+        if response.status_code == 200:
+            user_data = response.json()
+            return jsonify(user_data)
+        else:
+            return jsonify({"error": "No se pudieron obtener los datos del usuario"}), 400
+    else:
+        return jsonify({"error": "Usuario no autenticado"}), 401
+
 @app.route("/c/<selected_category>")
 def category(selected_category):
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
