@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -37,8 +36,11 @@ def signup():
 
 @app.route("/")
 def index():
-    is_logged = ""
-    return render_template("index.html", is_logged)
+    if 'user' in session:
+        username = session['user']['user']['username']
+        print('username')
+        return render_template("index.html", username = username)
+    return render_template("index.html")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
