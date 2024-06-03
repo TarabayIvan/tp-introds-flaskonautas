@@ -52,6 +52,28 @@ def login_user():
             return jsonify({'message': 'Usuario no encontrado'}), 404
     except SQLAlchemyError as err:
         return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
+    
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    conn = engine.connect()
+    query = f"SELECT id_user, username, security_answer_one, security_answer_two FROM users WHERE id_user = {user_id};"
+    try:
+        result = conn.execute(text(query))
+        user = result.fetchone()
+        conn.close()
+        if user:
+            user_data = {
+                'id_user': user.id_user,
+                'username': user.username,
+                'security_answer_one': user.security_answer_one,
+                'security_answer_two': user.security_answer_two
+                # Excluir el password por razones de seguridad
+            }
+            return jsonify(user_data), 200
+        else:
+            return jsonify({"message": "Usuario no encontrado"}), 404
+    except SQLAlchemyError as err:
+        return jsonify({"message": "Error en el servidor: " + str(err.__cause__)}), 500
 
 @app.route('/update_password', methods = ['PATCH'])
 def update_password():
