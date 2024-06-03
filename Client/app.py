@@ -8,8 +8,10 @@ from dotenv import load_dotenv
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 API_URL = 'http://localhost:5001'
 
