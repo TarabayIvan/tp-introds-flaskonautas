@@ -1,0 +1,110 @@
+{%extends "base.html" %}
+
+        {% block header %}
+        <!-- seccion header -->
+          <div class="text-box">
+            {% if username %}
+            <h1>Varied Topics Forum</h1>
+            <p>
+              Bienvenido {{ username }}
+            </p>
+            <a href="{{url_for('logout')}}" class="hero-btn">Log out</a>
+            {% else %}
+            <h1>Varied Topics Forum</h1>
+            <p>
+              Join the discussion and share your opinions on a variety of topics. <br> Find popular threads and engage with the community.
+            </p>
+            <a href="{{url_for('login')}}" class="hero-btn">Sign in</a>
+            <a href="{{url_for('register')}}" class="hero-btn">Sign up</a>
+            {% endif %}
+          </div>
+        {% endblock %}
+
+        {% block body %}
+      <!-- seccion categories-->
+      <section class="course">
+        <h1>Topics</h1>
+        <div class="row">
+          <div class="course-col">
+            <a href="/technology">
+              <i class="fas fa-laptop-code"></i>
+              <h3>Technology</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/science">
+              <i class="fas fa-flask"></i>
+              <h3>Science</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/health">
+              <i class="fas fa-heartbeat"></i>
+              <h3>Health & Wellness</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/business">
+              <i class="fas fa-briefcase"></i>
+              <h3>Business</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/education">
+              <i class="fas fa-book"></i>
+              <h3>Education</h3>
+            </a>
+          </div>
+          <div class="course-col">
+            <a href="/travel">
+              <i class="fas fa-plane"></i>
+              <h3>Travel</h3>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- seccion de importantes-->
+      <section class="campus">
+        <h1>Important Topics of the Day</h1>
+        <p>Stay updated with the most discussed topics in our forum.</p>
+        <div class="row">
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-1.jpg') }}" alt="">
+            <div class="layer">
+              <h3>Climate Change Discussions</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-2.jpeg') }}" alt="">
+            <div class="layer">
+              <h3>Latest Tech Innovations</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-3.jpg') }}" alt="">
+            <div class="layer">
+              <h3>Health and Wellness Tips</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-1.jpg') }}" alt="">
+            <div class="layer">
+              <h3>Climate Change Discussions</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-2.jpeg') }}" alt="">
+            <div class="layer">
+              <h3>Latest Tech Innovations</h3>
+            </div>
+          </div>
+          <div class="campus-col">
+            <img src="{{url_for('static', filename= '/images/tema-3.jpg') }}" alt="">
+            <div class="layer">
+              <h3>Health and Wellness Tips</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+      {% endblock %}

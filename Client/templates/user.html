@@ -1,0 +1,24 @@
+{%extends "base.html" %}
+    
+{% block header %}
+<div class="text-box">
+    <h1>User</h1>
+</div>
+
+{% endblock %}
+
+    {% block body %}
+    <!-- user info -->
+    <section class="user-info">
+        <h2>User Information</h2>
+        <ul>
+            <li><strong>Username:</strong> {{ username }}</li>
+            <li><strong>Email:</strong> {{ email }}</li>
+            <li><strong>Password:</strong> {{ password }}</li>
+        </ul>
+    </section>
+
+        {% endblock %}
+
+
+</html>

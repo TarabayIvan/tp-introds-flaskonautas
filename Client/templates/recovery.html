@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+    {% block header %}
+
+        <div class="formlogin">
+            <h1>Recuperación de contraseña</h1>
+            <form action="{{ url_for('recovery') }}" method="post">
+            <div class="username">
+                <input type="text" name="user" placeholder="Nombre de usuario" required>
+            </div>
+            <div class="secquestions">
+                <input type="text" name="secquestions1" placeholder="Color favorito" required>
+            </div>
+            <div class="secquestions">
+                <input type="text" name="secquestions2" placeholder="Nombre de su primera mascota" required>
+            </div>
+            <div class="password">
+                <input type="password" name="newpword" placeholder="Nueva contraseña" required>
+            </div>
+            <input type="submit" value="Cambiar contraseña">
+            </form>
+        </div>
+
+    {% endblock %}
