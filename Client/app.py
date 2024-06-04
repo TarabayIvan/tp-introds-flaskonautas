@@ -23,8 +23,6 @@ def signup():
         security_answer_two = request.form.get('security_answer_two')
         passhash = generate_password_hash(password)
         user = {'username': username, 'password': passhash, 'security_answer_one': security_answer_one, 'security_answer_two': security_answer_two}
-        for value in user.values():
-            print(bool(value))
         if (username and password and security_answer_one and security_answer_two):
             response = requests.post(API_URL + "/register_user", json=user)
             if response.status_code == 201:
@@ -38,7 +36,6 @@ def signup():
 def index():
     if 'user' in session:
         username = session['user']['user']['username']
-        print('username')
         return render_template("index.html", username = username)
     return render_template("index.html")
 
