@@ -15,6 +15,8 @@ engine = create_engine("mysql+mysqlconnector://root:123@localhost/flaskonautas",
 def register_user():
     conn = engine.connect()
     new_user = request.get_json()
+    if not (new_user.get("username") and new_user.get("password") and new_user.get("security_answer_one") and new_user.get("security_answer_two")):
+        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
     query = f"""INSERT INTO users (username, password, security_answer_one, security_answer_two)
     VALUES
     ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');"""
@@ -79,6 +81,8 @@ def get_user(user_id):
 def update_password():
     conn = engine.connect()
     data = request.get_json() # The function should recieve username, a new *hashed* password, and both security answers
+    if not (data.get("username") and data.get("password") and data.get("security_answer_one") and data.get("security_answer_two")):
+        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
     query = f"""UPDATE users
                 SET password = '{data['password']}'
                 WHERE username = '{data['username']}';
