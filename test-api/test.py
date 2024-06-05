@@ -67,7 +67,6 @@ def test_user_is_resgistred_vacio(client):
     assert response.json['message'] == 'Username y password son requeridos'
 
 
-# falta arreglar
 def test_user_is_resgistred(client):
     login_data = {
         "username": "guille",
@@ -187,7 +186,7 @@ def test_get_last_posts(client):
     assert len(response.json) > 0
     assert len(response.json) <= 6
 
-#lo mismo que antes controlar el id si la base de datos es vacia y tiene un post podria ir 1, en caso contrario asegurarse que el id del post sea valido
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
 def test_create_response_incompleto(client):
     new_response = {
         "username": "guille",
@@ -197,7 +196,8 @@ def test_create_response_incompleto(client):
     assert response.status_code == 400
     assert response.json['message'].startswith('Faltan datos en la solicitud')
 
-def test_create_response_user_valid(client):
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_create_response_user_not_valid(client):
     new_response = {
         "username": "guille5555",
         "post": "test_post",
@@ -205,4 +205,32 @@ def test_create_response_user_valid(client):
     }
     response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
     assert response.status_code == 400
-    assert response.json['message'].startswith('El usuario no existe')
+    assert response.json['message'].startswith('El usuario con nombre')
+
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_create_response_valid(client):
+    new_response = {
+        "username": "guille",
+        "post": "test_post",
+        "id_post": 42,
+    }
+    response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
+    assert response.status_code == 201
+    assert response.json['message'].startswith('se ha agregado correctamente')
+
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_create_response_post_not_exist(client):
+    new_response = {
+        "username": "guille",
+        "post": "test_post",
+        "id_post": 1,
+    }
+    response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('Se ha producido un error')
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_get_responses(client):
+    response = client.get('/get_responses/42')
+    assert response.status_code == 200
+    assert len(response.json) > 0
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
