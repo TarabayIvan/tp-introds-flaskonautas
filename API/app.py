@@ -183,5 +183,42 @@ def create_post():
     return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
 
 
+@app.route('/get_responses', methods = ['GET']) 
+
+def get_responses (id_post): 
+
+    connection = engine.connect() 
+
+    query = f" SELECT id_response, id_user, id_post, post FROM responses WHERE id_post = {id_post};" 
+
+    try: 
+
+        data = connection.execute(text(query)) 
+
+        connection.close() 
+
+    except SQLAlchemyError as err: 
+
+        return jsonify(str(err.__cause__)), 400 
+
+    posts = [] 
+
+    for row in data: 
+
+        entity = {} 
+
+        entity['id_response'] = row.id_response 
+
+        entity['id_user '] = row.id_user  
+
+        entity['id_post'] = row.id_post 
+
+        entity['post'] = row.post        
+
+ posts.append(entity) 
+
+    return jsonify(posts), 200
+
+
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
