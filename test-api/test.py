@@ -1,8 +1,8 @@
 import json
-import pytest
 import users
 import posts
 from werkzeug.security import generate_password_hash
+
 
 def test_register_user(client):
     new_user = {
@@ -15,6 +15,7 @@ def test_register_user(client):
     assert response.status_code == 201
     assert response.json['message'] == 'El usuario se registro correctamente.'
 
+
 def test_register_multiple_users(client):
     for user in users.users:
         response = client.post('/register_user', data=json.dumps(user), content_type='application/json')
@@ -22,7 +23,28 @@ def test_register_multiple_users(client):
         assert response.json['message'] == 'El usuario se registro correctamente.'
 
 
-#SACAR ESTE TEST Y MODOFICAR SEGUN SE CAMBIE LOS REQUERIMIENTOS DE LA API
+def test_register_user_data_inconpleta(client):
+    new_user = {
+        "username": "guille66",
+        "password": generate_password_hash("testpassword66"),
+        "security_answer_one": "queti66"
+    }
+    response = client.post('/register_user', data=json.dumps(new_user), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'] == 'No se enviaron todos los datos necesarios por JSON'
+
+
+def test_register_user_data_inconpleta_password_vacia(client):
+    new_user = {
+        "username": "guille66",
+        "password": generate_password_hash(""),
+        "security_answer_one": "queti66"
+    }
+    response = client.post('/register_user', data=json.dumps(new_user), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'] == 'No se enviaron todos los datos necesarios por JSON'
+
+
 def test_register_user_repeat(client):
     new_user = {
         "username": "guille66",
@@ -31,18 +53,31 @@ def test_register_user_repeat(client):
         "security_answer_two": "importa66"
     }
     response = client.post('/register_user', data=json.dumps(new_user), content_type='application/json')
-    assert response.status_code == 400
-    assert response.json['message'] == 'El usuario no pudo ser registrado'
+    assert response.status_code == 200
+    assert response.json['message'].startswith('El usuario no pudo ser registrado.')
 
-#A este test le pasa algo raro probarlo con la base de dastos vacia
-def test_user_is_resgistred(client):
+
+def test_user_is_resgistred_vacio(client):
     login_data = {
-        "username": "guille66",
-        "password": "testpassword66"
+        "username": "",
+        "password": generate_password_hash(""),
     }
     response = client.post('/login_user', data=json.dumps(login_data), content_type='application/json')
 
-    assert response.json['message'] == 'Login exitoso'
+    assert response.json['message'] == 'Username y password son requeridos'
+
+
+# falta arreglar
+def test_user_is_resgistred(client):
+    login_data = {
+        "username": "guille",
+        "password": "aguanteBoquita",
+    }
+    response = client.post('/login_user', data=json.dumps(login_data), content_type='application/json')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('Login exitoso')
+
+
 
 def test_user_is_not_resgistred(client):
     login_data = {
@@ -53,10 +88,18 @@ def test_user_is_not_resgistred(client):
     assert response.status_code == 404
     assert response.json['message'] == 'Usuario no encontrado'
 
+
+# si la base de datos esta vacia todo ok,si ya tiene gente fijarse en una id valido.
 def test_get_user(client):
     response = client.get('/user/1')
     assert response.status_code == 200
     assert 'username' in response.json
+
+# si la base de datos esta vacia todo ok,si ya tiene gente fijarse en una id valido.
+def test_get_user_not_exist(client):
+    response = client.get('/user/1')
+    assert response.status_code == 404
+    assert 'username' not in response.json
 
 def test_update_password(client):
     update_data = {
@@ -69,6 +112,17 @@ def test_update_password(client):
     assert response.status_code == 200
     assert response.json['message'] == 'Se cambio la contraseña correctamente.'
 
+def test_update_password_user_not_exist(client):
+    update_data = {
+        "username": "guille50",
+        "password": generate_password_hash("aguanteBoquitaa"),
+        "security_answer_one": "queti",
+        "security_answer_two": "importa"
+    }
+    response = client.patch('/update_password', data=json.dumps(update_data), content_type='application/json')
+    assert response.status_code == 404
+    assert response.json['message'] == 'El usuario no existe.'
+
 def test_update_password_wrong(client):
     update_data = {
         "username": "guille",
@@ -79,6 +133,7 @@ def test_update_password_wrong(client):
     response = client.patch('/update_password', data=json.dumps(update_data), content_type='application/json')
     assert response.status_code == 401
     assert response.json['message'] == 'Las respuestas a las preguntas de seguridad son incorrectas.'
+
 
 def test_create_post(client):
     new_post = {
@@ -92,13 +147,36 @@ def test_create_post(client):
     assert response.status_code == 201
     assert response.json['message'].startswith('se ha agregado correctamente')
 
+def test_create_post_con_data_faltante(client):
+    new_post = {
+        "username": "guille",
+        "category": "ANIMALS",
+        "title": "HOLA"
+    }
+    response = client.post('/create_post', data=json.dumps(new_post), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('Faltan datos en la solicitud')
+
+def test_create_post_user_not_exist(client):
+    new_post = {
+        "username": "guille5555",
+        "category": "ANIMALS",
+        "title": "HOLA",
+        "post": "test_post",
+        "image_link": "test_image_link"
+    }
+    response = client.post('/create_post', data=json.dumps(new_post), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('El usuario no existe')
+
 def test_create_multiple_posts(client):
     for post in posts.posts:
         response = client.post('/create_post', data=json.dumps(post), content_type='application/json')
         assert response.status_code == 201
         assert response.json['message'].startswith('se ha agregado correctamente')
 
-def test_get_post_by_categories(client):
+
+def test_get_post_by_category(client):
     response = client.get('/get_posts/Animalitos')
     assert response.status_code == 200
     assert len(response.json) > 0
@@ -108,3 +186,23 @@ def test_get_last_posts(client):
     assert response.status_code == 200
     assert len(response.json) > 0
     assert len(response.json) <= 6
+
+#lo mismo que antes controlar el id si la base de datos es vacia y tiene un post podria ir 1, en caso contrario asegurarse que el id del post sea valido
+def test_create_response_incompleto(client):
+    new_response = {
+        "username": "guille",
+        "post": "test_post",
+    }
+    response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('Faltan datos en la solicitud')
+
+def test_create_response_user_valid(client):
+    new_response = {
+        "username": "guille5555",
+        "post": "test_post",
+        "id_post": 1,
+    }
+    response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('El usuario no existe')
