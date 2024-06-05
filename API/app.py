@@ -47,7 +47,7 @@ def login_user():
         if user:
             # Verificar la contraseña
             if check_password_hash(user[2], password):
-                return jsonify({'message': 'Login exitoso', 'user': {'username': user['username']}}), 200
+                return jsonify({'message': 'Login exitoso', 'user': {'username': user[1]}}), 200
             else:
                 return jsonify({'message': 'Credenciales incorrectas'}), 401
         else:
