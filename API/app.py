@@ -215,10 +215,39 @@ def get_responses (id_post):
 
         entity['post'] = row.post        
 
- posts.append(entity) 
+        posts.append(entity) 
 
     return jsonify(posts), 200
 
+@app.route('/create_response', methods = ['POST'])
+def create_response():
+    connection = engine.connect()
+    new_response = request.get_json()
+    required_fields = ['username', 'post', 'id_post'] # valido que se reciben los campos necesarios
+    for field in required_fields:
+        if field not in new_response:
+            return jsonify({'message': f'Faltan datos en la solicitud ({field})'}), 400
+        
+    username = new_response['username']
+
+    query_1 = f"SELECT id_user FROM users WHERE username = '{username}'" # buscar el id del usuario
+    try:
+        id_user = connection.execute(text(query_1)).scalar() # scalar() para obtener el unico valor de la consulta
+        if id_user is None:
+            connection.close()
+            return jsonify({'message': f'El usuario con nombre ({username}) no existe'}), 400
+    except SQLAlchemyError as err:
+        connection.close()
+        return jsonify({'message': 'Se ha producido un error' + str(err.__cause__)}), 400
+    
+    query_2 = f"""INSERT INTO responses (id_user, id_post, post) VALUES ('{id_user}', '{new_response['id_post']}', '{new_response['post']}');"""
+    try:
+        connection.execute(text(query_2)) 
+        connection.commit() #subo la respuesta
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
+    return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
