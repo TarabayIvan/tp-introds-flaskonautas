@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ESTO SOLO ES UN HTML DE PRUEBA -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css" ) }}">
+
+    <style type="text/css">
+        body {
+            padding: 10px;
+            background-color: #eee;
+        }
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .post-card {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .user {
+            background-color: #a4a4af;
+            border-radius: 8px;
+        }
+        .user h4{
+            padding: 0 10px;
+            
+        }
+        .post-body {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{category}}</h1>
+
+    <div class="posts-container">
+        {% for post in posts %}
+
+            <div class="post-card">
+                <div class="user">
+                    <h4>{{post['username']}}</h4>
+                </div>
+                
+                <div class="post-body">
+                    <h3>{{post['title']}}</h3>
+                    <p>{{post['post']}}</p>
+                    <!-- despues definir bien como se va a crear la ruta -->
+                    {% if post['image_link'] %}
+                        <img src="../static/{{post['image_link']}}" class="img-card"> 
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+</body>
+</html>
+
+
