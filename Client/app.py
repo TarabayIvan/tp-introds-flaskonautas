@@ -130,6 +130,25 @@ def send_post():
         return jsonify({'message': 'El post no pudo ser registrado.' + str(err._cause_)})
     return jsonify({'message': 'El post se registro correctamente.'}), 201
 
+@app.route('/send_response', methods = ['POST'])
+def send_response():
+    conn = engine.connect()
+    new_response = request.get_json()
+    if not(
+                new_response.get("id_response") and new_response.get("id_user") and new_response.get("id_post") and new_response.get("post")
+          ):
+        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
+    query = f"""INSERT INTO responses (id_response,id_user,id_post,post)
+    VALUES
+    ('{new_response["id_response"]}', '{new_response["id_user"]}', '{new_response["id_post"]}', '{new_response["post"]}');"""
+    try:
+        result = conn.execute(text(query))
+        conn.commit()
+        conn.close()
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'La respuesta no pudo ser registrada.' + str(err._cause_)})
+    return jsonify({'message': 'La respuesta se registro correctamente.'}), 201
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
