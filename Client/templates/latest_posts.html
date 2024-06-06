@@ -1,53 +1,29 @@
 {%extends "base.html" %}
-
 {% block header %}
 
 <div class="text-box">
-
     <h1>Latest Posts</h1>
-
 </div>
-
 {% endblock %}
-
 {% block body %}
 
 
-
 <header>
-
     <div class="container">
-
         <div class="grid-container">
-
             {% for post in posts %}
-
             <div class="grid-item">
-
                 <h2>{{post['title']}}</h2>
-
                 {% if post['image_link'] %}
-
                 <img src="../static/{{post['image_link']}}" class="img-2"> 
-
                 {% endif %}
-
                 <p>Published by {{post['username']}}</p>
-
                 <p style="text-align: justify;padding-bottom: 15px;">{{post['post']}}
-
                 </p>
-
             </div>
-
             {% endfor %}
-
         </div>
-
     </div>
-
     <div class="container-footer"></div>
-
 </header>
-
 {% endblock %}
