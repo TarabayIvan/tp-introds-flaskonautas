@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
-    {% block header %}
+{% block title %}
+<title>Recuperación de contraseña</title>
+{% endblock %}
 
-        <div class="formlogin">
-            <h1>Recuperación de contraseña</h1>
-            <form action="{{ url_for('recovery') }}" method="post">
+{% block header %}
+<header>
+    <div class="formlogin">
+        <h1>Recuperación de contraseña</h1>
+        <form action="{{ url_for('recovery') }}" method="post">
             <div class="username">
                 <input type="text" name="user" placeholder="Nombre de usuario" required>
             </div>
@@ -20,5 +24,5 @@
             <input type="submit" value="Cambiar contraseña">
             </form>
         </div>
-
-    {% endblock %}
+</header>
+{% endblock %}

@@ -17,6 +17,9 @@
     background-size: cover;
     position: relative;
   }
+  .sub-header{
+    min-height: 50vh;
+  }
   
   nav {
     display: flex;
