@@ -98,8 +98,13 @@ def get_user_data():
     else:
         return jsonify({"error": "Usuario no autenticado"}), 401
 
+@app.route("/categories", methods=['GET'])
+def categories():
+    return render_template("categories.html")
+
 @app.route("/c/<selected_category>")
 def category(selected_category):
+    
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
