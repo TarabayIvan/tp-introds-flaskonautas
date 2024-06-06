@@ -638,3 +638,33 @@
   .red-btn:hover {
     color: #fff;
   }
+
+    /* Latest posts */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+}
+
+.grid-item {
+  width: 500px; 
+  height: 750px;
+  background-color: #ccc;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.img-2 {
+  padding-top: 20px;
+  width: 300px;
+  height: 300px;
+}
+
+.container-footer {
+  width: 100px; 
+  height: 100px;
+}
