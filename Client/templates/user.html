@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block header %}
-<header>
+<header class="sub-header">
   <div class="text-box">
     <h1>User Information</h1>
   </div>
@@ -37,9 +37,16 @@
     <section class="user-info">
         <h2>User Information</h2>
         <ul>
-            <li><strong>Username:</strong> {{ username }}</li>
-            <li><strong>Email:</strong> {{ email }}</li>
-            <li><strong>Password:</strong> {{ password }}</li>
+            <li><strong>Username:</strong> {{ user_data.username }}</li>
+            <li>
+                <strong>Password:</strong>
+                <span id="password" class="hidden">{{ user_data.password }}</span>
+                <span id="toggle-password" class="material-symbols-outlined">visibility</span>
+            </li>
+        </ul>
+        <ul>
+            <li><a href="{{ url_for('modificar_password') }}" class="hero-btn-user">Cambiar Contraseña</a></li>
+            <li><li><a href="{{url_for('delete_account')}}" class="hero-btn-user">Borrar Cuenta</a></li></li>
         </ul>
     </section>
 {% endblock %}
