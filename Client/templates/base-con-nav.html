@@ -28,10 +28,10 @@
                   <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
                   <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
                     <!-- si no hay usuario logueado debera estar con la clase login-active, en caso contrario debera estar en login-inactive-->
-                  <li><a href="{{url_for('login')}}" class="hero-btn {{ estadoUserSign }}">Sign in</a></li>
-                  <li><a href="{{url_for('signup')}}" class="hero-btn {{ estadoUserSign }}">Sign up</a></li>
+                  <li><a href="{{url_for('login')}}" class="hero-btn login-active">Sign in</a></li>
+                  <li><a href="{{url_for('signup')}}" class="hero-btn login-active">Sign up</a></li>
                     <!-- si el usuario esta logueado se mantiene igual con la clase logueado en caso contrario debera estar en no-logueado-->
-                  <li><a href="{{url_for ('get_user_data') }}" class="{{ estadoIconUser }}"><span class="material-symbols-outlined icon-user ">account_circle</span></a></li>
+                  <li><a href="{{url_for ('get_user_data') }}" class="no-logueado"><span class="material-symbols-outlined icon-user ">account_circle</span></a></li>
                 </ul>
             </div>
             <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
