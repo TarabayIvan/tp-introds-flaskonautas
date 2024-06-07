@@ -29,7 +29,7 @@ nav {
 }
 
 nav img {
-    width: 150px;
+    width: 130px;
 }
 
 .icon-user {
@@ -44,17 +44,11 @@ nav img {
     display: block;
 }
 
-.login-active {
-    display: block;
-}
 
-.login-inactive {
-    display: none;
-}
 
 .user-logo {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .nav-links {
@@ -106,6 +100,13 @@ nav img {
 .text-box p {
     margin: 10px 0 40px;
     font-size: 14px;
+}
+.login-active {
+    display: block !important;
+}
+
+.login-inactive {
+    display: none !important;
 }
 
 .hero-btn {
