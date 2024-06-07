@@ -41,6 +41,10 @@ def index():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    estadoUserSign_active = "login-active"
+    estadoUserSign_inaactive = "login-inactive"
+    estadoUserIcon_active = ".logueado"
+    estadoUserIcon_inaactive = "no-logueado"
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -53,8 +57,8 @@ def login():
                 return redirect(url_for('index'))
             else:
                 error_message = "Login fallido"
-                return render_template('login.html', error=error_message)
-    return render_template('login.html')
+                return render_template('base-con-nav.html', error=error_message, estadoUserSign=estadoUserSign_active,estadoUserIcon=estadoUserIcon_active)
+    return render_template('base-con-nav.html', estadoUserSign = estadoUserSign_inaactive, estadoUserIcon = estadoUserIcon_active)
 
 
 @app.route("/delete-account", methods=['GET', 'POST'])
