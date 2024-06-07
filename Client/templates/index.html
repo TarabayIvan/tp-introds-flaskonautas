@@ -10,13 +10,11 @@
     <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
     <ul>
       <li><a href="{{url_for ('index') }}">HOME</a></li>
-      <li><a href="{{url_for ('categories') }}">CATEGORIES</a>
-      </li><li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
-      <a href="{{url_for('login')}}" class="hero-btn">Sign in</a>
-      <a href="{{url_for('signup')}}" class="hero-btn">Sign up</a>
-      <li><a href="{{url_for ('get_user_data') }}"></a><img
-              class="user-logo" id="user-logo" src="{{url_for('static', filename='/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
-      </li>
+      <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
+      <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
+      <li><a href="{{url_for('login')}}" class="hero-btn login-inactive">Sign in</a></li>
+      <li><a href="{{url_for('signup')}}" class="hero-btn login-inactive">Sign up</a></li>
+      <li><a href="{{url_for ('get_user_data') }}" class="no-logueado"><span class="material-symbols-outlined icon-user ">account_circle</span></a></li>
     </ul>
   </div>
   <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
