@@ -1,4 +1,4 @@
-#!/home/elliug/Documents/curso2024/Cursada-Intro/tp-introds-flaskonautas/Client/.venv/bin/python3
+#!/home/elliug/Documents/curso2024/Cursada-Intro/tp-introds-flaskonautas/Client/.venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

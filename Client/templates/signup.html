@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
-    {% block header %}
-        <div class="formlogin">
+{% block title %}
+    <title>Registro</title>
+{% endblock %}
+
+{% block header %}
+<header>
+    <div class="formlogin">
             <h1>Registro</h1>
             <form action="{{ url_for('signup') }}" method="post">
                 <div class="username">
-                    <input type="text" name="user" placeholder="Nombre de usuario" required>
+                    <input type="text" name="username" placeholder="Nombre de usuario" required>
                 </div>
                 <div class="password">
                     <input type="password" name="password" placeholder="Contraseña" required>
@@ -14,13 +19,13 @@
                     <h3>Preguntas de seguridad</h3>
                 </div>
                 <div class="secquestions">
-                    <input type="text" name="secquestions1" placeholder="Color favorito" required>
+                    <input type="text" name="security_answer_one" placeholder="Color favorito" required>
                 </div>
                 <div class="secquestions">
-                    <input type="text" name="secquestions2" placeholder="Nombre de su primera mascota" required>
+                    <input type="text" name="security_answer_two" placeholder="Nombre de su primera mascota" required>
                 </div>
                 <input type="submit" value="Registrarse">
             </form>
         </div>
-
-    {% endblock %}
+</header>
+{% endblock %}

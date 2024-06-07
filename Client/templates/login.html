@@ -1,12 +1,15 @@
 {% extends "base.html" %}
+{% block title %}
+<title>Login</title>
+{% endblock %}
 
-      {% block header %}
-
-        <div class="formlogin">
+{% block header %}
+<header>
+  <div class="formlogin">
           <h1>Inicio de sesión</h1>
           <form action="{{ url_for('login') }}" method="post">
             <div class="username">
-              <input type="text" name="user" placeholder="Nombre de usuario" required>
+              <input type="text" name="username" placeholder="Nombre de usuario" required>
             </div>
             <div class="password">
               <input type="password" name="password" placeholder="Contraseña" required>
@@ -17,5 +20,5 @@
             <input type="submit" value="Iniciar sesión">
           </form>
         </div>
-
-        {% endblock %}
+</header>
+{% endblock %}
