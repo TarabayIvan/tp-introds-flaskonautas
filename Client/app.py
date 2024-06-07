@@ -152,51 +152,6 @@ def category(selected_category):
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
 
-@app.route("/latest_posts", methods=['GET'])
-def latest_posts():
-    response = requests.get(API_URL + "/get_last_posts")
-    if response.status_code == 200:
-        posts = response.json()
-        return render_template("latest_posts.html", posts=posts)
-    else:
-        return jsonify({"error": "No se pudieron obtener los posts"}), 400
-    
-@app.route('/send_post', methods = ['POST'])
-def send_post():
-    conn = engine.connect()
-    new_post = request.get_json()
-    if not (new_post.get("id_post") and new_post.get("id_user") and new_post.get("category") and new_post.get("title") and new_post.get("post") and new_post.get("image_link")):
-        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    query = f"""INSERT INTO posts (id_post,id_user,category,title,post,image_link)
-    VALUES
-    ('{new_post["id_post"]}', '{new_post["id_user"]}', '{new_post["category"]}', '{new_post["title"]}', '{new_post["post"]}', '{new_post["image_link"]}');"""
-    try:
-        result = conn.execute(text(query))
-        conn.commit()
-        conn.close()
-    except SQLAlchemyError as err:
-        return jsonify({'message': 'El post no pudo ser registrado.' + str(err._cause_)})
-    return jsonify({'message': 'El post se registro correctamente.'}), 201
-
-@app.route('/send_response', methods = ['POST'])
-def send_response():
-    conn = engine.connect()
-    new_response = request.get_json()
-    if not(
-                new_response.get("id_response") and new_response.get("id_user") and new_response.get("id_post") and new_response.get("post")
-          ):
-        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    query = f"""INSERT INTO responses (id_response,id_user,id_post,post)
-    VALUES
-    ('{new_response["id_response"]}', '{new_response["id_user"]}', '{new_response["id_post"]}', '{new_response["post"]}');"""
-    try:
-        result = conn.execute(text(query))
-        conn.commit()
-        conn.close()
-    except SQLAlchemyError as err:
-        return jsonify({'message': 'La respuesta no pudo ser registrada.' + str(err._cause_)})
-    return jsonify({'message': 'La respuesta se registro correctamente.'}), 201
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
