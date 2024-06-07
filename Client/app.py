@@ -141,6 +141,15 @@ def get_user_data():
     else:
         return render_template("user.html", user_data={"username": "Usuario no autenticado", "password": "Usuario no autenticado"})
 
+@app.route("/latest_posts", methods=['GET'])
+def latest_posts():
+    response = requests.get(API_URL + "/get_last_posts")
+    if response.status_code == 200:
+        posts = response.json()
+        return render_template("latest_posts.html", posts=posts)
+    else:
+        return jsonify({"error": "No se pudieron obtener los posts"}), 400
+    
 @app.route("/categories", methods=['GET'])
 def categories():
     return render_template("categories.html")
