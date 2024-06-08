@@ -152,6 +152,9 @@ def categories():
 
 @app.route("/c/<selected_category>")
 def category(selected_category):
+    categorias_elegibles = {'Technology', 'Science', 'Healt', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
+    if selected_category not in categorias_elegibles:
+        return page_not_found(404)
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
