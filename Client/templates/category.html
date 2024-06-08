@@ -1,67 +1,239 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- ESTO SOLO ES UN HTML DE PRUEBA -->
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css" ) }}">
-
-    <style type="text/css">
-        body {
-            padding: 10px;
-            background-color: #eee;
-        }
-        .posts-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .post-card {
-            background-color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .user {
-            background-color: #a4a4af;
-            border-radius: 8px;
-        }
-        .user h4{
-            padding: 0 10px;
-            
-        }
-        .post-body {
-            padding: 10px;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+    integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
 </head>
-<body>
+
+{%extends "base-con-nav.html" %}
+
+{% block title %}
+<title>{{category}}</title>
+{% endblock %}
+
+{% block header %}
+<header class="sub-header">
+  <div class="text-box">
     <h1>{{category}}</h1>
+  </div>
+</header>
+{% endblock %}
 
-    <div class="posts-container">
-        {% for post in posts %}
-
-            <div class="post-card">
-                <div class="user">
-                    <h4>{{post['username']}}</h4>
+{% block body %}
+    <div class="body-container">
+            <div class="inner-wrapper">
+                <!-- barra lateral -->
+                <div class="inner-sidebar" id="inner-sidebar"> 
+                    <div class="inner-sidebar-header justify-content-center">
+                        <button class="btn has-icon btn-block" type="button" data-toggle="modal"
+                            data-target="#threadModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-plus mr-2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            NEW POST
+                        </button>
+                    </div>
+                    <div class="inner-sidebar-body p-0">
+                        <div class="px-4 py-3" data-simplebar="init">
+                            <div class="simplebar-wrapper" style="margin: -16px;">
+                                <div class="simplebar-height-auto-observer-wrapper">
+                                    <div class="simplebar-height-auto-observer"></div>
+                                </div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper"
+                                            style="height: 100%;">
+                                            <div class="simplebar-content" style="padding: 16px;">
+                                                <div class="nav nav-pills nav-gap-y-1 flex-column">
+                                                    <h4 class="nav-section">Categories</h4>
+                                                    <a href="{{ url_for('category', selected_category='Technology') }}"
+                                                        class="nav-link nav-link-faded has-icon">Technology</a>
+                                                    <a href="{{ url_for('category', selected_category='Science') }}"
+                                                        class="nav-link nav-link-faded has-icon">Science</a>
+                                                    <a href="{{ url_for('category', selected_category='Entertainment') }}"
+                                                        class="nav-link nav-link-faded has-icon">Entertainment</a>
+                                                    <a href="{{ url_for('category', selected_category='Music') }}"
+                                                        class="nav-link nav-link-faded has-icon">Music</a>
+                                                    <a href="{{ url_for('category', selected_category='Politics') }}"
+                                                        class="nav-link nav-link-faded has-icon">Politics</a>
+                                                    <a href="{{ url_for('categories') }}"
+                                                        class="nav-link nav-link-faded has-icon">All...</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 
-                <div class="post-body">
-                    <h3>{{post['title']}}</h3>
-                    <p>{{post['post']}}</p>
-                    <!-- despues definir bien como se va a crear la ruta -->
-                    {% if post['image_link'] %}
-                        <img src="../static/{{post['image_link']}}" class="img-card"> 
-                    {% endif %}
+                <div class="inner-main"  id="inner-main">
+                    <!-- posts header -->
+                    <div class="inner-main-header">
+                        <h4 class="selected_category">{{category}}</h3>
+        
+                        <span class="input-icon input-icon-sm ml-auto w-auto">
+                            <input type="text"
+                                class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4"
+                                placeholder="Search"/>
+                        </span>
+                    </div>
+                     <!-- posts -->
+                    <div class="inner-main-body p-2 p-sm-3 forum-content show">
+                        {% if posts|length == 0 %}
+                            {% for _ in range(5) %}
+                            <div class="card mb-3">
+                                <div class="card-body p-2 p-sm-3">
+                                    <div class="media forum-item">
+                                        <div class="media-body">
+                                            <h5 class="post-title"><a href="#" class="text-body">Este es el titulo del post</a></h5>
+                                            <p class="post-text">
+                                                {{ 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas officiis quibusdam iste nihil, quasi nam fugit ipsum quas aperiam laboriosam, eaque minus fugiat, nobis nisi ipsam. Explicabo quasi recusandae eveniet expedita est velit exercitationem architecto at doloribus. Veritatis voluptatibus molestias eaque, eum aperiam, quam deleniti, quod sunt fugit vitae dignissimos?' | truncate(220) }}
+                                            </p>
+                                            <div class="info-text">
+                                                <p class="text-muted">Published by username</span></p>
+                            
+                                                <p class="text-muted"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                                            </div>
+                            
+                                        </div>
+                                        <div class="text-muted small text-center align-self-center">
+                                            <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
+                                            <span><i class="far fa-comment ml-2"></i> 3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for post in posts %}
+                            <div class="card mb-3">
+                                <div class="card-body p-2 p-sm-3">
+                                    <div class="media forum-item">
+                                        <div class="media-body">
+                                            <h5 class="post-title"><a href="#" class="text-body">{{post['title']}}</a></h5>
+                                            <p class="post-text">
+                                                {{ post['post'] | truncate(250) }}
+                                            </p>
+                                            <div class="info-text">
+                                                <p class="text-muted">Published by {{post['username']}}</span></p>
+
+                                                <p class="text-muted"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                                            </div>
+
+                                        </div>
+                                        <div class="text-muted small text-center align-self-center">
+                                            <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
+                                            <span><i class="far fa-comment ml-2"></i> 3</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-</body>
-</html>
+            <!-- new post -->
+            <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <!-- form new post -->
+                        <form action="#" method="post">
+                            <div class="modal-header d-flex align-items-center text-white">
+                                <h6 class="modal-title mb-0" id="threadModalLabel">New Post in {{category}}</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="threadTitle">Title</label>
+                                    <input type="text" name="post-title" class="form-control" id="threadTitle" placeholder="Enter title"
+                                        autofocus />
+                                </div>
+                                <div class="post-entry">
+                                    <label for="threadTitle">Post</label>
+                                    <textarea name="post-content" id="post-content" cols="30" rows="5" placeholder="Write your post here..."></textarea>
+                                </div>
+                                <textarea class="form-control summernote" style="display: none;"></textarea>
+                                <div class="custom-file form-control-sm mt-3" style="max-width: 300px;">
+                                    <input type="file" name="post-image" id="post-image" class="custom-file-input" accept="image/*">
+                                    <label class="custom-file-label" for="customFile">Attachment</label>
+                                </div>
+                                <div class="post-category">
+                                    <input type="hidden" name="post-category" value="{{category}}">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+      
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
 
 
+<!-- {% for post in posts %}
+<div class="card mb-3">
+    <div class="card-body p-2 p-sm-3">
+        <div class="media forum-item">
+            <div class="media-body">
+                <h5 class="post-title"><a href="#" class="text-body">{{post['title']}}</a></h5>
+                <p class="post-text">
+                    {{ post['post'] | truncate(250) }}
+                </p>
+                <div class="info-text">
+                    <p class="text-muted">Published by {{post['username']}}</span></p>
+
+                    <p class="text-muted"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                </div>
+
+            </div>
+            <div class="text-muted small text-center align-self-center">
+                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
+                <span><i class="far fa-comment ml-2"></i> 3</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %} -->
+
+
+<!-- {% for _ in range(10) %}
+<div class="card mb-3">
+    <div class="card-body p-2 p-sm-3">
+        <div class="media forum-item">
+            <div class="media-body">
+                <h5 class="post-title"><a href="#" class="text-body">Este es el titulo del post</a></h5>
+                <p class="post-text">
+                    {{ 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas officiis quibusdam iste nihil, quasi nam fugit ipsum quas aperiam laboriosam, eaque minus fugiat, nobis nisi ipsam. Explicabo quasi recusandae eveniet expedita est velit exercitationem architecto at doloribus. Veritatis voluptatibus molestias eaque, eum aperiam, quam deleniti, quod sunt fugit vitae dignissimos?' | truncate(220) }}
+                </p>
+                <div class="info-text">
+                    <p class="text-muted">Published by username</span></p>
+
+                    <p class="text-muted"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                </div>
+
+            </div>
+            <div class="text-muted small text-center align-self-center">
+                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
+                <span><i class="far fa-comment ml-2"></i> 3</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %} -->

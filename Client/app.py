@@ -152,7 +152,6 @@ def categories():
 
 @app.route("/c/<selected_category>")
 def category(selected_category):
-    
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)

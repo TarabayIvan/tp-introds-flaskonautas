@@ -61,19 +61,19 @@
       <section class="course">
         <div class="row row-category">
           <div class="course-col">
-            <a href="/categoria-tecnologia.html">
+            <a href="{{ url_for('category', selected_category='Technology') }}">
               <i class="fas fa-laptop-code"></i>
               <h3>Technology</h3>
             </a>
           </div>
           <div class="course-col">
-            <a href="/science">
+            <a href="{{ url_for('category', selected_category='Science') }}">
               <i class="fas fa-flask"></i>
               <h3>Science</h3>
             </a>
           </div>
           <div class="course-col">
-            <a href="/health">
+            <a href="{{ url_for('category', selected_category='Health') }}">
               <i class="fas fa-heartbeat"></i>
               <h3>Health & Wellness</h3>
             </a>
