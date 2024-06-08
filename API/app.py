@@ -28,6 +28,30 @@ def register_user():
         return jsonify({'message': 'El usuario no pudo ser registrado.' + str(err.__cause__)})
     return jsonify({'message': 'El usuario se registro correctamente.'}), 201
 
+@app.route('/delete_user', methods = ['DELETE'])
+def delete_user():
+    conn = engine.connect()
+    user_data = request.get_json() 
+    if not (user_data.get("username") and user_data.get("password")):
+        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
+    query_deletion = f"""DELETE FROM users
+            WHERE username='{user_data["username"]}';"""
+    query_check = f"""SELECT password FROM users
+            WHERE username='{user_data["username"]}';"""
+    try:
+        check = conn.execute(text(query_check))
+        conn.commit()
+        user_hash = check.fetchone()
+        if(check_password_hash(user_hash[0], user_data["password"])):
+            result = conn.execute(text(query_deletion))
+            conn.commit()
+        else:
+            return jsonify({'message': 'La contraseña no coincide con la del usuario'}), 403
+        conn.close()
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)})
+    return jsonify({'message': 'La cuenta del usuario fue borrada correctamente.'}), 200
+
 @app.route('/login_user', methods=['POST'])
 def login_user():
     conn = engine.connect()
