@@ -23,3 +23,20 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = './user';
     });
 });
+
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    let searchValue = e.target.value.toLowerCase();
+    let posts = document.getElementsByClassName('card');
+
+    for (let i = 0; i < posts.length; i++) {
+        let post = posts[i];
+        let postTitle = post.getAttribute('data-title');
+
+        if (postTitle.indexOf(searchValue) > -1) {
+            post.style.display = '';
+        } else {
+            post.style.display = 'none';
+        }
+    }
+});

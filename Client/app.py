@@ -32,12 +32,14 @@ def signup():
                 return render_template('signup.html', error=error_message)
     return render_template('signup.html')  # Renderiza el form de registro
 
+
 @app.route("/")
 def index():
     if 'user' in session:
         username = session['user']['user']['username']
         return render_template("index.html", username = username)
     return render_template("index.html")
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -50,7 +52,7 @@ def login():
             if response.status_code == 200:
                 user_data = response.json()
                 session['user'] = user_data  # Guarda la data de usuario en session
-                return redirect(url_for(''))
+                return redirect(url_for('index'))
             else:
                 error_message = "Login fallido"
                 return render_template('index.html', error=error_message)
@@ -72,6 +74,8 @@ def delete_account():
                 error_message = "No se pudo eliminar la cuenta."
                 return render_template('user.html', error=error_message)
     return render_template('delete-account.html')
+
+
 @app.route('/recovery', methods=['GET', 'POST'])
 def recovery():
     if request.method == "POST":
@@ -96,6 +100,7 @@ def recovery():
                 return render_template('recovery.html', error = error_msj)
     return render_template('recovery.html')
 
+
 @app.route('/modificar-password', methods=['GET', 'POST'])
 def modificar_password():
     if request.method == "POST":
@@ -119,10 +124,13 @@ def modificar_password():
                 error_msj = "Hubo un problema al cambiar la contraseña"
                 return render_template('refactor_password.html', error = error_msj)
     return render_template('refactor_password.html')
+
+
 @app.route("/logout")
 def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
+
 
 @app.route("/user_data", methods=['GET'])
 def get_user_data():
@@ -137,6 +145,7 @@ def get_user_data():
     else:
         return render_template("user.html", user_data={"username": "Usuario no autenticado", "password": "Usuario no autenticado"})
 
+
 @app.route("/latest_posts", methods=['GET'])
 def latest_posts():
     response = requests.get(API_URL + "/get_last_posts")
@@ -146,22 +155,26 @@ def latest_posts():
     else:
         return jsonify({"error": "No se pudieron obtener los posts"}), 400
     
+
 @app.route("/categories", methods=['GET'])
 def categories():
     return render_template("categories.html")
 
+
 @app.route("/c/<selected_category>")
 def category(selected_category):
-    categorias_elegibles = {'Technology', 'Science', 'Healt', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
+    categorias_elegibles = {'Technology', 'Science', 'Health', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
     if selected_category not in categorias_elegibles:
         return page_not_found(404)
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5000", debug=True)

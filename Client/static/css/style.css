@@ -893,9 +893,7 @@ footer h4 {
     display: flex;
     justify-content: space-between;
 }
-
-
-.text-muted a {
+.edit-post a {
     color: #3077c4;
     padding: 0 10px;
 }
@@ -927,7 +925,7 @@ footer h4 {
     color: #fff;
 }
 .inner-main-body p{
-    font-size: 20px;
+    font-size: 18px;
 }
 .inner-main-body .info-text p{
     font-size: 16px;
@@ -963,10 +961,11 @@ footer h4 {
 }
 .modal-header{
     background-color: #253760;
-
+}
+.inner-main-header{
+    display: flex;
+}
+.inner-main-header .input-icon{
+    max-width: 40%;
 }
 
-.inner-main-header input{
-    max-width: 80px;
-
-}
