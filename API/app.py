@@ -210,35 +210,22 @@ def create_post():
 @app.route('/get_responses', methods = ['GET']) 
 
 def get_responses (id_post): 
-
     connection = engine.connect() 
-
     query = f" SELECT id_response, id_user, id_post, post FROM responses WHERE id_post = {id_post};" 
 
     try: 
-
         data = connection.execute(text(query)) 
-
         connection.close() 
-
     except SQLAlchemyError as err: 
-
         return jsonify(str(err.__cause__)), 400 
 
     posts = [] 
-
     for row in data: 
-
         entity = {} 
-
         entity['id_response'] = row.id_response 
-
         entity['id_user '] = row.id_user  
-
         entity['id_post'] = row.id_post 
-
         entity['post'] = row.post        
-
         posts.append(entity) 
 
     return jsonify(posts), 200
@@ -272,6 +259,26 @@ def create_response():
     except SQLAlchemyError as err:
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
+
+@app.route('/update_response', methods = ['PATCH'])
+def update_response():
+    connection = engine.connect()
+    new_response = request.get_json()
+    required_fields = ['id_response', 'post'] # valido que se reciben los campos necesarios
+    for field in required_fields:
+        if field not in new_response:
+            return jsonify({'message': f'Faltan datos en la solicitud ({field})'}), 400
+    query = f"""UPDATE responses
+                SET post = '{new_response['post']}'
+                WHERE id_response = '{new_response['id_response']}';
+            """
+    try:
+        connection.execute(text(query))
+        connection.commit()
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
+    return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
