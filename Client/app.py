@@ -38,6 +38,10 @@ def index():
     if 'user' in session:
         username = session['user']['user']['username']
         return render_template("index.html", username = username)
+    if 'error' in session:
+        error = session['error']
+        print(error)
+        return render_template("index.html", error = error)
     return render_template("index.html")
 
 
@@ -55,7 +59,8 @@ def login():
                 return redirect(url_for('index'))
             else:
                 error_message = "Login fallido"
-                return render_template('index.html', error=error_message)
+                session['error'] = error_message
+                return redirect(url_for('index'))
     return render_template('login.html')
 
 
@@ -170,6 +175,24 @@ def category(selected_category):
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
 
+@app.route('/update_response', methods=['GET', 'POST'])
+def update_response():
+    if request.method == 'POST':
+        id_response = request.form.get('id_response')
+        post = request.form.get('post')
+        response_data = {
+            'id_response': id_response,
+            'post': post
+        }
+        
+        response = requests.patch(API_URL + '/update_response', json=response_data)
+        if response.status_code == 200:
+            message = "La respuesta se ha actualizado correctamente."
+            return render_template('update_response.html', message=message)
+        else:
+            error = "No se pudo actualizar la respuesta."
+            return render_template('update_response.html', error=error)
+    return render_template('update_response.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

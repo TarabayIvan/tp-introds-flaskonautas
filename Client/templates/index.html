@@ -1,26 +1,22 @@
-{%extends "base-con-nav.html" %}
-{% block title %}
+{%extends "base-con-nav.html" %} {% block title %}
 <title>Flaskonautas</title>
-{% endblock %}
-
-{% block header %}
+{% endblock %} {% block header %}
 <header>
   <!-- seccion header -->
-<div class="text-box">
-  {% if username %}
-  <h1>Varied Topics Forum</h1>
-  <p>
-    Bienvenido {{ username }}
-  </p>
-  <a href="{{url_for('logout')}}" class="hero-btn">Log out</a>
-  {% else %}
-  <h1>Varied Topics Forum</h1>
-  <p>
-    Join the discussion and share your opinions on a variety of topics. <br> Find popular threads and engage with the community.
-  </p>
+  <div class="text-box">
+    <h1>Varied Topics Forum</h1>
+    {% if username %}
+    <p>Bienvenido {{ username }}</p>
+    <a href="{{url_for('logout')}}" class="hero-btn">Log out</a>
+    {% else %} {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    <p>
+      Join the discussion and share your opinions on a variety of topics. <br />
+      Find popular threads and engage with the community.
+    </p>
     <a href="{{url_for('login')}}" class="hero-btn">Escribe tu primer Post</a>
-  {% endif %}
-</div>
+    {% endif %}
+  </div>
 </header>
 {% endblock %}
-
