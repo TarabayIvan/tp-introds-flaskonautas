@@ -15,13 +15,13 @@
             <article>
                 <header class="mb-4">
                     <!-- Título de la publicación -->
-                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <h1 class="fw-bolder mb-1">{{ post['title'] }}</h1>
                     <!-- Datos de la publicación -->
-                    <div class="text-muted fst-italic mb-2"> Post # {{ post.id_post }} by {{ post.username }}</div>
+                    <div class="text-muted fst-italic mb-2"> Post # {{ post['id_post'] }} by {{ post['username'] }}</div>
                 </header>
                 <!-- Contenido de la publicación -->
                 <section class="mb-5" style="text-align: justify;">
-                    {{ post.body }}
+                    {{ post['body'] }}
                   {% if post['image_link'] %}
                     <img src="{{ url_for('static', filename='/images/posts/' + post['image_link']) }}" />
                     {% endif %}
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ comment.author.username }}</div>
-                                    {{ comment_content }}
+                                    {{ comment.content }}
                                 </div>
                             </div>
                             {% endfor %}
