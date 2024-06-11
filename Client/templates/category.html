@@ -99,7 +99,7 @@
                                     quibusdam iste nihil, quasi nam fugit ipsum quas aperiam laboriosam, eaque minus
                                     fugiat, nobis nisi ipsam. Explicabo quasi recusandae eveniet expedita est velit
                                     exercitationem architecto at doloribus. Veritatis voluptatibus molestias eaque, eum
-                                    aperiam, quam deleniti, quod sunt fugit vitae dignissimos?' | truncate(220) }}
+                                    aperiam, quam deleniti, quod sunt fugit vitae dignissimos?' | truncate(200) }}
                                 </p>
                                 <div class="info-text">
                                     <p class="info-post">Published by username</p>
@@ -124,7 +124,7 @@
                             <div class="media-body">
                                 <h5 class="post-title"><a href="#" class="text-body">{{post['title']}}</a></h5>
                                 <p class="post-text">
-                                    {{ post['post'] | truncate(250) }}
+                                    {{ post['post'] | truncate(200) }}
                                 </p>
                                 <div class="info-text">
                                     <p class="info-post">Published by {{post['username']}}</p>
@@ -161,12 +161,12 @@
                         <div class="form-group">
                             <label for="threadTitle">Title</label>
                             <input type="text" name="post-title" class="form-control" id="threadTitle"
-                                placeholder="Enter title" autofocus required>
+                                placeholder="Enter title" autofocus maxlength="100" required>
                         </div>
                         <div class="post-entry">
                             <label for="threadTitle">Post</label>
                             <textarea name="post-content" id="post-content" cols="30" rows="5"
-                                placeholder="Write your post here..." required></textarea>
+                                placeholder="Write your post here..." maxlength="255" required></textarea>
                         </div>
                         <textarea class="form-control summernote" style="display: none;"></textarea>
                         <div class="custom-file form-control-sm mt-3" style="max-width: 350px;">

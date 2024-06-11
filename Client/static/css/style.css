@@ -771,7 +771,6 @@ footer h4 {
 
 /* category */
 
-
 .inner-wrapper {
     display: flex;
     position: relative;
@@ -977,6 +976,13 @@ footer h4 {
 #post-image {
     width: 100%;
     height: auto;
+}
+.text-muted {
+    display: flex;
+    flex-direction: column;
+}
+.post-title, .post-text {
+    word-break: break-word;
 }
 .error_message {
     font-size: 15px;
