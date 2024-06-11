@@ -27,7 +27,7 @@
                   <li><a href="{{url_for ('index') }}">HOME</a></li>
                   <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
                   <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
-                  {% if 'username' in session %}
+                  {% if 'user' not in session %}
                     <!-- si no hay usuario logueado debera estar con la clase login-active, en caso contrario debera estar en login-inactive-->
                   <li><a href="{{url_for('login')}}" class="hero-btn login-active">Sign in</a></li>
                   <li><a href="{{url_for('signup')}}" class="hero-btn login-active">Sign up</a></li>
