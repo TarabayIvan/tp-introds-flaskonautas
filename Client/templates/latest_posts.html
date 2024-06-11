@@ -12,35 +12,36 @@
     <ul>
       <li><a href="{{url_for ('index') }}">HOME</a></li>
       <li><a href="{{url_for ('categories') }}">CATEGORIES</a>
-      </li><li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
+      </li>
+      <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
       <a href="{{url_for('login')}}" class="hero-btn">Sign in</a>
       <a href="{{url_for('signup')}}" class="hero-btn">Sign up</a>
-      <li><a href="{{url_for ('get_user_data') }}"></a><img
-              class="user-logo" id="user-logo" src="{{url_for('static', filename='/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
+      <li><a href="{{url_for ('get_user_data') }}"></a><img class="user-logo" id="user-logo"
+          src="{{url_for('static', filename='/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
       </li>
-    </ul></div>
+    </ul>
+  </div>
   <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
 </nav>
 {% endblock %}
 
 {% block header %}
 <header class="sub-header">
-    <div class="container">
-        <div class="grid-container">
-            {% for post in posts %}
-            <div class="grid-item">
-                <h2>{{post['title']}}</h2>
-                {% if post['image_link'] %}
-                <img src="../static/{{post['image_link']}}" class="img-2">
-                {% endif %}
-                <p>Published by {{post['username']}}</p>
-                <p style="text-align: justify;padding-bottom: 15px;">{{post['post']}}
-                </p>
-            </div>
-            {% endfor %}
-        </div>
+  <div class="container">
+    <div class="grid-container">
+      {% for post in posts %}
+      <div class="grid-item">
+        <h2>{{post['title']}}</h2>
+        {% if post['image_link'] %}
+        <img src="../static/{{post['image_link']}}" class="img-2">
+        {% endif %}
+        <p>Published by {{post['username']}}</p>
+        <p style="text-align: justify;padding-bottom: 15px;">{{post['post']}}
+        </p>
+      </div>
+      {% endfor %}
     </div>
-    <div class="container-footer"></div>
+  </div>
+  <div class="container-footer"></div>
 </header>
 {% endblock %}
-
