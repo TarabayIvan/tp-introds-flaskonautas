@@ -11,6 +11,7 @@ app = Flask(__name__)
 engine = create_engine("mysql+mysqlconnector://root:123@localhost/flaskonautas", future=True)
 
 
+"""ENDPOINTS DE AUTENTICACION"""
 @app.route('/register_user', methods = ['POST'])
 def register_user():
     conn = engine.connect()
@@ -28,30 +29,6 @@ def register_user():
         conn.close()
         return jsonify({'message': 'El usuario no pudo ser registrado. ' + str(err.__cause__)}), 400
     return jsonify({'message': 'El usuario se registro correctamente.'}), 201
-
-@app.route('/delete_user', methods = ['DELETE'])
-def delete_user():
-    conn = engine.connect()
-    user_data = request.get_json() 
-    if not (user_data.get("username") and user_data.get("password")):
-        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    query_deletion = f"""DELETE FROM users
-            WHERE username='{user_data["username"]}';"""
-    query_check = f"""SELECT password FROM users
-            WHERE username='{user_data["username"]}';"""
-    try:
-        check = conn.execute(text(query_check))
-        conn.commit()
-        user_hash = check.fetchone()
-        if(check_password_hash(user_hash[0], user_data["password"])):
-            result = conn.execute(text(query_deletion))
-            conn.commit()
-        else:
-            return jsonify({'message': 'La contraseña no coincide con la del usuario'}), 403
-        conn.close()
-    except SQLAlchemyError as err:
-        return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)}), 400
-    return jsonify({'message': 'La cuenta del usuario fue borrada correctamente.'}), 200
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
@@ -79,7 +56,9 @@ def login_user():
             return jsonify({'message': 'Usuario no encontrado'}), 404
     except SQLAlchemyError as err:
         return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
-    
+
+
+"""ENDPOINTS DE USUARIOS"""
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     conn = engine.connect()
@@ -132,51 +111,32 @@ def update_password():
         return jsonify({'message': str(err.__cause__)}), 400
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
-# Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
-@app.route('/get_last_posts', methods=['GET'])
-def get_last_posts():
-    connection = engine.connect()
-    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
+@app.route('/delete_user', methods = ['DELETE'])
+def delete_user():
+    conn = engine.connect()
+    user_data = request.get_json() 
+    if not (user_data.get("username") and user_data.get("password")):
+        return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
+    query_deletion = f"""DELETE FROM users
+            WHERE username='{user_data["username"]}';"""
+    query_check = f"""SELECT password FROM users
+            WHERE username='{user_data["username"]}';"""
     try:
-        data = connection.execute(text(query))
-        connection.close()
+        check = conn.execute(text(query_check))
+        conn.commit()
+        user_hash = check.fetchone()
+        if(check_password_hash(user_hash[0], user_data["password"])):
+            result = conn.execute(text(query_deletion))
+            conn.commit()
+        else:
+            return jsonify({'message': 'La contraseña no coincide con la del usuario'}), 403
+        conn.close()
     except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__)), 400
-    posts = []
-    for row in data:
-        entity = {}
-        entity['username'] = row.username
-        entity['id_post'] = row.id_post
-        entity['category'] = row.category
-        entity['title'] = row.title
-        entity['post'] = row.post
-        entity['image_link'] = row.image_link
-        posts.append(entity)
-    return jsonify(posts), 200
+        return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)}), 400
+    return jsonify({'message': 'La cuenta del usuario fue borrada correctamente.'}), 200
 
 
-@app.route('/get_posts/<selected_category>', methods = ['GET'])
-def get_posts(selected_category):
-    connection = engine.connect()
-    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE category LIKE '{selected_category}' ORDER BY id_post DESC"
-    try:
-        data = connection.execute(text(query))
-        connection.close()
-    except SQLAlchemyError as err:
-        return jsonify(str(err.__cause__)), 400
-    posts = []
-    for row in data:
-        entity = {}
-        entity['username'] = row.username
-        entity['id_post'] = row.id_post # necesario? (ya se ordena en la query)
-        entity['category'] = row.category
-        entity['title'] = row.title
-        entity['post'] = row.post
-        entity['image_link'] = row.image_link
-        posts.append(entity)
-    return jsonify(posts), 200
-
-
+"""ENDPOINTS DE POSTS"""
 @app.route('/create_post', methods = ['POST'])
 def create_post():
     connection = engine.connect()
@@ -207,30 +167,51 @@ def create_post():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
 
-
-@app.route('/get_responses', methods = ['GET']) 
-
-def get_responses (id_post): 
-    connection = engine.connect() 
-    query = f" SELECT id_response, id_user, id_post, post FROM responses WHERE id_post = {id_post};" 
-
-    try: 
-        data = connection.execute(text(query)) 
-        connection.close() 
-    except SQLAlchemyError as err: 
-        return jsonify(str(err.__cause__)), 400 
-
-    posts = [] 
-    for row in data: 
-        entity = {} 
-        entity['id_response'] = row.id_response 
-        entity['id_user '] = row.id_user  
-        entity['id_post'] = row.id_post 
-        entity['post'] = row.post        
-        posts.append(entity) 
-
+@app.route('/get_posts/<selected_category>', methods = ['GET'])
+def get_posts(selected_category):
+    connection = engine.connect()
+    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE category LIKE '{selected_category}' ORDER BY id_post DESC"
+    try:
+        data = connection.execute(text(query))
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__)), 400
+    posts = []
+    for row in data:
+        entity = {}
+        entity['username'] = row.username
+        entity['id_post'] = row.id_post # necesario? (ya se ordena en la query)
+        entity['category'] = row.category
+        entity['title'] = row.title
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        posts.append(entity)
     return jsonify(posts), 200
 
+# Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
+@app.route('/get_last_posts', methods=['GET'])
+def get_last_posts():
+    connection = engine.connect()
+    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
+    try:
+        data = connection.execute(text(query))
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify(str(err.__cause__)), 400
+    posts = []
+    for row in data:
+        entity = {}
+        entity['username'] = row.username
+        entity['id_post'] = row.id_post
+        entity['category'] = row.category
+        entity['title'] = row.title
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        posts.append(entity)
+    return jsonify(posts), 200
+
+
+"""ENDPOINTS DE RESPONSES"""
 @app.route('/create_response', methods = ['POST'])
 def create_response():
     connection = engine.connect()
@@ -261,6 +242,28 @@ def create_response():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
 
+@app.route('/get_responses', methods = ['GET']) 
+def get_responses (id_post): 
+    connection = engine.connect() 
+    query = f" SELECT id_response, id_user, id_post, post FROM responses WHERE id_post = {id_post};" 
+
+    try: 
+        data = connection.execute(text(query)) 
+        connection.close() 
+    except SQLAlchemyError as err: 
+        return jsonify(str(err.__cause__)), 400 
+
+    posts = [] 
+    for row in data: 
+        entity = {} 
+        entity['id_response'] = row.id_response 
+        entity['id_user '] = row.id_user  
+        entity['id_post'] = row.id_post 
+        entity['post'] = row.post        
+        posts.append(entity) 
+
+    return jsonify(posts), 200
+
 @app.route('/update_response', methods = ['PATCH'])
 def update_response():
     connection = engine.connect()
@@ -280,6 +283,7 @@ def update_response():
     except SQLAlchemyError as err:
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
+
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
