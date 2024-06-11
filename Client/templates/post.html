@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block body %}
+
+<head>
+    <link href="static/css/style_post.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Itera sobre cada publicación -->
+            {% for post in posts %}
+            <article>
+                <header class="mb-4">
+                    <!-- Título de la publicación -->
+                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <!-- Datos de la publicación -->
+                    <div class="text-muted fst-italic mb-2"> Post # {{ post.id_post }} by {{ post.username }}</div>
+                </header>
+                <!-- Contenido de la publicación -->
+                <section class="mb-5" style="text-align: justify;">
+                    {{ post.body }}
+                </section>
+                <!-- Sección de comentarios -->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <!-- Formulario de comentarios -->
+                            <form class="mb-4">
+                                <textarea class="form-control mb-2" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+                                <!-- Botón de enviar comentario -->
+                                <button type="button" class="btn btn-primary btn-sm">Publish</button>
+                            </form>
+                            <!-- Comentarios -->
+                            {% for comment in post.comments %}
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <img class="rounded-circle" src="/static/images/usuario.png" alt="anonymous Profile Picture" />
+                                </div>
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{ comment.author.username }}</div>
+                                    {{ comment_content }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+</body>
+
+{% endblock %}
