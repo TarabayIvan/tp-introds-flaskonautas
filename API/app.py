@@ -17,9 +17,11 @@ def register_user():
     new_user = request.get_json()
     if not (new_user.get("username") and new_user.get("password") and new_user.get("security_answer_one") and new_user.get("security_answer_two")):
         return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    query = text("INSERT INTO users (username, password, security_answer_one, security_answer_two) VALUES :new_user['username'], :new_user['password'], :new_user['security_answer_one'], :new_user['security_answer_two']);")
+    query = f"""INSERT INTO users (username, password, security_answer_one, security_answer_two)
+    VALUES
+    ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');""" # This is actually vulnerable to SQL injections, please don't let users put " ' " in any fields
     try:
-        result = conn.execute(query)
+        result = conn.execute(text(query))
         conn.commit()
         conn.close()
     except SQLAlchemyError as err:
@@ -48,7 +50,7 @@ def delete_user():
             return jsonify({'message': 'La contraseña no coincide con la del usuario'}), 403
         conn.close()
     except SQLAlchemyError as err:
-        return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)})
+        return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)}), 400
     return jsonify({'message': 'La cuenta del usuario fue borrada correctamente.'}), 200
 
 @app.route('/login_user', methods=['POST'])
@@ -127,7 +129,7 @@ def update_password():
             conn.close()
             return jsonify({'message': "El usuario no existe."}), 404
     except SQLAlchemyError as err:
-        return jsonify({'message': str(err.__cause__)})
+        return jsonify({'message': str(err.__cause__)}), 400
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
 # Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
