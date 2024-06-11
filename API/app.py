@@ -17,16 +17,14 @@ def register_user():
     new_user = request.get_json()
     if not (new_user.get("username") and new_user.get("password") and new_user.get("security_answer_one") and new_user.get("security_answer_two")):
         return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    query = f"""INSERT INTO users (username, password, security_answer_one, security_answer_two)
-    VALUES
-    ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');""" # This is actually vulnerable to SQL injections, please don't let users put " ' " in any fields
+    query = text("INSERT INTO users (username, password, security_answer_one, security_answer_two) VALUES :new_user['username'], :new_user['password'], :new_user['security_answer_one'], :new_user['security_answer_two']);")
     try:
-        result = conn.execute(text(query))
+        result = conn.execute(query)
         conn.commit()
         conn.close()
     except SQLAlchemyError as err:
         conn.close()
-        return jsonify({'message': 'El usuario no pudo ser registrado.' + str(err.__cause__)})
+        return jsonify({'message': 'El usuario no pudo ser registrado. ' + str(err.__cause__)}), 400
     return jsonify({'message': 'El usuario se registro correctamente.'}), 201
 
 @app.route('/delete_user', methods = ['DELETE'])
