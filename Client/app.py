@@ -50,6 +50,7 @@ def index():
     return render_template("index.html")
 
 
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -250,6 +251,24 @@ def save_image(image):
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
+@app.route('/test')
+def test():
+    # Datos de prueba para pasar a la plantilla
+    posts = [
+        {
+            'id_post': 1,
+            'title': 'Test Post 1',
+            'body_post': 'This is the content of test post 1.',
+            'comments': [
+                {'author': 'User1', 'content': 'Comment 1'},
+                {'author': 'User2', 'content': 'Comment 2'}
+            ]
+        }
+
+    ]
+    # Renderiza la plantilla y pasa los datos de prueba
+    return render_template('post.html', posts=posts)
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5000", debug=True)
