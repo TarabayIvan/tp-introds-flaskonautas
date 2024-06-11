@@ -192,9 +192,15 @@ def get_posts(selected_category):
 @app.route('/get_last_posts', methods=['GET'])
 def get_last_posts():
     connection = engine.connect()
-    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
+    metadata = MetaData()
+    posts = Table('posts', metadata, autoload_with=engine)
+    users = Table('users', metadata, autoload_with=engine)
+    query = select(users.c.username, posts.c.id_post, posts.c.category, posts.c.title, posts.c.post, posts.c.image_link).join_from(
+        users, posts
+    ).order_by(posts.c.id_post.desc()).limit(6)
+    
     try:
-        data = connection.execute(text(query))
+        data = connection.execute(query)
         connection.close()
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__)), 400
