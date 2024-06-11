@@ -16,12 +16,26 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+
     <body>
         <!-- seccion navbar -->
-        {% block navbar %}
-
-        {% endblock %}
+        <nav>
+            <a href="{{url_for ('index') }}"><img src="{{url_for('static', filename='/images/logoo.png')}}" alt="" /></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                  <li><a href="{{url_for ('index') }}">HOME</a></li>
+                  <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
+                  <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
+                    <!-- si no hay usuario logueado debera estar con la clase login-active, en caso contrario debera estar en login-inactive-->
+                  <li><a href="{{url_for('login')}}" class="hero-btn login-active">Sign in</a></li>
+                  <li><a href="{{url_for('signup')}}" class="hero-btn login-active">Sign up</a></li>
+                    <!-- si el usuario esta logueado se mantiene igual con la clase logueado en caso contrario debera estar en no-logueado-->
+                  <li><a href="{{url_for ('get_user_data') }}" class="no-logueado"><span class="material-symbols-outlined icon-user ">account_circle</span></a></li>
+                </ul>
+            </div>
+            <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+        </nav>
         <!-- seccion header -->
         {% block header %}
 
@@ -32,7 +46,7 @@
         {% endblock %}
 
       <!--------- seccion footer --------->
-      <footer> 
+      <footer>
         <p>Made Width <i class="fa-solid fa-heart"></i> by the &copy; Flaskonautas</p>
       </footer>
 
