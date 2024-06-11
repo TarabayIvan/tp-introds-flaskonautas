@@ -602,10 +602,11 @@ button[type="submit"] {
     background-color: #f44336;
     color: #fff;
     border: none;
-    padding: 15px 30px;
     font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
+    height: 55px;
+    width: 120px;
 }
 
 button[type="submit"]:hover {
@@ -920,6 +921,11 @@ footer h4 {
     background-color: #2b4d97;
 }
 
+#submit-btn {
+    height: 100%;
+    width: 90px;
+}
+
 .inner-main-header {
     background-color: #253760;
     color: #fff;
@@ -952,7 +958,7 @@ footer h4 {
 }
 
 .media-body h5 {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .modal-footer .btn {
@@ -968,4 +974,17 @@ footer h4 {
 .inner-main-header .input-icon{
     max-width: 40%;
 }
-
+#post-image {
+    width: 100%;
+    height: auto;
+}
+.error_message {
+    font-size: 15px;
+    position: absolute;
+    color: #a00d08;
+}
+.success_message {
+    font-size: 15px;
+    position: absolute;
+    color: #08a081;
+}

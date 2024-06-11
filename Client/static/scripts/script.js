@@ -40,3 +40,12 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
         }
     }
 });
+
+
+document.getElementById('post-image').addEventListener('change', function () {
+    let size = this.files[0].size;
+    if (size > 2 * 1024 * 1024) { // Limita el peso de la imagen a 2mb
+      alert('El archivo es demasiado grande, el tamaño máximo permitido es de 2MB');
+      this.value = '';
+    };
+  });

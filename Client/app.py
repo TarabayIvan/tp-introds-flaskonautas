@@ -1,14 +1,19 @@
-from flask import Flask, jsonify, request, url_for, redirect, render_template, session
+from flask import Flask, jsonify, request, url_for, redirect, render_template, session, current_app, flash
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+from PIL import Image
 import requests
+import secrets #libreria de python para generar nombre random
 import os
 from dotenv import load_dotenv
 
+ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif'}
+ALLOWED_CATEGORIES = {'Technology', 'Science', 'Health', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024 # Limita el peso de la imagen a 2mb
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -168,12 +173,12 @@ def categories():
 
 @app.route("/c/<selected_category>")
 def category(selected_category):
-    categorias_elegibles = {'Technology', 'Science', 'Health', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
-    if selected_category not in categorias_elegibles:
+    if selected_category not in ALLOWED_CATEGORIES:
         return page_not_found(404)
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
+
 
 @app.route('/update_response', methods=['GET', 'POST'])
 def update_response():
@@ -193,6 +198,53 @@ def update_response():
             error = "No se pudo actualizar la respuesta."
             return render_template('update_response.html', error=error)
     return render_template('update_response.html')
+
+
+@app.route('/send_post', methods=['POST'])
+def send_post():
+    post_title = request.form.get("post-title")
+    post_content = request.form.get("post-content")
+    post_category = request.form.get("post-category")
+    post_image = request.files['post-image']
+    if not 'user' in session:
+        flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+        return redirect(url_for('category', selected_category=post_category))
+    username = session['user']['user']['username']
+    if not (username and post_title and post_content and post_category):
+        flash("El envio del post a fallado, no se recibieron los datos esperados!", "error")
+        return redirect(url_for('category', selected_category=post_category))
+    if not post_image:
+        filename = ""
+    else:
+        post_image = request.files['post-image']
+        filename = save_image(post_image)
+        if filename == None:
+            flash("La imagen que selecciono es invalida!", "error")
+            return redirect(url_for('category', selected_category=post_category))
+    post = {'username': username, 'title': post_title, 'post': post_content, 'category': post_category, 'image_link': filename}
+    response = requests.post(API_URL + "/create_post", json=post)
+    if response.status_code == 201:
+        flash("Post enviado exitosamente!", "success")
+    else:
+        flash("El envio del post a fallado!", "error")
+    return redirect(url_for('category', selected_category=post_category))
+
+    
+def save_image(image):
+    _, f_ext = os.path.splitext(image.filename) #divide el nombre de la imagen en 2, el nombre puro que no nos interesa y la extencion
+    if f_ext not in ALLOWED_EXTENSIONS: # verifica que la extencion esta permitida
+        return None
+    random_hex = secrets.token_hex(8) #crea un nombre random para la imagen
+    image_fn = random_hex + f_ext #une el nombre random con la extension
+    image_path = os.path.join(current_app.root_path, 'static', 'images', 'posts-images', image_fn) #crea la ruta completa de la imagen
+    image.save(image_path)
+    try:
+        Image.open(image_path) #verifica que es una imagen valida
+        return image_fn
+    except IOError:
+        os.remove(image_path)
+        return None
+
 
 @app.errorhandler(404)
 def page_not_found(e):
