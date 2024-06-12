@@ -296,5 +296,33 @@ def update_response():
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 
+
+@app.route('/update_post/<int:post_id>', methods = ['PUT'])
+def update_post(post_id):
+    connection = engine.connect()
+    try:
+        data = request.json
+        title = data.get('title')
+        post_content = data.get('post')
+
+        #verificar si estan los campos requeridos
+        if (title is None) or (post_content is None):
+            return jsonify({'message': 'Se deben proporcionnar el title y el post'}), 400
+        query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {post_id}"
+        connection.execute(text(query))
+        connection.close()
+        return jsonify({'message': 'Esta actualizado correctamente'}), 200
+
+    except KeyError:
+        connection.close()
+        return jsonify({'message': 'Los datos son invalidos'}), 400
+
+    except Exception as e:
+        # si puede estar fallando la conexion con la base de datos,
+        # donde captura cualquier excepcion de tipo 'Exception' que ocurra durante la
+        # ejecucion del codigo y la almacena en la variable 'e'
+        connection.close()
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
