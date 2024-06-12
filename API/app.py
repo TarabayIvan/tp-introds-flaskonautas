@@ -299,7 +299,7 @@ def update_response():
 
 @app.route('/update_post/<int:post_id>', methods = ['PUT'])
 def update_post(post_id):
-    
+
     connection = engine.connect()
     try:
 
