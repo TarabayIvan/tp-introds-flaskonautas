@@ -299,8 +299,10 @@ def update_response():
 
 @app.route('/update_post/<int:post_id>', methods = ['PUT'])
 def update_post(post_id):
+    
     connection = engine.connect()
     try:
+
         data = request.json
         title = data.get('title')
         post_content = data.get('post')
@@ -308,16 +310,20 @@ def update_post(post_id):
         #verificar si estan los campos requeridos
         if (title is None) or (post_content is None):
             return jsonify({'message': 'Se deben proporcionnar el title y el post'}), 400
+
         query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {post_id}"
         connection.execute(text(query))
         connection.close()
+
         return jsonify({'message': 'Esta actualizado correctamente'}), 200
 
     except KeyError:
+
         connection.close()
         return jsonify({'message': 'Los datos son invalidos'}), 400
 
     except Exception as e:
+
         # si puede estar fallando la conexion con la base de datos,
         # donde captura cualquier excepcion de tipo 'Exception' que ocurra durante la
         # ejecucion del codigo y la almacena en la variable 'e'
