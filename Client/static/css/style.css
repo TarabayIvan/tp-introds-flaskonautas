@@ -194,8 +194,11 @@ nav .fa {
     .nav-links ul li a {
         font-size: 0.8rem;
     }
+    .hero-btn {
+        display: block;
+        margin: 20px auto;
+    }
 }
-
 .course {
     width: 100%;
     margin: auto;
