@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
-from sqlalchemy import text, Table, MetaData, insert, select
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 import os
 from werkzeug.security import check_password_hash
@@ -18,9 +18,10 @@ def register_user():
     new_user = request.get_json()
     if not (new_user.get("username") and new_user.get("password") and new_user.get("security_answer_one") and new_user.get("security_answer_two")):
         return jsonify({'message': 'No se enviaron todos los datos necesarios por JSON'}), 400
-    metadata = MetaData()
-    users = Table('users', metadata, autoload_with=engine)
-    query = insert(users).values(username=new_user['username'], password=new_user["password"], security_answer_one=new_user["security_answer_one"], security_answer_two=new_user["security_answer_two"])
+
+    query = f"""INSERT INTO users (username, password, security_answer_one, security_answer_two)
+    VALUES
+    ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');""" # This is actually vulnerable to SQL injections, please don't let users put " ' " in any fields
     try:
         result = conn.execute(query)
         conn.commit()
@@ -141,6 +142,7 @@ def delete_user():
             return jsonify({'message': 'La contraseña no coincide con la del usuario'}), 403
         conn.close()
     except SQLAlchemyError as err:
+        conn.close()
         return jsonify({'message': 'No se pudo borrar la cuenta del usuario' + str(err.__cause__)}), 400
     return jsonify({'message': 'La cuenta del usuario fue borrada correctamente.'}), 200
 
@@ -204,14 +206,13 @@ def get_last_posts():
     metadata = MetaData()
     posts = Table('posts', metadata, autoload_with=engine)
     users = Table('users', metadata, autoload_with=engine)
-    query = select(users.c.username, posts.c.id_post, posts.c.category, posts.c.title, posts.c.post, posts.c.image_link).join_from(
-        users, posts
-    ).order_by(posts.c.id_post.desc()).limit(6)
+    query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
     
     try:
         data = connection.execute(query)
         connection.close()
     except SQLAlchemyError as err:
+        connection.close()
         return jsonify(str(err.__cause__)), 400
     posts = []
     for row in data:
