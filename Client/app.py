@@ -195,7 +195,7 @@ def update_response():
 @app.route("/")
 def index():
     if 'user' in session:
-        username = session['user']['user']['username']
+        username = session['user']['username']
         return render_template("index.html", username = username)
     if 'error' in session:
         error = session['error']
