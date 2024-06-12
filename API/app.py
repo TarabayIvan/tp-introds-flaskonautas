@@ -48,7 +48,6 @@ def login_user():
         user = result.fetchone()
         conn.close()
         if user:
-            print(user)
             user_data = {
                 'id': user[0],
                 'username': user[1],
@@ -56,7 +55,6 @@ def login_user():
                 'security_answer_two': user[4],
                 # Excluir el password por razones de seguridad
             }
-            print(user_data)
             # Verificar la contraseña
             if check_password_hash(user[2], password):
                 return jsonify(user_data), 200
