@@ -47,9 +47,18 @@ def login_user():
         user = result.fetchone()
         conn.close()
         if user:
+            print(user)
+            user_data = {
+                'id': user[0],
+                'username': user[1],
+                'security_answer_one': user[3],
+                'security_answer_two': user[4],
+                # Excluir el password por razones de seguridad
+            }
+            print(user_data)
             # Verificar la contraseña
             if check_password_hash(user[2], password):
-                return jsonify({'message': 'Login exitoso', 'user': {'username': user[1]}}), 200
+                return jsonify(user_data), 200
             else:
                 return jsonify({'message': 'Credenciales incorrectas'}), 401
         else:
