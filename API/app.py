@@ -201,9 +201,6 @@ def get_posts(selected_category):
 @app.route('/get_last_posts', methods=['GET'])
 def get_last_posts():
     connection = engine.connect()
-    metadata = MetaData()
-    posts = Table('posts', metadata, autoload_with=engine)
-    users = Table('users', metadata, autoload_with=engine)
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
     
     try:
