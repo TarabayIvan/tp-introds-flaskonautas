@@ -112,31 +112,6 @@ def recovery():
     return render_template('recovery.html')
 
 
-@app.route('/modificar-password', methods=['GET', 'POST'])
-def modificar_password():
-    if request.method == "POST":
-        username = request.form.get('user')
-        new_password = request.form.get('newpword')
-        security_answer_1 = request.form.get('secquestions1')
-        security_answer_2 = request.form.get('secquestions2')
-        new_password_hashed = generate_password_hash(new_password)
-        user_credentials = {'username': username, 'password': new_password_hashed, 'security_answer_one': security_answer_1 , 'security_answer_two': security_answer_2 }
-        if username and new_password and security_answer_1 and security_answer_2:
-            respone = requests.patch(API_URL + '/update_password', json = user_credentials)
-            if respone.status_code == 200:
-                return redirect(url_for('login')) # Redirige a login si se cambio la contraseña
-            elif respone.status_code == 401:
-                error_msj = "Las respuestas a las preguntas de seguridad son incorrectas."
-                return render_template('refactor_password.html', error = error_msj)
-            elif respone.status_code == 404:
-                error_msj = "El usuario no existe."
-                return render_template('refactor_password.html', error = error_msj)
-            else:
-                error_msj = "Hubo un problema al cambiar la contraseña"
-                return render_template('refactor_password.html', error = error_msj)
-    return render_template('refactor_password.html')
-
-
 @app.route("/logout")
 def logout():
     session.pop('user', None)
