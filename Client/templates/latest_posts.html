@@ -10,17 +10,17 @@
         <div class="grid-container">
             {% for post in posts %}
             <div class="grid-item">
-                <h2>{{post['title']}}</h2>
+                <h2 class="grid-title"><a style="color:black;" href="/{{post['id_post']}}">{{post['title']}}</a></h2>
                 {% if post['image_link'] %}
-                <img src="../static/{{post['image_link']}}" class="img-2">
+                <img src="../static/{{post['image_link']}}" class="img-lp">
                 {% endif %}
-                <p>Published by {{post['username']}}</p>
-                <p style="text-align: justify;padding-bottom: 15px;">{{post['post']}}
+                <p>Published by <span style="color: black;">{{post['username']}}</span</p>
+                <p class="grid-text">{{post['post']}}
                 </p>
             </div>
             {% endfor %}
         </div>
-    <div class="container-footer"></div>
+    <div class="footer-lp"></div>
 </header>
 {% endblock %}
 
