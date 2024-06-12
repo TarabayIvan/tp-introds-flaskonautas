@@ -8,13 +8,18 @@
 {% block header %}
 <header class="sub-header">
         <div class="grid-container">
+            <!-- Se itera en los posts cargados y crea un elemento de la grilla para cada uno -->
             {% for post in posts %}
             <div class="grid-item">
-                <h2 class="grid-title"><a style="color:black;" href="/{{post['id_post']}}">{{post['title']}}</a></h2>
+                <!-- Se muestra el titulo del post y este redirije hacia /category/id_post -->
+                <h2 class="grid-title"><a style="color:black;" href="/{{post['category']}}/{{post['id_post']}}">{{post['title']}}</a></h2>
+                <!-- Verifica si el post tiene una imagen, si la tiene, la añade -->
                 {% if post['image_link'] %}
                 <img src="../static/{{post['image_link']}}" class="img-lp">
                 {% endif %}
+                <!-- Autor del post -->
                 <p>Published by <span style="color: black;">{{post['username']}}</span</p>
+                <!-- Contenido del post -->
                 <p class="grid-text">{{post['post']}}
                 </p>
             </div>
