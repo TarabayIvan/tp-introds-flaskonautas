@@ -9,7 +9,9 @@
 {% block title %}
 <title>{{category}}</title>
 {% endblock %}
-
+{% block styles %}
+    <link href="{{ url_for('static', filename='/css/style_category.css') }}" rel="stylesheet" />
+{% endblock %}
 {% block header %}
 <header class="sub-header">
     <div class="text-box">
