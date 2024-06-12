@@ -1,3 +1,4 @@
+const navLinks = document.getElementById("navLinks");
 window.showMenu = function() {
         navLinks.style.top = '0';
     };
@@ -6,9 +7,9 @@ window.hideMenu = function() {
     navLinks.style.top = '-800px';
 };
 document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.getElementById("navLinks");
+    const togglePassword = document.getElementById('toggle-password');
 
-    document.getElementById('toggle-password').addEventListener('click', function() {
+    togglePassword.addEventListener('click', function() {
         var passwordElement = document.getElementById('password');
         if (passwordElement.classList.contains('hidden')) {
             passwordElement.classList.remove('hidden');
