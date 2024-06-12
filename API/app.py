@@ -23,7 +23,7 @@ def register_user():
     VALUES
     ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');""" # This is actually vulnerable to SQL injections, please don't let users put " ' " in any fields
     try:
-        result = conn.execute(query)
+        result = conn.execute(text(query))
         conn.commit()
         conn.close()
     except SQLAlchemyError as err:
@@ -204,7 +204,7 @@ def get_last_posts():
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
     
     try:
-        data = connection.execute(query)
+        data = connection.execute(text(query))
         connection.close()
     except SQLAlchemyError as err:
         connection.close()
