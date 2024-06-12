@@ -1,3 +1,10 @@
+window.showMenu = function() {
+        navLinks.style.top = '0';
+    };
+
+window.hideMenu = function() {
+    navLinks.style.top = '-800px';
+};
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.getElementById("navLinks");
 
@@ -9,14 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordElement.classList.add('hidden');
         }
     });
-
-    const showMenu = () => {
-        navLinks.style.top = '0';
-    };
-
-    const hideMenu = () => {
-        navLinks.style.top = '-800px';
-    };
 
     document.getElementById('user-logo').addEventListener('click', (event) => {
         event.preventDefault();
