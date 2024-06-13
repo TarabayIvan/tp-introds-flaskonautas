@@ -241,7 +241,28 @@ def send_post():
         flash("El envio del post a fallado!", "error")
     return redirect(url_for('category', selected_category=post_category))
 
-    
+
+@app.route("/delete_request_post/<id_post>", methods=['DELETE'])
+def delete_request_post(id_post):
+    try:
+        # Envia la solicitud DELETE a la API
+        response = requests.delete(API_URL + f"/delete_post/{id_post}")
+
+        # Verificar si la solicitud fue exitosa
+        if (response.status_code >= 200) and (response.status_code < 300):
+            return jsonify({'message': f'Se ha eliminado exitosamente'})
+        else:
+            # si llegara a fallar, devolviendo haci un mensaje de error
+            # tambien se puede modificar por algo mucho mejor
+            return jsonify({'message': f'Error al intentar eliminar. Código de estado:{response.status_code}'})
+    except Exception as e:
+        # esto es algo provicional para los ejemplos
+        # se puede modificar a un codigo mejor
+        # si courre algun error durante el proceso,
+        # devolver un mensaje de error
+        return jsonify(({'error': f'Error al eliminar el post: {e}'}))
+
+
 def save_image(image):
     _, f_ext = os.path.splitext(image.filename) #divide el nombre de la imagen en 2, el nombre puro que no nos interesa y la extencion
     if f_ext not in ALLOWED_EXTENSIONS: # verifica que la extencion esta permitida
