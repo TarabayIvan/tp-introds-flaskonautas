@@ -329,7 +329,7 @@ def update_response():
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 
-@app.route('/post/<int: id_post>/response/<int:id_response>', methods=['DELETE'])
+@app.route('/post/<int:id_post>/response/<int:id_response>', methods=['DELETE'])
 def delete_response(id_post, id_response):
     try:
         response = Response.query.filter_by(id=id_response, id_post=id_post).first()
@@ -341,7 +341,7 @@ def delete_response(id_post, id_response):
             return jsonify({'error': 'No se encontró el comentario'}), 404
     except Exception as e:
         db.session.rollback()
-           return jsonify({'error': 'Ocurrió un error al eliminar el comentario', 'details': str(e)}), 500
+        return jsonify({'error': 'Ocurrió un error al eliminar el comentario', 'details': str(e)}), 500
 
 
 @app.route('/update_post/<int:id_post>', methods = ['PUT'])
@@ -358,8 +358,9 @@ def update_post(id_post):
         if (title is None) or (post_content is None):
             return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
 
-        query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {id_post}"
+        query = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
         connection.execute(text(query))
+        connection.commit()
         connection.close()
 
         return jsonify({'message': 'Esta actualizado correctamente'}), 200
