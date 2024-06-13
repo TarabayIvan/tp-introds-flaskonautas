@@ -74,9 +74,6 @@ def test_user_login_success(client):
     response = client.post('/login_user', data=json.dumps(login_data), content_type='application/json')
     assert response.status_code == 200
 
-
-
-
 def test_user_login_user_not_found(client):
     login_data = {
         "username": "lucass",
@@ -87,13 +84,13 @@ def test_user_login_user_not_found(client):
     assert response.json['message'] == 'Usuario no encontrado'
 
 
-# si la base de datos esta vacia todo ok,si ya tiene gente fijarse en una id valido.
+#Vericar que el id sea valido
 def test_get_user(client):
     response = client.get('/user/222')
     assert response.status_code == 200
     assert 'username' in response.json
 
-# si la base de datos esta vacia todo ok,si ya tiene gente fijarse en una id valido.
+#Vericar que el id sea valido
 def test_get_user_not_found(client):
     response = client.get('/user/1')
     assert response.status_code == 404
@@ -185,7 +182,7 @@ def test_get_last_posts(client):
     assert len(response.json) > 0
     assert len(response.json) <= 6
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_create_response_incomplete_data(client):
     new_response = {
         "username": "guille",
@@ -195,7 +192,7 @@ def test_create_response_incomplete_data(client):
     assert response.status_code == 400
     assert response.json['message'].startswith('Faltan datos en la solicitud')
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_create_response_user_not_found(client):
     new_response = {
         "username": "guille5555",
@@ -206,7 +203,7 @@ def test_create_response_user_not_found(client):
     assert response.status_code == 400
     assert response.json['message'].startswith('El usuario con nombre')
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_create_response_success(client):
     new_response = {
         "username": "guille",
@@ -217,7 +214,7 @@ def test_create_response_success(client):
     assert response.status_code == 201
     assert response.json['message'].startswith('se ha agregado correctamente')
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_create_response_post_not_found(client):
     new_response = {
         "username": "guille",
@@ -227,18 +224,18 @@ def test_create_response_post_not_found(client):
     response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
     assert response.status_code == 400
     assert response.json['message'].startswith('Se ha producido un error')
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_get_responses_success(client):
     response = client.get('/get_complete_post/52')
     assert response.status_code == 200
     assert len(response.json) > 0
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_get_responses_post_incorrect(client):
     response = client.get('/get_complete_post/')
     assert response.status_code == 404
 
-#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+#Vericar que el id sea valido
 def test_get_responses_post_not_found(client):
     response = client.get('/get_complete_post/1')
     assert response.status_code == 404
@@ -261,6 +258,7 @@ def test_delete_user_user_incomplete(client):
     assert response.status_code == 400
     assert response.json['message'].startswith('No se enviaron todos los datos necesarios por JSON')
 
+
 def test_delete_user_password_invalid(client):
     delete_data = {
         "username": "guille",
@@ -270,19 +268,101 @@ def test_delete_user_password_invalid(client):
     assert response.status_code == 403
     assert response.json['message'].startswith('La contraseña no coincide con la del usuario')
 
+#Aca me quede con los test
 
+#Vericar que el id sea valido
 def test_update_post_success(client):
     update_post = {
-        "username": "guille",
-        "category": "ANIMALS",
         "title": "HOLA",
         "post": "test_post",
-        "image_link": "test_image_link",
-        "id_post": 52
     }
-    response = client.patch('/update_post', data=json.dumps(update_post), content_type='application/json')
+    response = client.patch('/update_post/1', data=json.dumps(update_post), content_type='application/json')
     assert response.status_code == 200
     assert response.json['message'].startswith('Esta actualizado correctamente')
+
+#Vericar que el id sea valido.
+def test_update_post_incomplete_data(client):
+    update_post = {
+        "title": "HOLA",
+    }
+    response = client.patch('/update_post/1', data=json.dumps(update_post), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('Faltan datos en la solicitud')
+
+#Vericar que el id sea valido
+def test_update_post_not_found(client):
+    update_post = {
+        "title": "HOLA",
+        "post": "test_post",
+    }
+    response = client.patch('/update_post/100', data=json.dumps(update_post), content_type='application/json')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado el post')
+
+#Vericar que el id sea valido
+def test_update_response_success(client):
+    update_response = {
+        "post": "test_post",
+    }
+    response = client.patch('/update_response/1', data=json.dumps(update_response), content_type='application/json')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('Esta actualizado correctamente')
+
+#Vericar que el id sea valido
+def test_update_response_incomplete_data(client):
+    update_response = {
+        "post": "test_post",
+    }
+    response = client.patch('/update_response/1', data=json.dumps(update_response), content_type='application/json')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('Esta actualizado correctamente')
+
+#Vericar que el id sea valido
+def test_update_response_not_found(client):
+    update_response = {
+        "post": "test_post",
+    }
+    response = client.patch('/update_response/100', data=json.dumps(update_response), content_type='application/json')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado la respuesta')
+
+#Vericar que el id sea valido
+def test_delete_response_success(client):
+    response = client.delete('/delete_response/1')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('se ha eliminado correctamente')
+
+#Vericar que el id sea valido
+def test_delete_response_not_found(client):
+    response = client.delete('/delete_response/100')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado la respuesta')
+
+#Vericar que el id sea valido
+def test_delete_response_incorrect(client):
+    response = client.delete('/delete_response/')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado la respuesta')
+
+
+#Vericar que el id sea valido
+def test_delete_post_success(client):
+    response = client.delete('/delete_post/1')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('se ha eliminado correctamente')
+
+#Vericar que el id sea valido
+def test_delete_post_not_found(client):
+    response = client.delete('/delete_post/100')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado el post')
+
+#Vericar que el id sea valido
+def test_delete_post_incorrect(client):
+    response = client.delete('/delete_post/')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado el post')
+
 
 
 
