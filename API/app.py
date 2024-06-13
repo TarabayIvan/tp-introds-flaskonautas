@@ -345,8 +345,8 @@ def delete_response(id_response):
             return jsonify({'message': 'La respuesta ha sido eliminada correctamente'}), 200
         else:
             return jsonify({'message': 'La respuesta no existe'}), 404
-
-    except SQLAlchemyError as err:
+            
+        except SQLAlchemyError as err:
         return jsonify({'message': 'Error en el servidor: ' + str(err)}), 500
 
 
