@@ -253,10 +253,20 @@ def send_post():
 def delete_request_post(id_post, category):
     try:
         # Envia la solicitud DELETE a la API
-        response = requests.delete(API_URL + f"/delete_post/{id_post}")
-
+        if not 'user' in session:
+            flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+            return redirect(url_for('category', selected_category=category))
+        username = {'username': session['user']['username']}
+        response = requests.delete(API_URL + f"/delete_post/{id_post}", json=username)
+        
+        
         # Verificar si la solicitud fue exitosa
         if (response.status_code >= 200) and (response.status_code < 300):
+            _, image_link = response.json()
+            if image_link['image_link']:
+                image_path = os.path.join(current_app.root_path, 'static', 'images', 'posts-images', image_link['image_link'])
+                if os.path.exists(image_path):
+                    os.remove(image_path)
             flash("Se ha eliminado exitosamente!", "success")
             return redirect(url_for('category', selected_category=category))
         else:
