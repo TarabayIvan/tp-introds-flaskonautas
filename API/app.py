@@ -189,7 +189,7 @@ def get_posts(selected_category):
     for row in data:
         entity = {}
         entity['username'] = row.username
-        entity['id_post'] = row.id_post # necesario? (ya se ordena en la query)
+        entity['id_post'] = row.id_post
         entity['category'] = row.category
         entity['title'] = row.title
         entity['post'] = row.post
@@ -253,11 +253,11 @@ def create_response():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
 
-@app.route('/get_post', methods = ['GET']) 
-def get_post (id_post): 
+@app.route('/get_complete_post/<id_post>', methods = ['GET']) 
+def get_complete_post (id_post): 
     connection = engine.connect() 
     query_username_post = f"SELECT username, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE id_post = {id_post};"
-    query_responses = f"SELECT username, id_response, id_user, id_post, post FROM responses JOIN posts ON posts.id_post = responses.id_post JOIN users ON responses.id_user = users.id_user WHERE id_post = {id_post};" 
+    query_responses = f"SELECT username, id_response, id_post, post FROM responses  JOIN users ON responses.id_user = users.id_user WHERE responses.id_post = {id_post};" 
 
     try: 
         data_user_post = connection.execute(text(query_username_post)) 
@@ -266,24 +266,23 @@ def get_post (id_post):
     except SQLAlchemyError as err: 
         return jsonify(str(err.__cause__)), 400 
 
-    post = ()
+    post = []
     for row in data_user_post: 
         entity = {} 
-        entity['username'] = row.id_response
-        entity['category'] = row.id_user
-        entity['title'] = row.id_post
+        entity['username'] = row.username
+        entity['category'] = row.category
+        entity['title'] = row.title
         entity['post'] = row.post
         entity['image_link'] = row.image_link
         post.append(entity) 
 
-    responses = ()
+    responses = []
     for row in data_responses: 
         entity = {} 
-        entity['username'] = row.id_response
-        entity['category'] = row.id_user
-        entity['title'] = row.id_post
+        entity['username'] = row.username
+        entity['id_response'] = row.id_response
+        entity['id_post'] = row.id_post
         entity['post'] = row.post
-        entity['image_link'] = row.image_link
         responses.append(entity) 
 
     return jsonify(post, responses), 200
