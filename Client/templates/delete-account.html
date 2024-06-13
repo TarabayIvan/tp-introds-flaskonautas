@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}
-<title>Login</title>
+<title>Eliminar Cuenta</title>
 {% endblock %}
-
 
 {% block header %}
 
@@ -15,18 +14,15 @@
     {% endif %}
   {% endwith %}
   <div class="formlogin">
-          <h1>Inicio de sesión</h1>
-          <form action="{{ url_for('login') }}" method="post">
+          <h1>Ingrese sus credenciales para borrar su cuenta</h1>
+          <form action="{{ url_for('delete_account') }}" method="post">
             <div class="username">
               <input type="text" name="username" placeholder="Nombre de usuario" required>
             </div>
             <div class="password">
               <input type="password" name="password" placeholder="Contraseña" required>
             </div>
-            <div class="pwordrecovery">
-              <a href="{{ url_for('recovery') }}">¿Olvidó su contraseña?</a>
-            </div>
-            <input type="submit" value="Iniciar sesión">
+            <input type="submit" value="Eliminar cuenta">
           </form>
         </div>
 </header>

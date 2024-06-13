@@ -4,44 +4,28 @@
 <title>Latest Posts</title>
 {% endblock %}
 
-{% block navbar %}
-<nav>
-  <a href="{{url_for ('index') }}"><img src="{{url_for('static', filename='/images/logoo.png')}}" alt="" /></a>
-  <div class="nav-links" id="navLinks">
-    <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
-    <ul>
-      <li><a href="{{url_for ('index') }}">HOME</a></li>
-      <li><a href="{{url_for ('categories') }}">CATEGORIES</a>
-      </li>
-      <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
-      <a href="{{url_for('login')}}" class="hero-btn">Sign in</a>
-      <a href="{{url_for('signup')}}" class="hero-btn">Sign up</a>
-      <li><a href="{{url_for ('get_user_data') }}"></a><img class="user-logo" id="user-logo"
-          src="{{url_for('static', filename='/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
-      </li>
-    </ul>
-  </div>
-  <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
-</nav>
-{% endblock %}
 
 {% block header %}
 <header class="sub-header">
-  <div class="container">
-    <div class="grid-container">
-      {% for post in posts %}
-      <div class="grid-item">
-        <h2>{{post['title']}}</h2>
-        {% if post['image_link'] %}
-        <img src="../static/{{post['image_link']}}" class="img-2">
-        {% endif %}
-        <p>Published by {{post['username']}}</p>
-        <p style="text-align: justify;padding-bottom: 15px;">{{post['post']}}
-        </p>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="container-footer"></div>
+        <div class="grid-container">
+            <!-- Se itera en los posts cargados y crea un elemento de la grilla para cada uno -->
+            {% for post in posts %}
+            <div class="grid-item">
+                <!-- Se muestra el titulo del post y este redirije hacia /category/id_post -->
+                <h2 class="grid-title"><a style="color:black;" href="/{{post['category']}}/{{post['id_post']}}">{{post['title']}}</a></h2>
+                <!-- Verifica si el post tiene una imagen, si la tiene, la añade -->
+                {% if post['image_link'] %}
+                <img src="../static/{{post['image_link']}}" class="img-lp">
+                {% endif %}
+                <!-- Autor del post -->
+                <p>Published by <span style="color: black;">{{post['username']}}</span></p>
+                <!-- Contenido del post -->
+                <p class="grid-text">{{post['post']}}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    <div class="footer-lp"></div>
 </header>
 {% endblock %}
+

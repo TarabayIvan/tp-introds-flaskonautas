@@ -1,134 +1,32 @@
-{%extends "base.html" %}
+{%extends "base.html" %} 
 {% block title %}
 <title>Flaskonautas</title>
 {% endblock %}
 
-{% block navbar %}
-<nav>
-  <a href="{{url_for ('index') }}"><img src="{{url_for('static', filename='/images/logoo.png')}}" alt="" /></a>
-  <div class="nav-links" id="navLinks">
-    <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
-    <ul>
-      <li><a href="{{url_for ('index') }}">HOME</a></li>
-      <li><a href="{{url_for ('categories') }}">CATEGORIES</a>
-      </li><li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
-      <a href="{{url_for('login')}}" class="hero-btn">Sign in</a>
-      <a href="{{url_for('signup')}}" class="hero-btn">Sign up</a>
-      <li><a href="{{url_for ('get_user_data') }}"></a><img
-              class="user-logo" id="user-logo" src="{{url_for('static', filename='/images/account_circle_24dp_FILL0_wght400_GRAD0_opsz24.svg')}}" alt="">
-      </li>
-    </ul>
-  </div>
-  <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
-</nav>
-{% endblock %}
-
 {% block header %}
-<header>
-  <!-- seccion header -->
-<div class="text-box">
-  {% if username %}
-  <h1>Varied Topics Forum</h1>
-  <p>
-    Bienvenido {{ username }}
-  </p>
-  <a href="{{url_for('logout')}}" class="hero-btn">Log out</a>
-  {% else %}
-  <h1>Varied Topics Forum</h1>
-  <p>
-    Join the discussion and share your opinions on a variety of topics. <br> Find popular threads and engage with the community.
-  </p>
 
-  {% endif %}
-</div>
+<header>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <p class="{{category}}_message">{{ message }}</li>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <!-- seccion header -->
+  <div class="text-box">
+    <h1>Varied Topics Forum</h1>
+    {% if username %}
+    <p>Bienvenido {{ username }}</p>
+    {% else %} {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    <p>
+      Join the discussion and share your opinions on a variety of topics. <br />
+      Find popular threads and engage with the community.
+    </p>
+    <a href="{{url_for('login')}}" class="hero-btn">Escribe tu primer Post</a>
+    {% endif %}
+  </div>
 </header>
 {% endblock %}
-
-{% block body %}
-<!-- seccion categories-->
-      <section class="course">
-        <h1>Topics</h1>
-        <div class="row">
-          <div class="course-col">
-            <a href="/technology">
-              <i class="fas fa-laptop-code"></i>
-              <h3>Technology</h3>
-            </a>
-          </div>
-          <div class="course-col">
-            <a href="/science">
-              <i class="fas fa-flask"></i>
-              <h3>Science</h3>
-            </a>
-          </div>
-          <div class="course-col">
-            <a href="/health">
-              <i class="fas fa-heartbeat"></i>
-              <h3>Health & Wellness</h3>
-            </a>
-          </div>
-          <div class="course-col">
-            <a href="/business">
-              <i class="fas fa-briefcase"></i>
-              <h3>Business</h3>
-            </a>
-          </div>
-          <div class="course-col">
-            <a href="/education">
-              <i class="fas fa-book"></i>
-              <h3>Education</h3>
-            </a>
-          </div>
-          <div class="course-col">
-            <a href="/travel">
-              <i class="fas fa-plane"></i>
-              <h3>Travel</h3>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- seccion de importantes-->
-      <section class="campus">
-        <h1>Important Topics of the Day</h1>
-        <p>Stay updated with the most discussed topics in our forum.</p>
-        <div class="row">
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-1.jpg') }}" alt="">
-            <div class="layer">
-              <h3>Climate Change Discussions</h3>
-            </div>
-          </div>
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-2.jpeg') }}" alt="">
-            <div class="layer">
-              <h3>Latest Tech Innovations</h3>
-            </div>
-          </div>
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-3.jpg') }}" alt="">
-            <div class="layer">
-              <h3>Health and Wellness Tips</h3>
-            </div>
-          </div>
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-1.jpg') }}" alt="">
-            <div class="layer">
-              <h3>Climate Change Discussions</h3>
-            </div>
-          </div>
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-2.jpeg') }}" alt="">
-            <div class="layer">
-              <h3>Latest Tech Innovations</h3>
-            </div>
-          </div>
-          <div class="campus-col">
-            <img src="{{url_for('static', filename= '/images/tema-3.jpg') }}" alt="">
-            <div class="layer">
-              <h3>Health and Wellness Tips</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% endblock %}
