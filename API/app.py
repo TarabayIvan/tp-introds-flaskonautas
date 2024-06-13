@@ -421,7 +421,7 @@ def update_post(id_post):
         user = check_res.fetchone()
         if user[0] != username:
             return jsonify({'message': 'No es el usuario correcto'}), 403
-        connection.execute(text(query_check))
+        connection.execute(text(query_update))
         connection.commit()
         connection.close()
     except SQLAlchemyError as err:
