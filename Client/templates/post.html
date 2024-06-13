@@ -38,8 +38,8 @@
                                     <img class="rounded-circle" src="/static/images/usuario.png" alt="anonymous Profile Picture" />
                                 </div>
                                 <div class="ms-3">
-                                    <div class="fw-bold">{{ comment.author.username }}</div>
-                                    {{ comment.content }}
+                                    <div class="fw-bold">{{ comment['username'] }}</div>
+                                    {{ comment['post'] }}
                                 </div>
                             </div>
                             {% endfor %}
