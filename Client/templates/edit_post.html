@@ -1,0 +1,75 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+        integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
+</head>
+
+{%extends "base.html" %}
+
+{% block title %}
+
+<title>{{category}}</title>
+
+{% endblock %}
+
+
+{% block header %}
+
+<header class="sub-header">
+    <div class="text-box">
+        <h1>{{category}}</h1>
+    </div>
+</header>
+
+{% endblock %}
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <p class="{{category}}_message">{{ message }}</li>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+    <!-- new post -->
+    <div class="visible" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!-- form new post -->
+                <form action="{{ url_for('edit_post', category = category, id_post = id_post) }}" method=post enctype=multipart/form-data>
+                    <div class="modal-header d-flex align-items-center text-white">
+                        <h6 class="modal-title mb-0" id="threadModalLabel"> Edit your post in {{category}}</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="threadTitle">Title</label>
+                            <input type="text" name="post-title" class="form-control" id="threadTitle"
+                                placeholder="Enter title" autofocus maxlength="100" required>
+                        </div>
+                        <div class="post-entry">
+                            <label for="threadTitle">Post</label>
+                            <textarea name="post-content" id="post-content" cols="30" rows="5"
+                                placeholder="Write your post here..." maxlength="255" required></textarea>
+
+                        <div class="post-category">
+                            <input type="hidden" name="post-category" value="{{category}}" required>
+                        </div>
+                        <div class="id-post">
+                            <input type="hidden" name="id-post" value="{{id_post}}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-light" data-dismiss="modal" href="{{ url_for ('categories')}}">Cancel</a>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
