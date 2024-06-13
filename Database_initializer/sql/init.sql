@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS posts (
     title VARCHAR(100) NOT NULL,
 	post VARCHAR(255) NOT NULL,
     image_link VARCHAR(50),
-    FOREIGN KEY (id_user) REFERENCES users(id_user)
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS responses (
@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS responses (
 	id_user INT,
     id_post INT,
     post VARCHAR(255) NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES users(id_user),
-    FOREIGN KEY (id_post) REFERENCES posts(id_post)
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_post) REFERENCES posts(id_post) ON DELETE CASCADE
 );
