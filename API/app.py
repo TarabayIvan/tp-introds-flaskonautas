@@ -176,6 +176,27 @@ def create_post():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
 
+@app.route('/delete_post/<id_post>', methods=['DELETE'])
+def delete_post(id_post):
+    connection = engine.connect()
+    search_post = request.get_json()
+    # verifica si el post existe
+    try:
+        if id_post not in search_post:
+            # cierro conexion y hago return
+            connection.close()
+            return jsonify({'message': 'El post no existe'}), 404
+        else:
+            # elimino el post
+            delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
+            connection.execute(text(delete_query))
+            # cierro conexion y hago return
+            connection.close()
+            return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
+
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
+
 @app.route('/get_posts/<selected_category>', methods = ['GET'])
 def get_posts(selected_category):
     connection = engine.connect()
