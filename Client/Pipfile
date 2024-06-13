@@ -8,7 +8,7 @@ flask = "*"
 requests = "*"
 python-dotenv = "*"
 colorama = "*"
-Pillow = "*"
+pillow = "*"
 
 [dev-packages]
 

@@ -77,7 +77,7 @@ def delete_account():
         password = request.form.get('password')
         user_credentials = {'username': username, 'password': password}
         if username and password:
-            response = requests.post(API_URL + "/delete_user", json=user_credentials)
+            response = requests.delete(API_URL + "/delete_user", json=user_credentials)
             if response.status_code == 200:
                 session.pop('user', None)
                 return redirect(url_for('index'))
@@ -185,7 +185,7 @@ def send_post():
     if not 'user' in session:
         flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
         return redirect(url_for('category', selected_category=post_category))
-    username = session['user']['user']['username']
+    username = session['user']['username']
     if not (username and post_title and post_content and post_category):
         flash("El envio del post a fallado, no se recibieron los datos esperados!", "error")
         return redirect(url_for('category', selected_category=post_category))
