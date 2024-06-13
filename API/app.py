@@ -106,7 +106,6 @@ def update_password():
             user = val_result.fetchone()
             if user[3] == data['security_answer_one'] and user[4] == data['security_answer_two']:
                 result = conn.execute(text(query))
-                print(result)
                 conn.commit()
                 conn.close()
             else:
@@ -346,43 +345,40 @@ def delete_response(id_response):
         else:
             return jsonify({'message': 'La respuesta no existe'}), 404
             
-        except SQLAlchemyError as err:
+    except SQLAlchemyError as err:
         return jsonify({'message': 'Error en el servidor: ' + str(err)}), 500
 
 
-@app.route('/update_post/<int:id_post>', methods = ['PUT'])
+@app.route('/update_post/<id_post>', methods = ['PATCH'])
 def update_post(id_post):
 
     connection = engine.connect()
+
+    data = request.json
+    title = data.get('title')
+    post_content = data.get('post')
+    username = data.get('username')
+
+    #verificar si estan los campos requeridos
+    if not (title and post_content and username):
+        return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
+    query_check = f"""SELECT username FROM users
+                    JOIN posts ON posts.id_user = users.id_user
+                    WHERE id_post = '{id_post}';
+                """
+    query_update = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
     try:
-
-        data = request.json
-        title = data.get('title')
-        post_content = data.get('post')
-
-        #verificar si estan los campos requeridos
-        if (title is None) or (post_content is None):
-            return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
-
-        query = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
-        connection.execute(text(query))
+        check_res = connection.execute(text(query_check))
+        user = check_res.fetchone()
+        if user[0] != username:
+            return jsonify({'message': 'No es el usuario correcto'}), 403
+        connection.execute(text(query_check))
         connection.commit()
         connection.close()
+    except SQLAlchemyError as err:
+        return jsonify({'Error': str(err.__cause__)}), 400
+    return jsonify({'message': 'Esta actualizado correctamente'}), 200
 
-        return jsonify({'message': 'Esta actualizado correctamente'}), 200
-
-    except KeyError:
-
-        connection.close()
-        return jsonify({'message': 'Los datos son invalidos'}), 400
-
-    except Exception as e:
-
-        # si puede estar fallando la conexion con la base de datos,
-        # donde captura cualquier excepcion de tipo 'Exception' que ocurra durante la
-        # ejecucion del codigo y la almacena en la variable 'e'
-        connection.close()
-        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run("127.0.0.1", port="5001", debug=True)
