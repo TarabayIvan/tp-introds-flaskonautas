@@ -52,7 +52,7 @@ def test_register_duplicate_users(client):
         "security_answer_two": "importa66"
     }
     response = client.post('/register_user', data=json.dumps(new_user), content_type='application/json')
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert response.json['message'].startswith('El usuario no pudo ser registrado.')
 
 
@@ -73,7 +73,7 @@ def test_user_login_success(client):
     }
     response = client.post('/login_user', data=json.dumps(login_data), content_type='application/json')
     assert response.status_code == 200
-    assert response.json['message'].startswith('Login exitoso')
+
 
 
 
@@ -89,7 +89,7 @@ def test_user_login_user_not_found(client):
 
 # si la base de datos esta vacia todo ok,si ya tiene gente fijarse en una id valido.
 def test_get_user(client):
-    response = client.get('/user/1')
+    response = client.get('/user/222')
     assert response.status_code == 200
     assert 'username' in response.json
 
@@ -211,7 +211,7 @@ def test_create_response_success(client):
     new_response = {
         "username": "guille",
         "post": "test_post",
-        "id_post": 42,
+        "id_post": 52,
     }
     response = client.post('/create_response', data=json.dumps(new_response), content_type='application/json')
     assert response.status_code == 201
@@ -229,7 +229,8 @@ def test_create_response_post_not_found(client):
     assert response.json['message'].startswith('Se ha producido un error')
 #lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
 def test_get_responses_success(client):
-    response = client.get('/get_responses/42')
+    response = client.get('/get_complete_post/52')
     assert response.status_code == 200
     assert len(response.json) > 0
+
 

@@ -1,5 +1,36 @@
-GUia de uso del test_:
+# Proyecto de API Flask
 
-1_Fijarse en los requerimientos del test.
+## Guía de Uso
 
-2_Ejecutar el test.
+### Instalación de Requerimientos
+
+1. Instala los requerimientos necesarios con el siguiente comando:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Pruebas
+
+2. Puedes probar cada test por separado en tu IDE. Asegúrate de que los IDs utilizados en los tests que los requieran sean válidos.
+
+3. Para ejecutar todos los tests juntos, utiliza el siguiente comando:
+
+    ```bash
+    pytest
+    ```
+
+### Endpoints Disponibles
+
+- `POST /register_user`: Registrar un nuevo usuario.
+- `POST /login_user`: Iniciar sesión de usuario.
+- `GET /get_user`: Obtener información de usuario.
+- `PATCH /update-password`: Actualizar la contraseña del usuario.
+- `POST /create_post`: Crear una nueva publicación.
+- `GET /get_posts`: Obtener todas las publicaciones.
+- `GET /get_last_posts`: Obtener las publicaciones más recientes.
+- `POST /create_response`: Crear una nueva respuesta a una publicación.
+
+---
+
+¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en abrir un issue en el repositorio.
