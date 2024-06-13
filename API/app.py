@@ -256,8 +256,8 @@ def create_response():
 @app.route('/get_complete_post/<id_post>', methods = ['GET']) 
 def get_complete_post (id_post): 
     connection = engine.connect() 
-    query_username_post = f"SELECT username, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE id_post = {id_post};"
-    query_responses = f"SELECT username, id_response, id_post, post FROM responses  JOIN users ON responses.id_user = users.id_user WHERE responses.id_post = {id_post};" 
+    query_username_post = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE id_post = {id_post};"
+    query_responses = f"SELECT username, id_response, post FROM responses  JOIN users ON responses.id_user = users.id_user WHERE responses.id_post = {id_post};" 
 
     try: 
         data_user_post = connection.execute(text(query_username_post)) 
@@ -270,6 +270,7 @@ def get_complete_post (id_post):
     for row in data_user_post: 
         entity = {} 
         entity['username'] = row.username
+        entity['id_post'] = row.id_post
         entity['category'] = row.category
         entity['title'] = row.title
         entity['post'] = row.post
@@ -281,7 +282,6 @@ def get_complete_post (id_post):
         entity = {} 
         entity['username'] = row.username
         entity['id_response'] = row.id_response
-        entity['id_post'] = row.id_post
         entity['post'] = row.post
         responses.append(entity) 
 
