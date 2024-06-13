@@ -309,8 +309,8 @@ def update_response():
 
 
 
-@app.route('/update_post/<int:post_id>', methods = ['PUT'])
-def update_post(post_id):
+@app.route('/update_post/<int:id_post>', methods = ['PUT'])
+def update_post(id_post):
 
     connection = engine.connect()
     try:
@@ -323,7 +323,7 @@ def update_post(post_id):
         if (title is None) or (post_content is None):
             return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
 
-        query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {post_id}"
+        query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {id_post}"
         connection.execute(text(query))
         connection.close()
 
