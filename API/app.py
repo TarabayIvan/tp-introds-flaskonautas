@@ -175,26 +175,47 @@ def create_post():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
 
-@app.route('/delete_post/<id_post>', methods=['DELETE'])
-def delete_post(id_post):
-    connection = engine.connect()
-    search_post = request.get_json()
-    # verifica si el post existe
-    try:
-        if id_post not in search_post:
-            # cierro conexion y hago return
-            connection.close()
-            return jsonify({'message': 'El post no existe'}), 404
-        else:
-            # elimino el post
-            delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
-            connection.execute(text(delete_query))
-            # cierro conexion y hago return
-            connection.close()
-            return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
 
+@app.route('/delete_post/<int:id_post>', methods=['DELETE'])
+def delete_post(id_post):
+    conn = engine.connect()
+    data = request.json
+    
+    try:
+        # primero verifico si el post existe
+        query_check = f"""
+            SELECT users.username
+            FROM users
+            JOIN posts ON users.id_user = posts.id_user
+            WHERE posts.id_post = {id_post};
+        """
+        post_data = conn.execute(text(query_check)).fetchone()
+        
+        # si el post no existe, muestra mensaje al usuario
+        if not post_data:
+            conn.close()
+            return jsonify({'message': 'El post no existe'}), 404
+        
+        post_username = post_data[0]  
+        
+        # se obtiene el usuario que hizo el request
+        request_username = data.get('username')
+        
+        if post_username != request_username:
+            conn.close()
+            return jsonify({'message': 'No tienes permiso para borrar este post'}), 403
+        
+        # Borrar el post
+        delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
+        conn.execute(text(delete_query))
+        conn.commit()
+        conn.close()
+        
+        return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
     except SQLAlchemyError as err:
-        return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
+        conn.close()
+        return jsonify({'message': 'No se pudo borrar el post: ' + str(err)}), 500
+
 
 @app.route('/get_posts/<selected_category>', methods = ['GET'])
 def get_posts(selected_category):
