@@ -329,19 +329,25 @@ def update_response():
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 
-@app.route('/post/<int:id_post>/response/<int:id_response>', methods=['DELETE'])
-def delete_response(id_post, id_response):
+@app.route('/delete_response/<int:id_response>', methods=['DELETE'])
+def delete_response(id_response):
+    connection = engine.connect()
     try:
-        response = Response.query.filter_by(id=id_response, id_post=id_post).first()
-        if response:
-            db.session.delete(response)
-            db.session.commit()
-            return jsonify({'message': 'El comentario se ha eliminado correctamente'}), 200
+        search_response = request.get_json()  
+
+        # Verifica si la respuesta existe 
+        if search_response and id_response in search_response:
+            # Elimina la respuesta
+            delete_query = f"DELETE FROM response WHERE id_response = {id_response};"
+            connection.execute(text(delete_query), id_response=id_response)
+            # Cierro la conexión y retorno
+            connection.close()
+            return jsonify({'message': 'La respuesta ha sido eliminada correctamente'}), 200
         else:
-            return jsonify({'error': 'No se encontró el comentario'}), 404
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': 'Ocurrió un error al eliminar el comentario', 'details': str(e)}), 500
+            return jsonify({'message': 'La respuesta no existe'}), 404
+
+    except SQLAlchemyError as err:
+        return jsonify({'message': 'Error en el servidor: ' + str(err)}), 500
 
 
 @app.route('/update_post/<int:id_post>', methods = ['PUT'])
