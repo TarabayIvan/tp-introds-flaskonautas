@@ -303,6 +303,9 @@ def edit_post(category, id_post):
     if request.method == 'POST':
         title = request.form.get('post-title')
         post_content = request.form.get('post-content')
+        if not 'user' in session:
+            flash("Necesita iniciar sesion para editar el post!", "error")
+            return redirect(url_for('category', selected_category=category))
         data = {"title": title, "post": post_content, "username": session['user']['username']}
         response = requests.patch(API_URL + '/update_post/' + str(id_post), json=data)
         if response.status_code == 200:
