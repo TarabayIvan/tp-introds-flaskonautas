@@ -227,6 +227,22 @@ def save_image(image):
         os.remove(image_path)
         return None
 
+@app.route('/edit_post', methods = ['GET', 'POST'])
+def edit_post():
+    if request.method == 'POST':
+        title = request.form.get('post-title')
+        post_content = request.form.get('post-content')
+        post_id = request.form.get('post-id')
+        post_category = request.form.get('post-category')
+        post = {"title": title, "post": post_content}
+        
+        response = requests.put(API_URL + '/update_post/' + str(post_id), json=post)
+        if response.status_code == 200:
+            flash("El post se ha editado correctamente.", "success")
+        else:
+            flash("No se pudo editar el post.", "error")
+    return redirect(url_for('category', selected_category=post_category))
+
 
 @app.errorhandler(404)
 def page_not_found(e):
