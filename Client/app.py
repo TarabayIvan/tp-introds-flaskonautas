@@ -31,10 +31,11 @@ def signup():
         if (username and password and security_answer_one and security_answer_two):
             response = requests.post(API_URL + "/register_user", json=user)
             if response.status_code == 201:
+                flash("Registro exitoso!", "success")
                 return redirect(url_for('login'))  # Redirige a login luego del registro exitoso.
             else:
-                error_message = "Registro fallido"
-                return render_template('signup.html', error=error_message)
+                flash("Registro fallido!", "error")
+                return render_template('signup.html')
     return render_template('signup.html')  # Renderiza el form de registro
 
 
@@ -45,8 +46,8 @@ def index():
         return render_template("index.html", username = username)
     if 'error' in session:
         error = session['error']
-        print(error)
-        return render_template("index.html", error = error)
+        flash(f"{error}", "error")
+        return render_template("index.html")
     return render_template("index.html")
 
 
@@ -63,7 +64,8 @@ def login():
                 session['user'] = user_data  # Guarda la data de usuario en session
                 return redirect(url_for('index'))
             else:
-                error_message = "Login fallido"
+                error_message = "Login fallido!"
+                flash(f"{error_message}", "error")
                 session['error'] = error_message
                 return redirect(url_for('index'))
     return render_template('login.html')
@@ -81,8 +83,8 @@ def delete_account():
                 session.pop('user', None)
                 return redirect(url_for('index'))
             else:
-                error_message = "No se pudo eliminar la cuenta."
-                return render_template('user.html', error=error_message)
+                flash("No se pudo eliminar la cuenta!", "error")
+                return redirect(url_for('index'))
     return render_template('delete-account.html')
 
 
@@ -101,13 +103,16 @@ def recovery():
                 return redirect(url_for('login')) # Redirige a login si se cambio la contraseña
             elif respone.status_code == 401:
                 error_msj = "Las respuestas a las preguntas de seguridad son incorrectas."
-                return render_template('recovery.html', error = error_msj)
+                flash(f"{error_msj}", "error")
+                return render_template('recovery.html')
             elif respone.status_code == 404:
                 error_msj = "El usuario no existe."
-                return render_template('recovery.html', error = error_msj)
+                flash(f"{error_msj}", "error")
+                return render_template('recovery.html')
             else:
                 error_msj = "Hubo un problema al cambiar la contraseña"
-                return render_template('recovery.html', error = error_msj)
+                flash(f"{error_msj}", "error")
+                return render_template('recovery.html')
     return render_template('recovery.html')
 
 
@@ -193,10 +198,12 @@ def update_response():
         response = requests.patch(API_URL + '/update_response', json=response_data)
         if response.status_code == 200:
             message = "La respuesta se ha actualizado correctamente."
-            return render_template('update_response.html', message=message)
+            flash(f"{message}", "success")
+            return render_template('update_response.html')
         else:
             error = "No se pudo actualizar la respuesta."
-            return render_template('update_response.html', error=error)
+            flash(f"{error}", "error")
+            return render_template('update_response.html')
     return render_template('update_response.html')
 
 @app.route('/remove_response', methods=['GET', 'POST'])
@@ -250,17 +257,17 @@ def delete_request_post(id_post):
 
         # Verificar si la solicitud fue exitosa
         if (response.status_code >= 200) and (response.status_code < 300):
-            return jsonify({'message': f'Se ha eliminado exitosamente'})
+            flash("Se ha eliminado exitosamente!", "success")
         else:
             # si llegara a fallar, devolviendo haci un mensaje de error
             # tambien se puede modificar por algo mucho mejor
-            return jsonify({'message': f'Error al intentar eliminar. Código de estado:{response.status_code}'})
+            flash(f"Error al intentar eliminar. Código de estado:{response.status_code}", "success")
     except Exception as e:
         # esto es algo provicional para los ejemplos
         # se puede modificar a un codigo mejor
         # si courre algun error durante el proceso,
         # devolver un mensaje de error
-        return jsonify(({'error': f'Error al eliminar el post: {e}'}))
+        flash(f"Error al eliminar el post: {e}", "success")
 
 
 def save_image(image):
