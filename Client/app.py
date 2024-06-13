@@ -292,9 +292,9 @@ def edit_post():
         post_content = request.form.get('post-content')
         post_id = request.form.get('post-id')
         post_category = request.form.get('post-category')
-        post = {"title": title, "post": post_content}
+        data = {"title": title, "post": post_content, "username": session['user']['username']}
         
-        response = requests.put(API_URL + '/update_post/' + str(post_id), json=post)
+        response = requests.patch(API_URL + '/update_post/' + str(post_id), json=data)
         if response.status_code == 200:
             flash("El post se ha editado correctamente.", "success")
         else:
