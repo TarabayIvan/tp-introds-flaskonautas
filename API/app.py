@@ -196,7 +196,8 @@ def delete_post(id_post):
             conn.close()
             return jsonify({'message': 'El post no existe'}), 404
         
-        post_username, image_link = post_data[0]  
+        post_username = post_data[0]  
+        image_link = post_data[1]
         
         # se obtiene el usuario que hizo el request
         request_username = data.get('username')
