@@ -40,4 +40,7 @@
 - `DELETE /delete_post`: Eliminar una publicación.
 - `DELETE /delete_response`: Eliminar una respuesta.
 
-¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en abrir un issue en el repositorio.
+¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en contactarnos.
+```
+The Flaskonauts
+```
