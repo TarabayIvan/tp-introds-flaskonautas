@@ -331,6 +331,7 @@ def update_response():
 @app.route('/delete_response/<int:id_response>', methods=['DELETE'])
 def delete_response(id_response):
     conn = engine.connect()
+    data = request.json
     
     try:
         # Verifica si la respuesta existe y obtiene información 
@@ -351,7 +352,7 @@ def delete_response(id_response):
         response_username = response_data[0]  
         
         # Obtiene el usuario que hizo el request
-        request_username = request.headers.get('username') 
+        request_username = data.get('username') 
         
         if response_username != request_username:
             conn.close()
