@@ -184,7 +184,7 @@ def delete_post(id_post):
     try:
         # primero verifico si el post existe
         query_check = f"""
-            SELECT users.username
+            SELECT users.username, posts.image_link
             FROM users
             JOIN posts ON users.id_user = posts.id_user
             WHERE posts.id_post = {id_post};
@@ -196,7 +196,7 @@ def delete_post(id_post):
             conn.close()
             return jsonify({'message': 'El post no existe'}), 404
         
-        post_username = post_data[0]  
+        post_username, image_link = post_data[0]  
         
         # se obtiene el usuario que hizo el request
         request_username = data.get('username')
@@ -209,6 +209,12 @@ def delete_post(id_post):
         delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
         conn.execute(text(delete_query))
         conn.commit()
+
+          # Construye un JSON de respuesta con el nombre de la imagen si esta existe
+        response_json = {'message': 'El post ha sido eliminado correctamente'}
+        if image_link:
+            response_json['image_link'] = image_link
+        
         conn.close()
         
         return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
