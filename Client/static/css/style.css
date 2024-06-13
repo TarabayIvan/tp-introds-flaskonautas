@@ -747,6 +747,7 @@ footer h4 {
   width: 400px; 
   height: 70px;
   margin: auto;
+  color: #000000;
   text-align: center;
   word-wrap: break-word;
   overflow: hidden;
@@ -757,7 +758,7 @@ footer h4 {
 
 .grid-item {
   width: 500px; 
-  height: 750px;
+  height: 620px;
   border-radius: 10px;
   background-color: #ccc;
   padding: 20px;
@@ -767,16 +768,17 @@ footer h4 {
 
 .grid-text {
   width: 450px; 
-  height: 283px;
+  height: 150px;
   border-radius: 10px;
   text-align: start;
   border: 2px solid rgb(119, 119, 119);
   margin: auto;
   color: #000000;
   display: -webkit-box;
-  -webkit-line-clamp: 12;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  word-wrap: break-word;
 }
 
 .img-lp {
