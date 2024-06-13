@@ -211,7 +211,9 @@ def remove_response():
     id_response = request.args.get('response_id')
     id_post = request.args.get('post_id')
     post_category = request.args.get('post_category')
-    response = requests.delete(API_URL + '/post/' + id_post + '/response/' + id_response)
+    username = session['user']['username']
+    data = {"username": username, "id_response": id_response}
+    response = requests.delete(API_URL + '/delete_response/' + id_response, json=data)
     if response.status_code == 200:
         flash("La respuesta se ha borrado correctamente.", "success")
     else:
