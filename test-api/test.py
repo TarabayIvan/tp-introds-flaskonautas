@@ -244,6 +244,45 @@ def test_get_responses_post_not_found(client):
     assert response.status_code == 404
     assert response.json['message'].startswith('No se ha encontrado el post')
 
-def
+def test_delete_user_success(client):
+    delete_data = {
+        "username": "guille66",
+        "password": "testpassword66",
+    }
+    response = client.delete('/delete_user', data=json.dumps(delete_data), content_type='application/json')
+    assert response.status_code == 200
+
+
+def test_delete_user_user_incomplete(client):
+    delete_data = {
+        "username": "guille",
+    }
+    response = client.delete('/delete_user', data=json.dumps(delete_data), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('No se enviaron todos los datos necesarios por JSON')
+
+def test_delete_user_password_invalid(client):
+    delete_data = {
+        "username": "guille",
+        "password": "aguanteBoquita1",
+    }
+    response = client.delete('/delete_user', data=json.dumps(delete_data), content_type='application/json')
+    assert response.status_code == 403
+    assert response.json['message'].startswith('La contraseña no coincide con la del usuario')
+
+
+def test_update_post_success(client):
+    update_post = {
+        "username": "guille",
+        "category": "ANIMALS",
+        "title": "HOLA",
+        "post": "test_post",
+        "image_link": "test_image_link",
+        "id_post": 52
+    }
+    response = client.patch('/update_post', data=json.dumps(update_post), content_type='application/json')
+    assert response.status_code == 200
+    assert response.json['message'].startswith('Esta actualizado correctamente')
+
 
 

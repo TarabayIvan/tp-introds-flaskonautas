@@ -31,7 +31,13 @@
 - `GET /get_last_posts`: Obtener las publicaciones más recientes.
 - `POST /create_response`: Crear una nueva respuesta a una publicación.
 - `GET /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es invalido)
-
+- `DELETE /delete_user`: Eliminar un usuario.
 ---
+
+### Enpoints que no funcionan
+- `PUT /update_post`: Actualizar una publicación.
+- `PATCH /update_response`: Actualizar una respuesta.
+- `DELETE /delete_post`: Eliminar una publicación.
+- `DELETE /delete_response`: Eliminar una respuesta.
 
 ¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en abrir un issue en el repositorio.
