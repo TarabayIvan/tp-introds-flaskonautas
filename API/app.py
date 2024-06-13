@@ -330,23 +330,43 @@ def update_response():
 
 @app.route('/delete_response/<int:id_response>', methods=['DELETE'])
 def delete_response(id_response):
-    connection = engine.connect()
+    conn = engine.connect()
+    
     try:
-        search_response = request.get_json()  
-
-        # Verifica si la respuesta existe 
-        if search_response and id_response in search_response:
-            # Elimina la respuesta
-            delete_query = f"DELETE FROM response WHERE id_response = {id_response};"
-            connection.execute(text(delete_query), id_response=id_response)
-            # Cierro la conexión y retorno
-            connection.close()
-            return jsonify({'message': 'La respuesta ha sido eliminada correctamente'}), 200
-        else:
+        # Verifica si la respuesta existe y obtiene información 
+        query_check = f"""
+            SELECT users.username
+            FROM users
+            JOIN responses ON users.id_user = responses.id_user
+            JOIN posts ON responses.id_post = posts.id_post
+            WHERE responses.id_response = {id_response};
+        """
+        response_data = conn.execute(text(query_check)).fetchone()
+        
+        # Si la respuesta no existe, muestra ese mensaje al usuario
+        if not response_data:
+            conn.close()
             return jsonify({'message': 'La respuesta no existe'}), 404
-            
+        
+        response_username = response_data[0]  
+        
+        # Obtiene el usuario que hizo el request
+        request_username = request.headers.get('username') 
+        
+        if response_username != request_username:
+            conn.close()
+            return jsonify({'message': 'No tienes permiso para borrar esta respuesta'}), 403
+        
+        # Borra la respuesta
+        delete_query = f"DELETE FROM responses WHERE id_response = {id_response};"
+        conn.execute(text(delete_query))
+        conn.commit()
+        conn.close()
+        
+        return jsonify({'message': 'La respuesta ha sido eliminada correctamente'}), 200
     except SQLAlchemyError as err:
-        return jsonify({'message': 'Error en el servidor: ' + str(err)}), 500
+        conn.close()
+        return jsonify({'message': 'No se pudo borrar la respuesta: ' + str(err)}), 500
 
 
 @app.route('/update_post/<id_post>', methods = ['PATCH'])
