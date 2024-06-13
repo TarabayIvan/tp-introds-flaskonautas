@@ -253,27 +253,40 @@ def create_response():
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
 
-@app.route('/get_responses', methods = ['GET']) 
-def get_responses (id_post): 
+@app.route('/get_post', methods = ['GET']) 
+def get_post (id_post): 
     connection = engine.connect() 
-    query = f" SELECT id_response, id_user, id_post, post FROM responses WHERE id_post = {id_post};" 
+    query_username_post = f"SELECT username, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE id_post = {id_post};"
+    query_responses = f"SELECT username, id_response, id_user, id_post, post FROM responses JOIN posts ON posts.id_post = responses.id_post JOIN users ON responses.id_user = users.id_user WHERE id_post = {id_post};" 
 
     try: 
-        data = connection.execute(text(query)) 
+        data_user_post = connection.execute(text(query_username_post)) 
+        data_responses = connection.execute(text(query_responses)) 
         connection.close() 
     except SQLAlchemyError as err: 
         return jsonify(str(err.__cause__)), 400 
 
-    posts = [] 
-    for row in data: 
+    post = ()
+    for row in data_user_post: 
         entity = {} 
-        entity['id_response'] = row.id_response 
-        entity['id_user '] = row.id_user  
-        entity['id_post'] = row.id_post 
-        entity['post'] = row.post        
-        posts.append(entity) 
+        entity['username'] = row.id_response
+        entity['category'] = row.id_user
+        entity['title'] = row.id_post
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        post.append(entity) 
 
-    return jsonify(posts), 200
+    responses = ()
+    for row in data_responses: 
+        entity = {} 
+        entity['username'] = row.id_response
+        entity['category'] = row.id_user
+        entity['title'] = row.id_post
+        entity['post'] = row.post
+        entity['image_link'] = row.image_link
+        responses.append(entity) 
+
+    return jsonify(post, responses), 200
 
 @app.route('/update_response', methods = ['PATCH'])
 def update_response():
@@ -309,7 +322,7 @@ def update_post(post_id):
 
         #verificar si estan los campos requeridos
         if (title is None) or (post_content is None):
-            return jsonify({'message': 'Se deben proporcionnar el title y el post'}), 400
+            return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
 
         query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {post_id}"
         connection.execute(text(query))
