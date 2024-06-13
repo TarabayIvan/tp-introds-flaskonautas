@@ -233,4 +233,17 @@ def test_get_responses_success(client):
     assert response.status_code == 200
     assert len(response.json) > 0
 
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_get_responses_post_incorrect(client):
+    response = client.get('/get_complete_post/')
+    assert response.status_code == 404
+
+#lo mismo que en otros test, debe verificarse que el id del post a probar sea valido
+def test_get_responses_post_not_found(client):
+    response = client.get('/get_complete_post/1')
+    assert response.status_code == 404
+    assert response.json['message'].startswith('No se ha encontrado el post')
+
+def
+
 

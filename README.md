@@ -30,6 +30,7 @@
 - `GET /get_posts`: Obtener todas las publicaciones.
 - `GET /get_last_posts`: Obtener las publicaciones más recientes.
 - `POST /create_response`: Crear una nueva respuesta a una publicación.
+- `GET /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es invalido)
 
 ---
 
