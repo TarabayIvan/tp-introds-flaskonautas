@@ -288,21 +288,19 @@ def save_image(image):
         os.remove(image_path)
         return None
 
-@app.route('/edit_post', methods = ['GET', 'POST'])
-def edit_post():
+@app.route('/edit_post/<category>/<id_post>', methods = ['GET', 'POST'])
+def edit_post(category, id_post):
     if request.method == 'POST':
         title = request.form.get('post-title')
         post_content = request.form.get('post-content')
-        post_id = request.form.get('post-id')
-        post_category = request.form.get('post-category')
         data = {"title": title, "post": post_content, "username": session['user']['username']}
-        
-        response = requests.patch(API_URL + '/update_post/' + str(post_id), json=data)
+        response = requests.patch(API_URL + '/update_post/' + str(id_post), json=data)
         if response.status_code == 200:
             flash("El post se ha editado correctamente.", "success")
         else:
             flash("No se pudo editar el post.", "error")
-    return redirect(url_for('category', selected_category=post_category))
+
+    return render_template("edit_post.html", category = category, id_post = id_post)
 
 
 @app.errorhandler(404)
