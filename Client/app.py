@@ -161,6 +161,24 @@ def responses(selected_category, id_post):
     post, responses = response.json()
     return render_template("post.html", post=post, responses=responses)
 
+@app.route("/send_response", methods=['GET', 'POST'])
+def send_response():
+    if request.method == 'POST':
+        response_content = request.form.get('response-content')
+        post_id = request.form.get('post-id')
+        post_category = request.form.get('post-category')
+        if not 'user' in session:
+            flash("Necesita iniciar session para responder a un post!", "error")
+            return redirect(url_for('responses', selected_category=post_category, id_post=post_id))
+        username = session['user']['username']
+        response = {"username": username, "post": response_content, "id_post": post_id}
+        post_response = requests.post(API_URL + "/create_response", json=response)
+        if post_response.status_code == 201:
+            flash("Respuesta enviada exitosamente!", "success")
+        else:
+            flash("El envio la respuesta ha fallado!", "error")
+    return redirect(url_for('responses', selected_category=post_category, id_post=post_id))
+    
 
 @app.route('/update_response', methods=['GET', 'POST'])
 def update_response():
@@ -180,6 +198,18 @@ def update_response():
             error = "No se pudo actualizar la respuesta."
             return render_template('update_response.html', error=error)
     return render_template('update_response.html')
+
+@app.route('/remove_response', methods=['GET', 'POST'])
+def remove_response():
+    id_response = request.args.get('response_id')
+    id_post = request.args.get('post_id')
+    post_category = request.args.get('post_category')
+    response = requests.delete(API_URL + '/post/' + id_post + '/response/' + id_response)
+    if response.status_code == 200:
+        flash("La respuesta se ha borrado correctamente.", "success")
+    else:
+        flash("No se pudo borrar la respuesta.", "error")
+    return redirect(url_for('responses', selected_category=post_category, id_post=id_post))
 
 
 @app.route('/send_post', methods=['POST'])
