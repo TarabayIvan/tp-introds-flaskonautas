@@ -212,13 +212,11 @@ def delete_post(id_post):
         conn.commit()
 
           # Construye un JSON de respuesta con el nombre de la imagen si esta existe
-        response_json = {'message': 'El post ha sido eliminado correctamente'}
-        if image_link:
-            response_json['image_link'] = image_link
-        
+        message = {'message': 'El post ha sido eliminado correctamente'}
+        entity = {}
+        entity['image_link'] = image_link
         conn.close()
-        
-        return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
+        return jsonify(message, entity), 200
     except SQLAlchemyError as err:
         conn.close()
         return jsonify({'message': 'No se pudo borrar el post: ' + str(err)}), 500
