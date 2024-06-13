@@ -1,58 +1,46 @@
-# Product Backlog
+# Proyecto de API Flask
 
-1. Registro y Autenticación de Usuarios
+## Guía de Uso
 
-   Los usuarios registrados tienen que poder registrarse con un nombre de usuario y contraseña.
-   Los usuarios registrados tienen que poder iniciar sesión con usuario y contraseña.
-   Los usuarios registrados tienen que poder poder cerrar sesión.
+### Instalación de Requerimientos
 
-2. Gestión de Perfil de Usuario
+1. Instala los requerimientos necesarios con el siguiente comando:
 
-   Los usuarios registrados tienen que poder actualizar su perfil, incluyendo nombre y foto de perfil.
-   Los usuarios registrados tienen que poder eliminar su cuenta.
-   Los usuarios registrados tienen que poder cambiar su contraseña.
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3. Publicación de Contenidos
+### Pruebas
 
-   Los usuarios registrados tienen que poder crear nuevos hilos con título, contenido y opcionalmente una imagen.
-   Los usuarios registrados tienen que poder comentar en un hilo.
+2. Puedes probar cada test por separado en tu IDE. Asegúrate de que los IDs utilizados en los tests que los requieran sean válidos.
 
-4. Visualización de Contenidos
+3. Para ejecutar todos los tests juntos, utiliza el siguiente comando:
 
-   Los usuarios tienen que poder ver una lista de los hilos de cada categoría.
-   Los usuarios tienen que poder ver el perfil del autor de un post.
+    ```bash
+    pytest
+    ```
 
-## Tareas Asociadas
+### Endpoints Disponibles
 
-| ID  | Tarea                                    | Descripción                                                                               | Responsable | Estado    | Prioridad |
-| --- | ---------------------------------------- | ----------------------------------------------------------------------------------------- | ----------- | --------- | --------- |
-| 1   | Crear base de datos                      | Diseñar y crear las tablas necesarias en la base de datos                                 | Backend     | Pendiente | Alta      |
-| 2   | Conexión de API con base de datos        | Configurar la conexión entre la API y la base de datos                                    | Backend     | Pendiente | Media     |
-| 3   | Diseñar formulario de registro           | Crear el formulario de registro para nuevos usuarios                                      | Frontend    | Pendiente | Media     |
-| 4   | Lógica de creación de nuevo usuario      | Implementar la lógica de registro de nuevos usuarios en la base de datos                  | Backend     | Pendiente | Alta      |
-| 5   | Validación de usuario y contraseña       | Implementar la lógica para validar el usuario y la contraseña durante el inicio de sesión | Backend     | Pendiente | Alta      |
-| 6   | Lógica de cambio de contraseña           | Implementar la lógica para permitir a los usuarios cambiar su contraseña                  | Backend     | Pendiente | Media     |
-| 7   | Lógica de creación de hilos              | Implementar la lógica para crear nuevos hilos en el foro                                  | Backend     | Pendiente | Alta      |
-| 8   | Lógica de creación de respuestas a hilos | Implementar la lógica para agregar respuestas a los hilos existentes                      | Backend     | Pendiente | Alta      |
-| 9   | Crear template base                      | Diseñar un template base que se pueda reutilizar en otros templates                       | Frontend    | Pendiente | Media     |
-| 10  | Crear template para registrarse          | Diseñar el template para la página de registro                                            | Frontend    | Pendiente | Media     |
-| 11  | Crear template para iniciar sesión       | Diseñar el template para la página de inicio de sesión                                    | Frontend    | Pendiente | Media     |
-| 12  | Crear template para editar usuario       | Diseñar el template para la página de edición del perfil de usuario                       | Frontend    | Pendiente | Media     |
-| 13  | Diseñar CSS global                       | Diseñar el archivo CSS global para el estilo de la aplicación                             | Frontend    | Pendiente | Baja      |
-| 14  | Conexión de front-end con la API         | Implementar la lógica para que el front-end se comunique con la API                       | Frontend    | Pendiente | Alta      |
+- `POST /register_user`: Registrar un nuevo usuario.
+- `POST /login_user`: Iniciar sesión de usuario.
+- `GET /get_user`: Obtener información de usuario.
+- `PATCH /update-password`: Actualizar la contraseña del usuario.
+- `POST /create_post`: Crear una nueva publicación.
+- `GET /get_posts`: Obtener todas las publicaciones.
+- `GET /get_last_posts`: Obtener las publicaciones más recientes.
+- `POST /create_response`: Crear una nueva respuesta a una publicación.
+- `GET /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es invalido)
+- `DELETE /delete_user`: Eliminar un usuario.
+---
 
-## Variables de Entorno
+### Enpoints que no funcionan
+- `PUT /update_post`: Actualizar una publicación.
+- `PATCH /update_response`: Actualizar una respuesta.
+- `DELETE /delete_post`: Eliminar una publicación.
+- `DELETE /delete_response`: Eliminar una respuesta.
 
-Crear un archivo `.env` en la raiz de Client.
-
-Ejecutar en la terminal:
-
+¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en contactarnos.
 ```
-$ python -c 'import secrets; print(secrets.token_hex())'
-```
-
-Copiar el resultado y guardarlo en el archivo `.env` como:
-
-```
-SECRET_KEY=tu_clave_secreta_generada
+The Flaskonauts
 ```
