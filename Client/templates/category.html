@@ -124,7 +124,7 @@
                     <div class="card-body p-2 p-sm-3">
                         <div class="media forum-item">
                             <div class="media-body">
-                                <h5 class="post-title"><a href="#" class="text-body">{{post['title']}}</a></h5>
+                                <h5 class="post-title"><a href="{{ url_for('responses', selected_category='category', id_post=post['id_post']) }}" class="text-body">{{post['title']}}</a></h5>
                                 <p class="post-text">
                                     {{ post['post'] | truncate(200) }}
                                 </p>

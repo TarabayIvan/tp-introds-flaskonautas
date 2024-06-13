@@ -50,7 +50,6 @@ def index():
     return render_template("index.html")
 
 
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -154,6 +153,13 @@ def category(selected_category):
     response = requests.get(API_URL + f"/get_posts/{selected_category}")
     posts = response.json()
     return render_template("category.html", posts=posts, category=selected_category)
+
+
+@app.route("/c/<selected_category>/post/<id_post>")
+def responses(selected_category, id_post):
+    response = requests.get(API_URL + f"/get_complete_post/{id_post}")
+    post, responses = response.json()
+    return render_template("post.html", post=post, responses=responses)
 
 
 @app.route('/update_response', methods=['GET', 'POST'])
