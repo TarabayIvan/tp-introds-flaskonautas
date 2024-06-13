@@ -124,14 +124,14 @@
                     <div class="card-body p-2 p-sm-3">
                         <div class="media forum-item">
                             <div class="media-body">
-                                <h5 class="post-title"><a href="{{ url_for('responses', selected_category='category', id_post=post['id_post']) }}" class="text-body">{{post['title']}}</a></h5>
+                                <h5 class="post-title"><a href="{{ url_for('responses', selected_category=category, id_post=post['id_post']) }}" class="text-body">{{post['title']}}</a></h5>
                                 <p class="post-text">
                                     {{ post['post'] | truncate(200) }}
                                 </p>
                                 <div class="info-text">
                                     <p class="info-post">Published by {{post['username']}}</p>
 
-                                    <p class="edit-post"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                                    <p class="edit-post"><a href="{{ url_for('delete_request_post', category=category, id_post=post['id_post']) }}">Borrar</a> <a href="#">Editar</a></p>
                                 </div>
                             </div>
                             <div class="text-muted small text-center align-self-center">

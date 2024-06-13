@@ -249,8 +249,8 @@ def send_post():
     return redirect(url_for('category', selected_category=post_category))
 
 
-@app.route("/delete_request_post/<id_post>", methods=['DELETE'])
-def delete_request_post(id_post):
+@app.route("/delete_request_post/<category>/<id_post>")
+def delete_request_post(id_post, category):
     try:
         # Envia la solicitud DELETE a la API
         response = requests.delete(API_URL + f"/delete_post/{id_post}")
@@ -258,16 +258,19 @@ def delete_request_post(id_post):
         # Verificar si la solicitud fue exitosa
         if (response.status_code >= 200) and (response.status_code < 300):
             flash("Se ha eliminado exitosamente!", "success")
+            return redirect(url_for('category', selected_category=category))
         else:
             # si llegara a fallar, devolviendo haci un mensaje de error
             # tambien se puede modificar por algo mucho mejor
-            flash(f"Error al intentar eliminar. Código de estado:{response.status_code}", "success")
+            flash(f"Error al intentar eliminar. Código de estado:{response.status_code}", "error")
+            return redirect(url_for('category', selected_category=category))
     except Exception as e:
         # esto es algo provicional para los ejemplos
         # se puede modificar a un codigo mejor
         # si courre algun error durante el proceso,
         # devolver un mensaje de error
-        flash(f"Error al eliminar el post: {e}", "success")
+        flash(f"Error al eliminar el post: {e}", "error")
+        return redirect(url_for('category', selected_category=category))
 
 
 def save_image(image):
