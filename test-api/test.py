@@ -4,7 +4,7 @@ import users
 import posts
 
 
-def test_register_user_success(client):
+def test_registrar_un_usuario_correctamente(client):
     """
     Test para registrar un usuario correctamente.
     """
@@ -19,7 +19,7 @@ def test_register_user_success(client):
     assert response.json['message'] == 'El usuario se registro correctamente.'
 
 
-def test_register_multiple_users_success(client):
+def test_registrar_multiples_usuarios_correctamente(client):
     """
     Test para registrar multiples usuarios correctamente.
     """
@@ -29,7 +29,7 @@ def test_register_multiple_users_success(client):
         assert response.json['message'] == 'El usuario se registro correctamente.'
 
 
-def test_register_user_incomplete_data(client):
+def test_registrar_usuario_con_datos_incompletos(client):
     """
     Test para registrar un usuario con datos incompletos.
     """
@@ -43,7 +43,7 @@ def test_register_user_incomplete_data(client):
     assert response.json['message'] == 'No se enviaron todos los datos necesarios por JSON'
 
 
-def test_register_user_empy_data_password(client):
+def test_registrar_usuario_con_datos_vacio(client):
     """
     Test para registrar un usuario con datos vacios.
     """
@@ -57,7 +57,7 @@ def test_register_user_empy_data_password(client):
     assert response.json['message'] == 'No se enviaron todos los datos necesarios por JSON'
 
 
-def test_register_duplicate_users(client):
+def test_registrar_usuario_duplicado(client):
     """
     Test para registrar un usuario ya registrado.
     """
@@ -72,7 +72,7 @@ def test_register_duplicate_users(client):
     assert response.json['message'].startswith('El usuario no pudo ser registrado.')
 
 
-def test_user_empty_credenciales(client):
+def test_usuario_credenciales_vacias(client):
     """
     Test para loguear un usuario con credenciales vacias.
 
@@ -86,7 +86,7 @@ def test_user_empty_credenciales(client):
     assert response.json['message'] == 'Username y password son requeridos'
 
 
-def test_user_login_success(client):
+def test_inicio_sesion_usuario_exitoso(client):
     """
     Test para loguear un usuario correctamente.
     """
@@ -98,7 +98,7 @@ def test_user_login_success(client):
     assert response.status_code == 200
 
 
-def test_user_login_user_not_found(client):
+def test_nicio_sesion_usuario_no_encontrado(client):
     """
     Test para loguear un usuario que no existe.
     """
@@ -111,7 +111,7 @@ def test_user_login_user_not_found(client):
     assert response.json['message'] == 'Usuario no encontrado'
 
 
-def test_get_user(client):
+def test_obtener_usuario(client):
     """
     Test para obtener un usuario registrado en la BBDD.
     """
@@ -120,7 +120,7 @@ def test_get_user(client):
     assert 'username' in response.json
 
 
-def test_get_user_not_found(client):
+def test_obtener_usuario_no_encontrado(client):
     """
     Test para obtener un usuario que no existe en la BBDD.
     """
@@ -129,7 +129,7 @@ def test_get_user_not_found(client):
     assert 'username' not in response.json
 
 
-def test_update_password_success(client):
+def test_actualizar_contrasenia_exitoso(client):
     """
     Test para actualizar la contraseña de un usuario correctamente.
     """
@@ -144,7 +144,7 @@ def test_update_password_success(client):
     assert response.json['message'] == 'Se cambio la contraseña correctamente.'
 
 
-def test_update_password_user_not_found(client):
+def test_actualizar_contrasenia_usuario_no_encontrado(client):
     """
     Test para actualizar la contraseña de un usuario que no existe.
     """
@@ -159,7 +159,7 @@ def test_update_password_user_not_found(client):
     assert response.json['message'] == 'El usuario no existe.'
 
 
-def test_update_password_security_answers_incorrect(client):
+def test_actualizar_contrasenia_respuestas_seguridad_incorrectas(client):
     """
     Test para actualizar la contraseña de un usuario con respuestas de seguridad incorrectas.
     """
@@ -174,7 +174,7 @@ def test_update_password_security_answers_incorrect(client):
     assert response.json['message'] == 'Las respuestas a las preguntas de seguridad son incorrectas.'
 
 
-def test_create_post_success(client):
+def test_crear_post_exitoso(client):
     """
     Test para crear un post correctamente.
     """
@@ -190,7 +190,7 @@ def test_create_post_success(client):
     assert response.json['message'].startswith('se ha agregado correctamente')
 
 
-def test_create_post_incomplete_data(client):
+def test_crear_post_datos_incompletos(client):
     """
     Test para crear un post con datos incompletos.
     """
@@ -204,7 +204,7 @@ def test_create_post_incomplete_data(client):
     assert response.json['message'].startswith('Faltan datos en la solicitud')
 
 
-def test_create_post_user_not_found(client):
+def test_crear_post_usuario_no_encontrado(client):
     """
     Test para crear un post con un usuario que no existe en la BBDD.
     """
@@ -220,7 +220,7 @@ def test_create_post_user_not_found(client):
     assert response.json['message'].startswith('El usuario no existe')
 
 
-def test_create_multiple_posts_success(client):
+def test_crcrear_multiples_posts_exitoso(client):
     """
     Test para crear multiples posts correctamente.
     """
@@ -230,7 +230,7 @@ def test_create_multiple_posts_success(client):
         assert response.json['message'].startswith('se ha agregado correctamente')
 
 
-def test_get_post_by_category(client):
+def test_obtener_post_por_categoria(client):
     """
     Test para obtener posts por categoria.
     """
@@ -239,7 +239,7 @@ def test_get_post_by_category(client):
     assert len(response.json) > 0
 
 
-def test_get_last_posts(client):
+def test_obtener_ultimos_posts(client):
     """
     Test para obtener los ultimos posts.
     """
@@ -249,7 +249,7 @@ def test_get_last_posts(client):
     assert len(response.json) <= 6
 
 
-def test_create_response_incomplete_data(client):
+def test_crear_respuesta_datos_incompletos(client):
     """
     Test para crear una respuesta con datos incompletos.
     """
@@ -262,7 +262,7 @@ def test_create_response_incomplete_data(client):
     assert response.json['message'].startswith('Faltan datos en la solicitud')
 
 
-def test_create_response_user_not_found(client):
+def test_crear_respuesta_usuario_no_encontrado(client):
     """
     Test para crear una respuesta con un usuario que no existe.
     """
@@ -276,7 +276,7 @@ def test_create_response_user_not_found(client):
     assert response.json['message'].startswith('El usuario con nombre')
 
 
-def test_create_response_success(client):
+def test_crear_respuesta_exitoso(client):
     """
     Test para crear una respuesta correctamente.
     """
@@ -290,7 +290,7 @@ def test_create_response_success(client):
     assert response.json['message'].startswith('se ha agregado correctamente')
 
 
-def test_create_response_post_not_found(client):
+def test_crear_respuesta_post_no_encontrado(client):
     """
     Test para crear una respuesta con un post que no existe.
     """
@@ -304,7 +304,7 @@ def test_create_response_post_not_found(client):
     assert response.json['message'].startswith('Se ha producido un error')
 
 
-def test_get_responses_success(client):
+def test_obtener_respuestas_exitoso(client):
     """
     Test para obtener el post con sus respuestas correctamente.
     """
@@ -313,7 +313,7 @@ def test_get_responses_success(client):
     assert len(response.json) > 0
 
 
-def test_get_responses_post_incorrect(client):
+def test_obtener_respuestas_post_incorrecto(client):
     """
     Test para obtener el post con sus respuestas sin un id de post.
     """
@@ -321,7 +321,7 @@ def test_get_responses_post_incorrect(client):
     assert response.status_code == 404
 
 
-def test_get_responses_post_not_found(client):
+def test_obtener_respuestas_post_no_encontrado(client):
     """
     Test para obtener el post con sus respuestas con un id de post que no existe.
     """
@@ -330,7 +330,7 @@ def test_get_responses_post_not_found(client):
     assert response.json['message'].startswith('No se ha encontrado el post')
 
 
-def test_delete_user_success(client):
+def test_eliminar_usuario_exitoso(client):
     """
     Test para borrar un usuario correctamente.
     """
@@ -342,7 +342,7 @@ def test_delete_user_success(client):
     assert response.status_code == 200
 
 
-def test_delete_user_user_incomplete(client):
+def test_eliminar_usuario_datos_incompletos(client):
     """
     Test para borrar un usuario con datos incompletos.
     """
@@ -354,7 +354,7 @@ def test_delete_user_user_incomplete(client):
     assert response.json['message'].startswith('No se enviaron todos los datos necesarios por JSON')
 
 
-def test_delete_user_password_invalid(client):
+def test_delete_eliminar_usuario_contrasenia_invalida(client):
     """
     Test para borrar un usuario con una contraseña inválida.
     """
@@ -367,7 +367,7 @@ def test_delete_user_password_invalid(client):
     assert response.json['message'].startswith('La contraseña no coincide con la del usuario')
 
 
-def test_update_post_success(client):
+def test_actualizar_post_exitoso(client):
     """
     Test para actualizar un post correctamente.
     """
@@ -381,7 +381,7 @@ def test_update_post_success(client):
     assert response.json['message'].startswith('Esta actualizado correctamente')
 
 
-def test_update_post_incomplete_data(client):
+def test_actualizar_post_datos_incompletos(client):
     """
     Test para actualizar un post con datos incompletos.
     """
@@ -393,7 +393,7 @@ def test_update_post_incomplete_data(client):
     assert response.json['message'].startswith('Se deben proporcionar el title y el post')
 
 
-def test_update_post_user_not_found(client):
+def test_actualizar_post_usuario_no_encontrado(client):
     """
     Test para actualizar un post con un usuario que no existe.
     """
@@ -407,7 +407,7 @@ def test_update_post_user_not_found(client):
     assert response.json['message'].startswith('No es el usuario correcto')
 
 
-def test_update_response_success(client):
+def test_actualizar_respuesta_exitoso(client):
     """
     Test para actualizar una respuesta correctamente.
     """
@@ -420,7 +420,7 @@ def test_update_response_success(client):
     assert response.json['message'].startswith('se ha actualizado correctamente')
 
 
-def test_update_response_incomplete_data(client):
+def test_actualizar_respuesta_datos_incompletos(client):
     """
     Test para actualizar una respuesta con datos incompletos.
     """
@@ -432,7 +432,7 @@ def test_update_response_incomplete_data(client):
     assert response.json['message'].startswith('Faltan datos en la solicitud')
 
 
-def test_update_response_not_found(client):
+def test_actualizar_respuesta_no_encontrada(client):
     """
     Test para actualizar una respuesta que no existe.
     """
@@ -445,7 +445,7 @@ def test_update_response_not_found(client):
     assert response.json['message'].startswith('Se ha producido un error')
 
 
-def test_delete_response_success(client):
+def test_eliminar_respuesta_exitoso(client):
     """
     Test para borrar una respuesta correctamente.
     """
@@ -457,7 +457,7 @@ def test_delete_response_success(client):
     assert response.json['message'].startswith('La respuesta ha sido eliminada correctamente')
 
 
-def test_delete_response_not_found(client):
+def test_eliminar_respuesta_invalida(client):
     """
     Test para borrar una respuesta que no existe.
     """
@@ -469,7 +469,7 @@ def test_delete_response_not_found(client):
     assert response.json['message'].startswith('La respuesta no existe')
 
 
-def test_delete_response_incorrect(client):
+def test_eliminar_respuesta_con_datos_invalidos(client):
     """
     Test para borrar una respuesta con un usuario incorrecto.
     """
@@ -481,7 +481,7 @@ def test_delete_response_incorrect(client):
     assert response.json['message'].startswith('No tienes permiso para borrar esta respuesta')
 
 
-def test_delete_post_success(client):
+def test_eliminar_post_exitoso(client):
     """
     Test para borrar un post correctamente.
     """
@@ -492,7 +492,7 @@ def test_delete_post_success(client):
     assert response.status_code == 200
 
 
-def test_delete_post_not_found(client):
+def test_eliminar_post_con_id_invalido(client):
     """
     Test para borrar un post que no existe.
     """
@@ -504,7 +504,7 @@ def test_delete_post_not_found(client):
     assert response.json['message'].startswith('El post no existe')
 
 
-def test_delete_post_incorrect_user(client):
+def test_eliminar_post_con_usuario_invalido(client):
     """
     Test para borrar un post con un usuario incorrecto.
     """
