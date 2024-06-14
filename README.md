@@ -19,6 +19,9 @@
     ```bash
     pytest
     ```
+### Nota Importante:
+   - Algunos test donde requieren de un ID, o algún campo con datos relacionados con la base de datos, se debe de cambiar el ID o lo que corresponda, ya que los mismos son variables y pueden cambiar.
+   - Es muy importante respetar lo de arriba ya que si no se tienen en cuenta los cambios, los test fallarán.
 
 ### Endpoints Disponibles
 
@@ -34,13 +37,9 @@
 - `DELETE /delete_user`: Eliminar un usuario.
 - `PUT /update_post`: Actualizar una publicación.
 - `PATCH /update_response`: Actualizar una respuesta.
----
-
-### Enpoints que no funcionan
 - `DELETE /delete_post`: Eliminar una publicación.
 - `DELETE /delete_response`: Eliminar una respuesta.
-
-¡Gracias por usar nuestra API Flask! Si tienes alguna pregunta o encuentras algún problema, no dudes en contactarnos.
+---
 ```
 The Flaskonauts
 ```

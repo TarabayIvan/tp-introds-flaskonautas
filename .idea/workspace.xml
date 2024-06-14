@@ -6,7 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="c2e9c764-facc-4446-a733-c5d6edfd8f47" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/API/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/INSTALLER" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/METADATA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/RECORD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/REQUESTED" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/WHEEL" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/certifi-2024.2.2.dist-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/charset_normalizer-3.3.2.dist-info/REQUESTED" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/idna-3.7.dist-info/REQUESTED" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.venv/lib/python3.12/site-packages/urllib3-2.2.1.dist-info/REQUESTED" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test-api/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test-api/test.py" afterDir="false" />
     </list>
@@ -32,8 +41,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests for test.test_delete_post_incorrect.executor": "Run",
     "Python tests.Python tests for test.test_delete_post_not_found.executor": "Run",
     "Python tests.Python tests for test.test_delete_post_success.executor": "Run",
+    "Python tests.Python tests for test.test_delete_response_incorrect.executor": "Run",
     "Python tests.Python tests for test.test_delete_response_not_found.executor": "Run",
     "Python tests.Python tests for test.test_delete_response_success.executor": "Run",
     "Python tests.Python tests for test.test_update_post_incomplete_data.executor": "Run",
@@ -54,8 +65,8 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test.test_delete_post_success">
-    <configuration name="Python tests for test.test_delete_post_not_found" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test.test_update_post_user_not_found">
+    <configuration name="Python tests for test.test_delete_post_incorrect" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="tp-introds-flaskonautas" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -67,11 +78,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.test_delete_post_not_found&quot;" />
+      <option name="_new_target" value="&quot;test.test_delete_post_incorrect&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test.test_delete_post_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test.test_delete_response_incorrect" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="tp-introds-flaskonautas" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,7 +94,39 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.test_delete_post_success&quot;" />
+      <option name="_new_target" value="&quot;test.test_delete_response_incorrect&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test.test_delete_response_not_found" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="tp-introds-flaskonautas" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test-api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test.test_delete_response_not_found&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test.test_delete_response_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="tp-introds-flaskonautas" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test-api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test.test_delete_response_success&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -103,45 +146,13 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test.test_update_response_incomplete_data" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="tp-introds-flaskonautas" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test-api" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.test_update_response_incomplete_data&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test.test_update_response_success" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="tp-introds-flaskonautas" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test-api" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test.test_update_response_success&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test.test_delete_post_success" />
-        <item itemvalue="Python tests.Python tests for test.test_delete_post_not_found" />
-        <item itemvalue="Python tests.Python tests for test.test_update_response_incomplete_data" />
-        <item itemvalue="Python tests.Python tests for test.test_update_response_success" />
         <item itemvalue="Python tests.Python tests for test.test_update_post_user_not_found" />
+        <item itemvalue="Python tests.Python tests for test.test_delete_response_incorrect" />
+        <item itemvalue="Python tests.Python tests for test.test_delete_response_not_found" />
+        <item itemvalue="Python tests.Python tests for test.test_delete_response_success" />
+        <item itemvalue="Python tests.Python tests for test.test_delete_post_incorrect" />
       </list>
     </recent_temporary>
   </component>
@@ -160,7 +171,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1718383337246</updated>
-      <workItem from="1718383346298" duration="4806000" />
+      <workItem from="1718383346298" duration="10478000" />
     </task>
     <servers />
   </component>
@@ -168,6 +179,6 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tp_introds_flaskonautas$.coverage" NAME=" Coverage Results" MODIFIED="1718387980913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test-api" />
+    <SUITE FILE_PATH="coverage/tp_introds_flaskonautas$.coverage" NAME=" Coverage Results" MODIFIED="1718401832138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test-api" />
   </component>
 </project>
