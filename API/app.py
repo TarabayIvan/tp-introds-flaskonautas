@@ -22,7 +22,7 @@ def register_user():
 
     query = f"""INSERT INTO users (username, password, security_answer_one, security_answer_two)
     VALUES
-    ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');"""
+    ('{new_user["username"]}', '{new_user["password"]}', '{new_user["security_answer_one"]}', '{new_user["security_answer_two"]}');"""  # This is actually vulnerable to SQL injections, please don't let users put " ' " in any fields
     try:
         result = conn.execute(text(query))
         conn.commit()
@@ -55,7 +55,7 @@ def login_user():
                 'username': user[1],
                 'security_answer_one': user[3],
                 'security_answer_two': user[4],
-
+                # Excluir el password por razones de seguridad
             }
             # Verificar la contraseña
             if check_password_hash(user[2], password):
@@ -112,7 +112,6 @@ def update_password():
             user = val_result.fetchone()
             if user[3] == data['security_answer_one'] and user[4] == data['security_answer_two']:
                 result = conn.execute(text(query))
-                print(result)
                 conn.commit()
                 conn.close()
             else:
@@ -187,26 +186,49 @@ def create_post():
     return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
 
 
-@app.route('/delete_post/<id_post>', methods=['DELETE'])
+@app.route('/delete_post/<int:id_post>', methods=['DELETE'])
 def delete_post(id_post):
-    connection = engine.connect()
-    search_post = request.get_json()
-    # verifica si el post existe
-    try:
-        if id_post not in search_post:
-            # cierro conexion y hago return
-            connection.close()
-            return jsonify({'message': 'El post no existe'}), 404
-        else:
-            # elimino el post
-            delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
-            connection.execute(text(delete_query))
-            # cierro conexion y hago return
-            connection.close()
-            return jsonify({'message': 'El post ha sido eliminado correctamente'}), 200
+    conn = engine.connect()
+    data = request.json
 
+    try:
+        # primero verifico si el post existe
+        query_check = f"""
+            SELECT users.username, posts.image_link
+            FROM users
+            JOIN posts ON users.id_user = posts.id_user
+            WHERE posts.id_post = {id_post};
+        """
+        post_data = conn.execute(text(query_check)).fetchone()
+
+        # si el post no existe, muestra mensaje al usuario
+        if not post_data:
+            conn.close()
+            return jsonify({'message': 'El post no existe'}), 404
+
+        post_username = post_data[0]
+        image_link = post_data[1]
+
+        # se obtiene el usuario que hizo el request
+        request_username = data.get('username')
+
+        if post_username != request_username:
+            conn.close()
+            return jsonify({'message': 'No tienes permiso para borrar este post'}), 403
+
+        # Borrar el post
+        delete_query = f"DELETE FROM posts WHERE id_post = {id_post};"
+        conn.execute(text(delete_query))
+        conn.commit()
+
+        # Construye un JSON de respuesta con el nombre de la imagen si esta existe
+        message = {'message': 'El post ha sido eliminado correctamente'}
+        entity = {'image_link': image_link}
+        conn.close()
+        return jsonify(message, entity), 200
     except SQLAlchemyError as err:
-        return jsonify({'message': 'Error en el servidor: ' + str(err.__cause__)}), 500
+        conn.close()
+        return jsonify({'message': 'No se pudo borrar el post: ' + str(err)}), 500
 
 
 @app.route('/get_posts/<selected_category>', methods=['GET'])
@@ -346,40 +368,76 @@ def update_response():
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 
+@app.route('/delete_response/<int:id_response>', methods=['DELETE'])
+def delete_response(id_response):
+    conn = engine.connect()
+    data = request.json
+
+    try:
+        # Verifica si la respuesta existe y obtiene información
+        query_check = f"""
+            SELECT users.username
+            FROM users
+            JOIN responses ON users.id_user = responses.id_user
+            JOIN posts ON responses.id_post = posts.id_post
+            WHERE responses.id_response = {id_response};
+        """
+        response_data = conn.execute(text(query_check)).fetchone()
+
+        # Si la respuesta no existe, muestra ese mensaje al usuario
+        if not response_data:
+            conn.close()
+            return jsonify({'message': 'La respuesta no existe'}), 404
+
+        response_username = response_data[0]
+
+        # Obtiene el usuario que hizo el request
+        request_username = data.get('username')
+
+        if response_username != request_username:
+            conn.close()
+            return jsonify({'message': 'No tienes permiso para borrar esta respuesta'}), 403
+
+        # Borra la respuesta
+        delete_query = f"DELETE FROM responses WHERE id_response = {id_response};"
+        conn.execute(text(delete_query))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'La respuesta ha sido eliminada correctamente'}), 200
+    except SQLAlchemyError as err:
+        conn.close()
+        return jsonify({'message': 'No se pudo borrar la respuesta: ' + str(err)}), 500
 
 
-
-@app.route('/update_post/<int:id_post>', methods=['PUT'])
+@app.route('/update_post/<id_post>', methods=['PATCH'])
 def update_post(id_post):
     connection = engine.connect()
+
+    data = request.json
+    title = data.get('title')
+    post_content = data.get('post')
+    username = data.get('username')
+
+    # verificar si estan los campos requeridos
+    if not (title and post_content and username):
+        return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
+    query_check = f"""SELECT username FROM users
+                    JOIN posts ON posts.id_user = users.id_user
+                    WHERE id_post = '{id_post}';
+                """
+    query_update = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
     try:
-
-        data = request.json
-        title = data.get('title')
-        post_content = data.get('post')
-
-        # verificar si estan los campos requeridos
-        if (title is None) or (post_content is None):
-            return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
-
-        query = f"UPDATE posts SET title = {title}, post = {post_content} WHERE id_post = {id_post}"
-        connection.execute(text(query))
+        check_res = connection.execute(text(query_check))
+        user = check_res.fetchone()
+        if user[0] != username:
+            return jsonify({'message': 'No es el usuario correcto'}), 403
+        connection.execute(text(query_update))
+        connection.commit()
         connection.close()
-
-        return jsonify({'message': 'Esta actualizado correctamente'}), 200
-
-    except KeyError:
-
-        connection.close()
-        return jsonify({'message': 'Los datos son invalidos'}), 400
-
-    except Exception as e:
-
-        # si puede estar fallando la conexion con la base de datos,
-        # donde captura cualquier excepcion de tipo 'Exception' que ocurra durante la
-        # ejecucion del codigo y la almacena en la variable 'e'
-        connection.close()
-        return jsonify({'error': str(e)}), 500
+    except SQLAlchemyError as err:
+        return jsonify({'Error': str(err.__cause__)}), 400
+    return jsonify({'message': 'Esta actualizado correctamente'}), 200
 
 
 if __name__ == "__main__":

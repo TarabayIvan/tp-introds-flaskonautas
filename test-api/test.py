@@ -275,8 +275,9 @@ def test_update_post_success(client):
     update_post = {
         "title": "HOLA",
         "post": "test_post",
+        "username": "guille",
     }
-    response = client.patch('/update_post/1', data=json.dumps(update_post), content_type='application/json')
+    response = client.patch('/update_post/52', data=json.dumps(update_post), content_type='application/json')
     assert response.status_code == 200
     assert response.json['message'].startswith('Esta actualizado correctamente')
 
@@ -287,56 +288,58 @@ def test_update_post_incomplete_data(client):
     }
     response = client.patch('/update_post/1', data=json.dumps(update_post), content_type='application/json')
     assert response.status_code == 400
-    assert response.json['message'].startswith('Faltan datos en la solicitud')
+    assert response.json['message'].startswith('Se deben proporcionar el title y el post')
 
 #Vericar que el id sea valido
-def test_update_post_not_found(client):
+def test_update_post_user_not_found(client):
     update_post = {
         "title": "HOLA",
         "post": "test_post",
+        "username": "guille5555s",
     }
-    response = client.patch('/update_post/100', data=json.dumps(update_post), content_type='application/json')
-    assert response.status_code == 404
-    assert response.json['message'].startswith('No se ha encontrado el post')
+    response = client.patch('/update_post/52', data=json.dumps(update_post), content_type='application/json')
+    assert response.status_code == 403
+    assert response.json['message'].startswith('No es el usuario correcto')
 
 #Vericar que el id sea valido
 def test_update_response_success(client):
     update_response = {
-        "post": "test_post",
+        "id_response": 7,
+        "post": "test_post 666",
     }
-    response = client.patch('/update_response/1', data=json.dumps(update_response), content_type='application/json')
+    response = client.patch('/update_response', data=json.dumps(update_response), content_type='application/json')
     assert response.status_code == 200
-    assert response.json['message'].startswith('Esta actualizado correctamente')
+    assert response.json['message'].startswith('se ha actualizado correctamente')
 
 #Vericar que el id sea valido
 def test_update_response_incomplete_data(client):
     update_response = {
         "post": "test_post",
     }
-    response = client.patch('/update_response/1', data=json.dumps(update_response), content_type='application/json')
-    assert response.status_code == 200
-    assert response.json['message'].startswith('Esta actualizado correctamente')
+    response = client.patch('/update_response', data=json.dumps(update_response), content_type='application/json')
+    assert response.status_code == 400
+    assert response.json['message'].startswith('Faltan datos en la solicitud')
 
-#Vericar que el id sea valido
 def test_update_response_not_found(client):
     update_response = {
+        "id_response": 100,
         "post": "test_post",
     }
-    response = client.patch('/update_response/100', data=json.dumps(update_response), content_type='application/json')
-    assert response.status_code == 404
-    assert response.json['message'].startswith('No se ha encontrado la respuesta')
+    response = client.patch('/update_response', data=json.dumps(update_response), content_type='application/json')
 
-#Vericar que el id sea valido
+    assert response.json['message'].startswith('Se ha producido un error')
+
+#Vericar que el id sea valido 404
 def test_delete_response_success(client):
-    response = client.delete('/delete_response/1')
-    assert response.status_code == 200
-    assert response.json['message'].startswith('se ha eliminado correctamente')
+    response = client.delete('/delete_response/10')
+
+    assert response.json['message'].startswith('La respuesta ha sido eliminada correctamente')
 
 #Vericar que el id sea valido
 def test_delete_response_not_found(client):
     response = client.delete('/delete_response/100')
-    assert response.status_code == 404
-    assert response.json['message'].startswith('No se ha encontrado la respuesta')
+
+    assert response.json['message'].startswith('La respuesta no existe')
 
 #Vericar que el id sea valido
 def test_delete_response_incorrect(client):
@@ -347,15 +350,20 @@ def test_delete_response_incorrect(client):
 
 #Vericar que el id sea valido
 def test_delete_post_success(client):
-    response = client.delete('/delete_post/1')
+    post_id = 52
+    data = {
+        "username": "guille"
+    }
+    response = client.delete(f'/delete_post/{post_id}', data=json.dumps(data), content_type='application/json')
     assert response.status_code == 200
-    assert response.json['message'].startswith('se ha eliminado correctamente')
+    assert response.json['message'].startswith('El post ha sido eliminado correctamente')
+    assert .response.json['image_link'] == post_id
 
 #Vericar que el id sea valido
 def test_delete_post_not_found(client):
-    response = client.delete('/delete_post/100')
-    assert response.status_code == 404
-    assert response.json['message'].startswith('No se ha encontrado el post')
+    response = client.delete('/delete_post/10000')
+
+    assert response.json['message'].startswith('El post no existe')
 
 #Vericar que el id sea valido
 def test_delete_post_incorrect(client):

@@ -30,13 +30,13 @@
 - `GET /get_posts`: Obtener todas las publicaciones.
 - `GET /get_last_posts`: Obtener las publicaciones más recientes.
 - `POST /create_response`: Crear una nueva respuesta a una publicación.
-- `GET /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es invalido)
+- `GET /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es inválido)
 - `DELETE /delete_user`: Eliminar un usuario.
+- `PUT /update_post`: Actualizar una publicación.
+- `PATCH /update_response`: Actualizar una respuesta.
 ---
 
 ### Enpoints que no funcionan
-- `PUT /update_post`: Actualizar una publicación.
-- `PATCH /update_response`: Actualizar una respuesta.
 - `DELETE /delete_post`: Eliminar una publicación.
 - `DELETE /delete_response`: Eliminar una respuesta.
 
