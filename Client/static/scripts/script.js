@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             let searchValue = e.target.value.toLowerCase();
-            let posts = document.getElementsByClassName('card');
+            let posts = document.getElementsByClassName('card-post');
 
             for (let i = 0; i < posts.length; i++) {
                 let post = posts[i];
