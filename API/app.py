@@ -14,6 +14,16 @@ engine = create_engine("mysql+mysqlconnector://root:123@localhost/flaskonautas",
 """ENDPOINTS DE AUTENTICACION"""
 @app.route('/register_user', methods = ['POST'])
 def register_user():
+    '''
+    Agrega a la tabla de usuarios un usuario, siempre y cuando los datos sean validos. En caso contrario, devuelve un error.
+    
+    PRE
+    Recibe mediante json un nombre de usuario, una contraseña (cifrada), y las respuestas a ambas preguntas de seguridad.
+
+    POST
+    Devuelve 201 en caso de registrar al usuario correctamente.
+    Devuelve 400 en caso de tener algun fallo.
+    '''
     conn = engine.connect()
     new_user = request.get_json()
     if not (new_user.get("username") and new_user.get("password") and new_user.get("security_answer_one") and new_user.get("security_answer_two")):
@@ -91,6 +101,16 @@ def get_user(user_id):
 
 @app.route('/update_password', methods = ['PATCH'])
 def update_password():
+    '''
+    Cambia la contraseña de un usuario cuando los datos enviados por json son correctos, sino devuelve un error.
+
+    PRE
+    Recibe mediante json un nombre de usuario, una contraseña (cifrdada), y las respuestas de ambas preguntas de seguridad.
+
+    POST
+    Devuelve 200 en caso de registrar al usuario correctamente.
+    Devuelve 40X en caso de tener algun fallo.
+    '''
     conn = engine.connect()
     data = request.get_json() # The function should recieve username, a new *hashed* password, and both security answers
     if not (data.get("username") and data.get("password") and data.get("security_answer_one") and data.get("security_answer_two")):
@@ -120,6 +140,16 @@ def update_password():
 
 @app.route('/delete_user', methods = ['DELETE'])
 def delete_user():
+    '''
+    Elimina una entrada de la tabla de usuarios, en caso de recibir datos incorrectos, devuelve un error.
+    
+    PRE
+    Recibe mediante json un nombre de usuario y una contraseña (sin cifrar).
+    
+    POST
+    Devuelve 200 en caso de registrar al usuario correctamente.
+    Devuelve 40X en caso de tener algun fallo.
+    '''
     conn = engine.connect()
     user_data = request.get_json() 
     if not (user_data.get("username") and user_data.get("password")):
@@ -246,6 +276,13 @@ def get_posts(selected_category):
 # Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
 @app.route('/get_last_posts', methods=['GET'])
 def get_last_posts():
+    '''
+    Devuelve los 6 posts con el mayor numero de ID.
+
+    POST
+    Devuelve 200 en caso de que todo salga bien, junto con una lista con los posts como diccionarios.
+    Devuelve 400 en caso de que haya un error obteniendo los posts.
+    '''
     connection = engine.connect()
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user ORDER BY id_post DESC LIMIT 6"
     
