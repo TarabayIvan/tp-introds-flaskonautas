@@ -6,12 +6,11 @@ from sqlalchemy.exc import SQLAlchemyError
 import os
 from werkzeug.security import check_password_hash
 
-
 app = Flask(__name__)
 engine = create_engine("mysql+mysqlconnector://root:123@localhost/flaskonautas", future=True)
 
-
 """ENDPOINTS DE AUTENTICACION"""
+
 @app.route('/register_user', methods = ['POST'])
 def register_user():
     conn = engine.connect()
@@ -30,6 +29,7 @@ def register_user():
         conn.close()
         return jsonify({'message': 'El usuario no pudo ser registrado. ' + str(err.__cause__)}), 400
     return jsonify({'message': 'El usuario se registro correctamente.'}), 201
+
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
@@ -67,6 +67,7 @@ def login_user():
 
 
 """ENDPOINTS DE USUARIOS"""
+
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     conn = engine.connect()
@@ -88,6 +89,7 @@ def get_user(user_id):
             return jsonify({"message": "Usuario no encontrado"}), 404
     except SQLAlchemyError as err:
         return jsonify({"message": "Error en el servidor: " + str(err.__cause__)}), 500
+
 
 @app.route('/update_password', methods = ['PATCH'])
 def update_password():
@@ -118,6 +120,7 @@ def update_password():
         return jsonify({'message': str(err.__cause__)}), 400
     return jsonify({'message': 'Se cambio la contraseña correctamente.'}), 200
 
+
 @app.route('/delete_user', methods = ['DELETE'])
 def delete_user():
     conn = engine.connect()
@@ -145,6 +148,7 @@ def delete_user():
 
 
 """ENDPOINTS DE POSTS"""
+
 @app.route('/create_post', methods = ['POST'])
 def create_post():
     connection = engine.connect()
@@ -155,25 +159,20 @@ def create_post():
         if field not in new_post:
             return jsonify({'message': f'Faltan datos en la solicitud ({field})'}), 400
 
-    query1 = f"SELECT id_user FROM users WHERE username = '{new_post['username']}'" # buscar el id del usuario
+    query_validation = f"SELECT id_user FROM users WHERE username = '{new_post['username']}'" # buscar el id del usuario
     try:
-        id_user = connection.execute(text(query1)).scalar() # scalar() para obtener el unico valor de la consulta
-
-        if id_user is None:
-            connection.close()
+        id_user = connection.execute(text(query_validation)).scalar() # scalar() para obtener el unico valor de la consulta
+        if not id_user:
             return jsonify({'message': 'El usuario no existe'}), 400
-    except SQLAlchemyError as err:
-        connection.close()
-        return jsonify({'message': 'Se ha producido un error' + str(err.__cause__)}), 400
-
-    query2 = f"""INSERT INTO posts (id_user, category, title, post, image_link) VALUES ('{id_user}', '{new_post["category"]}', '{new_post["title"]}', '{new_post["post"]}', '{new_post["image_link"]}');"""
-    try:
-        connection.execute(text(query2))
+        
+        query = f"""INSERT INTO posts (id_user, category, title, post, image_link) VALUES ('{id_user}', '{new_post["category"]}', '{new_post["title"]}', '{new_post["post"]}', '{new_post["image_link"]}');"""
+        connection.execute(text(query))
         connection.commit()
-        connection.close()
     except SQLAlchemyError as err:
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
-    return jsonify({'message': 'se ha agregado correctamente ' + query2}), 201
+    finally:
+        connection.close()
+    return jsonify({'message': 'se ha agregado correctamente ' + query}), 201
 
 
 @app.route('/delete_post/<int:id_post>', methods=['DELETE'])
@@ -243,6 +242,7 @@ def get_posts(selected_category):
         posts.append(entity)
     return jsonify(posts), 200
 
+
 # Basically the same as /get_posts, but gets posts of all categories, with a limit of 6
 @app.route('/get_last_posts', methods=['GET'])
 def get_last_posts():
@@ -268,7 +268,39 @@ def get_last_posts():
     return jsonify(posts), 200
 
 
+@app.route('/update_post/<id_post>', methods = ['PATCH'])
+def update_post(id_post):
+
+    connection = engine.connect()
+
+    data = request.json
+    title = data.get('title')
+    post_content = data.get('post')
+    username = data.get('username')
+
+    #verificar si estan los campos requeridos
+    if not (title and post_content and username):
+        return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
+    query_check = f"""SELECT username FROM users
+                    JOIN posts ON posts.id_user = users.id_user
+                    WHERE id_post = '{id_post}';
+                """
+    query_update = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
+    try:
+        check_res = connection.execute(text(query_check))
+        user = check_res.fetchone()
+        if user[0] != username:
+            return jsonify({'message': 'No es el usuario correcto'}), 403
+        connection.execute(text(query_update))
+        connection.commit()
+        connection.close()
+    except SQLAlchemyError as err:
+        return jsonify({'Error': str(err.__cause__)}), 400
+    return jsonify({'message': 'Esta actualizado correctamente'}), 200
+
+
 """ENDPOINTS DE RESPONSES"""
+
 @app.route('/create_response', methods = ['POST'])
 def create_response():
     connection = engine.connect()
@@ -298,6 +330,7 @@ def create_response():
     except SQLAlchemyError as err:
         return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
     return jsonify({'message': 'se ha agregado correctamente ' + query_2}), 201
+
 
 @app.route('/get_complete_post/<id_post>', methods = ['GET']) 
 def get_complete_post (id_post): 
@@ -330,8 +363,8 @@ def get_complete_post (id_post):
         entity['id_response'] = row.id_response
         entity['post'] = row.post
         responses.append(entity) 
-
     return jsonify(post, responses), 200
+
 
 @app.route('/update_response', methods = ['PATCH'])
 def update_response():
@@ -394,37 +427,6 @@ def delete_response(id_response):
     except SQLAlchemyError as err:
         conn.close()
         return jsonify({'message': 'No se pudo borrar la respuesta: ' + str(err)}), 500
-
-
-@app.route('/update_post/<id_post>', methods = ['PATCH'])
-def update_post(id_post):
-
-    connection = engine.connect()
-
-    data = request.json
-    title = data.get('title')
-    post_content = data.get('post')
-    username = data.get('username')
-
-    #verificar si estan los campos requeridos
-    if not (title and post_content and username):
-        return jsonify({'message': 'Se deben proporcionar el title y el post'}), 400
-    query_check = f"""SELECT username FROM users
-                    JOIN posts ON posts.id_user = users.id_user
-                    WHERE id_post = '{id_post}';
-                """
-    query_update = f"UPDATE posts SET title = '{title}', post = '{post_content}' WHERE id_post = '{id_post}';"
-    try:
-        check_res = connection.execute(text(query_check))
-        user = check_res.fetchone()
-        if user[0] != username:
-            return jsonify({'message': 'No es el usuario correcto'}), 403
-        connection.execute(text(query_update))
-        connection.commit()
-        connection.close()
-    except SQLAlchemyError as err:
-        return jsonify({'Error': str(err.__cause__)}), 400
-    return jsonify({'message': 'Esta actualizado correctamente'}), 200
 
 
 if __name__ == "__main__":
