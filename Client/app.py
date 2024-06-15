@@ -202,11 +202,14 @@ def update_response():
             return render_template('update_response.html')
     return render_template('update_response.html')
 
-@app.route('/remove_response', methods=['GET', 'POST'])
+@app.route('/remove_response')
 def remove_response():
     id_response = request.args.get('response_id')
     id_post = request.args.get('post_id')
     post_category = request.args.get('post_category')
+    if not 'user' in session:
+        flash("Necesita iniciar session para borrar un comentario!", "error")
+        return redirect(url_for('responses', selected_category=post_category, id_post=id_post))
     username = session['user']['username']
     data = {"username": username, "id_response": id_response}
     response = requests.delete(API_URL + '/delete_response/' + id_response, json=data)
@@ -224,7 +227,7 @@ def send_post():
     post_category = request.form.get("post-category")
     post_image = request.files['post-image']
     if not 'user' in session:
-        flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+        flash("Necesita iniciar session para publicar un post!", "error")
         return redirect(url_for('category', selected_category=post_category))
     username = session['user']['username']
     if not (username and post_title and post_content and post_category):
@@ -235,7 +238,7 @@ def send_post():
     else:
         post_image = request.files['post-image']
         filename = save_image(post_image)
-        if filename == None:
+        if not filename:
             flash("La imagen que selecciono es invalida!", "error")
             return redirect(url_for('category', selected_category=post_category))
     post = {'username': username, 'title': post_title, 'post': post_content, 'category': post_category, 'image_link': filename}
@@ -252,7 +255,7 @@ def delete_request_post(id_post, category):
     try:
         # Envia la solicitud DELETE a la API
         if not 'user' in session:
-            flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+            flash("Necesita iniciar session para publicar un post!", "error")
             return redirect(url_for('category', selected_category=category))
         username = {'username': session['user']['username']}
         response = requests.delete(API_URL + f"/delete_post/{id_post}", json=username)

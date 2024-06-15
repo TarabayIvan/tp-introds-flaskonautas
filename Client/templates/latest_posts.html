@@ -16,7 +16,7 @@
       </h2>
       <!-- Verifica si el post tiene una imagen, si la tiene, la añade -->
       {% if post['image_link'] %}
-      <img src="../static/{{post['image_link']}}" class="img-lp" />
+      <img src="{{ url_for('static', filename='/images/posts-images/' + post['image_link']) }}"  class="img-lp"/>
       {% endif %}
       <!-- Autor del post -->
       <p>Published by <span style="color: black">{{post['username']}}</span></p>
