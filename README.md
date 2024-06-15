@@ -28,7 +28,7 @@ This project is a practical work for the "Introduction to Software Development" 
 
 3. Install the required dependencies:
     ```bash
-    pipenv install -r requirements_front.txt
+    pipenv install -r requirements.txt
     ```
 
 4. Run the frontend:
@@ -52,7 +52,7 @@ This project is a practical work for the "Introduction to Software Development" 
 
 3. Install the required dependencies:
     ```bash
-    pipenv install -r requirements_api.txt
+    pipenv install -r requirements.txt
     ```
 
 4. Run the back end:
