@@ -1,9 +1,7 @@
-from flask import Flask, jsonify, request, url_for, redirect, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request
 from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
-import os
 from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
@@ -227,9 +225,10 @@ def get_posts(selected_category):
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE category LIKE '{selected_category}' ORDER BY id_post DESC"
     try:
         data = connection.execute(text(query))
-        connection.close()
     except SQLAlchemyError as err:
         return jsonify(str(err.__cause__)), 400
+    finally:
+        connection.close()
     posts = []
     for row in data:
         entity = {}
