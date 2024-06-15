@@ -185,8 +185,8 @@ def send_response():
     return redirect(url_for('responses', selected_category=post_category, id_post=post_id))
     
 
-@app.route('/update_response', methods=['GET', 'POST'])
-def update_response():
+@app.route('/update_response/<post_category>/<id_post>/<id_response>', methods=['GET', 'POST'])
+def update_response(post_category, id_post, id_response):
     if request.method == 'POST':
         id_response = request.form.get('id_response')
         post = request.form.get('post')
@@ -198,13 +198,13 @@ def update_response():
         response = requests.patch(API_URL + '/update_response', json=response_data)
         if response.status_code == 200:
             message = "La respuesta se ha actualizado correctamente."
-            flash(f"{message}", "success")
-            return render_template('update_response.html')
+            flash(message, "success")
+           
         else:
             error = "No se pudo actualizar la respuesta."
-            flash(f"{error}", "error")
-            return render_template('update_response.html')
-    return render_template('update_response.html')
+            flash(error, "error")
+            
+    return render_template('update_response.html', post_category = post_category, id_post = id_post, id_response = id_response)
 
 @app.route('/remove_response', methods=['GET', 'POST'])
 def remove_response():
