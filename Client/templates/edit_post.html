@@ -32,12 +32,12 @@
     {% endif %}
 {% endwith %}
 
-    <!-- new post -->
+    <!-- edited post -->
     <div class="visible" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <!-- form new post -->
+                <!-- form edited post -->
                 <form action="{{ url_for('edit_post', category = category, id_post = id_post) }}" method=post enctype=multipart/form-data>
                     <div class="modal-header d-flex align-items-center text-white">
                         <h6 class="modal-title mb-0" id="threadModalLabel"> Edit your post in {{category}}</h6>
