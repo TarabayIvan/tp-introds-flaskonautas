@@ -451,6 +451,18 @@ def update_response():
 
 @app.route('/delete_response/<int:id_response>', methods=['DELETE'])
 def delete_response(id_response):
+    '''
+Borra una respuesta de ID específico 
+PRE: 
+    La respuesta debe existir, el usuario debe estar logueado correctamente y ser el autor de la respuesta para que se le permita borrarla.
+    
+POST: 
+    Si el usuario cumple las condiciones, se elimina la respuesta, devolviéndose un 200 (OK) + mensaje que corrobora que se ha podido eliminar la respuesta.
+    Si la respuesta no existe, se devuelve un 404 (Not Found) + mensaje que indica que la respuesta no existe en la db.
+    Si el usuario no tiene permisos para borrar la respuesta, se devuelve un 403 (Forbidden) + mensaje indicando que no se tienen los permisos requeridos.
+    En caso de cualquier otro error, se devuelve un 500 (Internal Server Error).
+
+    '''
     conn = engine.connect()
     data = request.json
     
