@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, url_for, redirect, render_template, session, current_app, flash
-from werkzeug.utils import secure_filename
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from PIL import Image
 import requests
 import secrets #libreria de python para generar nombre random
@@ -181,7 +180,7 @@ def send_response():
     return redirect(url_for('responses', selected_category=post_category, id_post=post_id))
     
 
-@app.route('/update_response/<post_category>/<id_post>/<id_response>', methods=['GET', 'POST'])
+@app.route('/c/<post_category>/post/<id_post>/update_response/<id_response>', methods=['GET', 'POST'])
 def update_response(post_category, id_post, id_response):
     if request.method == 'POST':
         id_response = request.form.get('id_response')
@@ -190,12 +189,11 @@ def update_response(post_category, id_post, id_response):
             'id_response': id_response,
             'post': post
         }
-        
         response = requests.patch(API_URL + '/update_response', json=response_data)
         if response.status_code == 200:
             message = "La respuesta se ha actualizado correctamente."
             flash(message, "success")
-           
+            return redirect(url_for('responses', selected_category=post_category, id_post=id_post))
         else:
             error = "No se pudo actualizar la respuesta."
             flash(error, "error")
@@ -204,8 +202,8 @@ def update_response(post_category, id_post, id_response):
 
 @app.route('/remove_response')
 def remove_response():
-    id_response = request.args.get('response_id')
-    id_post = request.args.get('post_id')
+    id_response = request.args.get('id_response')
+    id_post = request.args.get('id_post')
     post_category = request.args.get('post_category')
     if not 'user' in session:
         flash("Necesita iniciar session para borrar un comentario!", "error")

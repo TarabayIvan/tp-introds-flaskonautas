@@ -1175,6 +1175,11 @@ footer h4 {
   border-radius: 0.375rem;
 }
 
+.button-back:hover {
+    cursor: pointer;
+
+}
+
 
  /* flashes */
 .error_message {

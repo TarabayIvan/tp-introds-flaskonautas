@@ -15,6 +15,13 @@
             {% for post in post %}
             <article>
                 <div class="mb-4">
+                    <!-- Boton para volver atras -->
+                     <a href="{{ url_for('category', selected_category=post['category']) }}">
+                        <button class="button-back">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                     </a>
+
                     <!-- Título de la publicación -->
                     <h1 class="fw-bolder mb-1">{{ post['title'] }}</h1>
                     <!-- Datos de la publicación -->
@@ -53,7 +60,8 @@
                                     <div class="fw-bold">{{ response['username'] }}</div>
                                     {{ response['post'] }}
                                     <div class="edit-post">
-                                        <a href="{{url_for('remove_response', response_id=response['id_response'], post_id=post['id_post'], post_category=post['category'])}}">Borrar</a>
+                                        <a href="{{url_for('remove_response', id_response=response['id_response'], id_post=post['id_post'], post_category=post['category'])}}">Borrar</a>
+                                        <a href="{{url_for('update_response', id_response=response['id_response'], id_post=post['id_post'], post_category=post['category'])}}">Editar</a>
                                     </div>
                                 </div>
                             </div>
