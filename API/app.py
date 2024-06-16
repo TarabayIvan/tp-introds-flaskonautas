@@ -179,6 +179,15 @@ def delete_user():
 
 @app.route('/create_post', methods = ['POST'])
 def create_post():
+    '''
+    PRE: Recibe en formato json los datos del post a crear (username, category, title, post e image_link)
+
+    POST: Si no a ocurrido ningun error se crea un nuevo post en la base de datos con los datos recibidos, 
+    devuelve un status code 201 si el post se a creado correctamente, 
+    devuelve un 400 si falto algun dato requerido para la creacion del post, 
+    devuelve un 404 si el usuario no existe en la base de datos, 
+    devuelve un 400 tambien si ocurre algun error durante la ejecucion de la query.
+    '''
     connection = engine.connect()
     new_post = request.get_json()
 
@@ -251,6 +260,14 @@ def delete_post(id_post):
 
 @app.route('/get_posts/<selected_category>', methods = ['GET'])
 def get_posts(selected_category):
+    '''
+    PRE: Recibe por path la categoria de los posts solicitados.
+
+    POST: Devuelve en formato json todos los posts que haya en la base de datos que correspondan a la categoria solicitada, 
+    devuelve un status code 200 si se ejecutado la query con exito, 
+    si no hay ningun post en esa categoria devuelve el json con una lista vacia, 
+    devuelve un 400 si ocurre algun error durante la ejecucion de la query.
+    '''
     connection = engine.connect()
     query = f"SELECT username, id_post, category, title, post, image_link FROM posts JOIN users ON posts.id_user = users.id_user WHERE category LIKE '{selected_category}' ORDER BY id_post DESC"
     try:
