@@ -44,10 +44,6 @@ def index():
     if 'user' in session:
         username = session['user']['username']
         return render_template("index.html", username = username)
-    if 'error' in session:
-        error = session['error']
-        flash(f"{error}", "error")
-        return render_template("index.html")
     return render_template("index.html")
 
 
@@ -62,11 +58,10 @@ def login():
             if response.status_code == 200:
                 user_data = response.json()
                 session['user'] = user_data  # Guarda la data de usuario en session
+                flash("Login exitoso!", "success")
                 return redirect(url_for('index'))
             else:
-                error_message = "Login fallido!"
-                flash(f"{error_message}", "error")
-                session['error'] = error_message
+                flash("Login fallido!", "error")
                 return redirect(url_for('index'))
     return render_template('login.html')
 
@@ -100,6 +95,7 @@ def recovery():
         if username and new_password and security_answer_1 and security_answer_2:
             respone = requests.patch(API_URL + '/update_password', json = user_credentials)
             if respone.status_code == 200:
+                flash("Se cambio la contraseña exitosamente!", "success")
                 return redirect(url_for('login')) # Redirige a login si se cambio la contraseña
             elif respone.status_code == 401:
                 error_msj = "Las respuestas a las preguntas de seguridad son incorrectas."
@@ -206,11 +202,14 @@ def update_response(post_category, id_post, id_response):
             
     return render_template('update_response.html', post_category = post_category, id_post = id_post, id_response = id_response)
 
-@app.route('/remove_response', methods=['GET', 'POST'])
+@app.route('/remove_response')
 def remove_response():
     id_response = request.args.get('response_id')
     id_post = request.args.get('post_id')
     post_category = request.args.get('post_category')
+    if not 'user' in session:
+        flash("Necesita iniciar session para borrar un comentario!", "error")
+        return redirect(url_for('responses', selected_category=post_category, id_post=id_post))
     username = session['user']['username']
     data = {"username": username, "id_response": id_response}
     response = requests.delete(API_URL + '/delete_response/' + id_response, json=data)
@@ -228,7 +227,7 @@ def send_post():
     post_category = request.form.get("post-category")
     post_image = request.files['post-image']
     if not 'user' in session:
-        flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+        flash("Necesita iniciar session para publicar un post!", "error")
         return redirect(url_for('category', selected_category=post_category))
     username = session['user']['username']
     if not (username and post_title and post_content and post_category):
@@ -239,7 +238,7 @@ def send_post():
     else:
         post_image = request.files['post-image']
         filename = save_image(post_image)
-        if filename == None:
+        if not filename:
             flash("La imagen que selecciono es invalida!", "error")
             return redirect(url_for('category', selected_category=post_category))
     post = {'username': username, 'title': post_title, 'post': post_content, 'category': post_category, 'image_link': filename}
@@ -256,7 +255,7 @@ def delete_request_post(id_post, category):
     try:
         # Envia la solicitud DELETE a la API
         if not 'user' in session:
-            flash("Necesita iniciar session para publicar un post!", "error") # flash muestra un mensaje por pantalla
+            flash("Necesita iniciar session para publicar un post!", "error")
             return redirect(url_for('category', selected_category=category))
         username = {'username': session['user']['username']}
         response = requests.delete(API_URL + f"/delete_post/{id_post}", json=username)
@@ -274,7 +273,7 @@ def delete_request_post(id_post, category):
         else:
             # si llegara a fallar, devolviendo haci un mensaje de error
             # tambien se puede modificar por algo mucho mejor
-            flash(f"Error al intentar eliminar. Código de estado:{response.status_code}", "error")
+            flash("Error al intentar eliminar el post.", "error")
             return redirect(url_for('category', selected_category=category))
     except Exception as e:
         # esto es algo provicional para los ejemplos
@@ -300,7 +299,8 @@ def save_image(image):
         os.remove(image_path)
         return None
 
-@app.route('/edit_post/<category>/<id_post>', methods = ['GET', 'POST'])
+
+@app.route('/c/<category>/edit_post/<id_post>', methods = ['GET', 'POST'])
 def edit_post(category, id_post):
     if request.method == 'POST':
         title = request.form.get('post-title')
@@ -312,9 +312,10 @@ def edit_post(category, id_post):
         response = requests.patch(API_URL + '/update_post/' + str(id_post), json=data)
         if response.status_code == 200:
             flash("El post se ha editado correctamente.", "success")
+            return redirect(url_for('category', selected_category=category))
         else:
             flash("No se pudo editar el post.", "error")
-
+            
     return render_template("edit_post.html", category = category, id_post = id_post)
 
 

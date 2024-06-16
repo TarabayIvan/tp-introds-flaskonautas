@@ -41,9 +41,6 @@
                 <form action="{{ url_for('edit_post', category = category, id_post = id_post) }}" method=post enctype=multipart/form-data>
                     <div class="modal-header d-flex align-items-center text-white">
                         <h6 class="modal-title mb-0" id="threadModalLabel"> Edit your post in {{category}}</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -64,7 +61,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a type="button" class="btn btn-light" data-dismiss="modal" href="{{ url_for ('categories')}}">Cancel</a>
+                        <a type="button" class="btn btn-light" data-dismiss="modal" href="{{ url_for('category', selected_category=category) }}">Cancel</a>
                         <button type="submit" class="btn btn-primary" id="submit-btn">Post</button>
                     </div>
                 </form>

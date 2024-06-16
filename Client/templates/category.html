@@ -89,38 +89,22 @@
             <!-- posts -->
             <div class="inner-main-body p-2 p-sm-3 forum-content show">
                 {% if posts|length == 0 %}
-                {% for _ in range(5) %}
-                <div class="card mb-3">
+                <div class="card-post mb-3">
                     <div class="card-body p-2 p-sm-3">
                         <div class="media forum-item">
                             <div class="media-body">
-                                <h5 class="post-title"><a href="#" class="text-body">Este es el titulo del post</a></h5>
-
-                                <p class="post-text">
-                                    {{ 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas officiis
-                                    quibusdam iste nihil, quasi nam fugit ipsum quas aperiam laboriosam, eaque minus
-                                    fugiat, nobis nisi ipsam. Explicabo quasi recusandae eveniet expedita est velit
-                                    exercitationem architecto at doloribus. Veritatis voluptatibus molestias eaque, eum
-                                    aperiam, quam deleniti, quod sunt fugit vitae dignissimos?' | truncate(200) }}
-                                </p>
+                                <h5 class="post-title"><a class="text-body">Aun no hay posteos en esta categoria</a></h5>
+                                <p class="post-text"> ¡Sé el primero en romper el hielo! Esta categoría está esperando tus ideas y opiniones. ¡Inicia la conversación!</p>
                                 <div class="info-text">
-                                    <p class="info-post">Published by username</p>
-
-                                    <p class="edit-post"><a href="#">Borrar</a> <a href="#">Editar</a></p>
+                                    <p class="info-post">Published by Flaskonautas</p>
                                 </div>
                             </div>
-                            <div class="text-muted small text-center align-self-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
-                                <span><i class="far fa-comment ml-2"></i> 3</span>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-                {% endfor %}
                 {% else %}
                 {% for post in posts %}
-                <div class="card mb-3" data-title="{{ post['title']|lower }}">
+                <div class="card-post mb-3" data-title="{{ post['title']|lower }}">
                     <div class="card-body p-2 p-sm-3">
                         <div class="media forum-item">
                             <div class="media-body">
@@ -133,10 +117,6 @@
 
                                     <p class="edit-post"><a href="{{ url_for('delete_request_post', category=category, id_post=post['id_post']) }}">Borrar</a> <a href="{{ url_for('edit_post', category=category, id_post=post['id_post']) }}">Editar</a></p>
                                 </div>
-                            </div>
-                            <div class="text-muted small text-center align-self-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
-                                <span><i class="far fa-comment ml-2"></i> 3</span>
                             </div>
                         </div>
                     </div>
