@@ -406,15 +406,24 @@ def get_complete_post (id_post):
 def update_response():
     connection = engine.connect()
     new_response = request.get_json()
-    required_fields = ['id_response', 'post'] # valido que se reciben los campos necesarios
+    required_fields = ['id_response', 'post', 'username'] # valido que se reciben los campos necesarios
     for field in required_fields:
         if field not in new_response:
             return jsonify({'message': f'Faltan datos en la solicitud ({field})'}), 400
+        
+    query_check = f"""SELECT username FROM users
+                    JOIN responses ON responses.id_user = users.id_user
+                    WHERE id_response = '{new_response['id_response']}';
+                """ 
     query = f"""UPDATE responses
                 SET post = '{new_response['post']}'
                 WHERE id_response = '{new_response['id_response']}';
             """
     try:
+        check_res = connection.execute(text(query_check))
+        user = check_res.fetchone()
+        if user.username != new_response['username']:
+            return jsonify({'message':'No tienes permiso para editar esta respuesta'}), 403
         connection.execute(text(query))
         connection.commit()
         connection.close()
