@@ -182,12 +182,16 @@ def send_response():
 
 @app.route('/c/<post_category>/post/<id_post>/update_response/<id_response>', methods=['GET', 'POST'])
 def update_response(post_category, id_post, id_response):
+    if not 'user' in session:
+        flash("Necesita iniciar sesion para editar este comentario!", "error")
+        return redirect(url_for('responses', selected_category=post_category, id_post=id_post))
     if request.method == 'POST':
         id_response = request.form.get('id_response')
         post = request.form.get('post')
         response_data = {
             'id_response': id_response,
-            'post': post
+            'post': post,
+            "username": session['user']['username']
         }
         response = requests.patch(API_URL + '/update_response', json=response_data)
         if response.status_code == 200:
@@ -300,12 +304,13 @@ def save_image(image):
 
 @app.route('/c/<category>/edit_post/<id_post>', methods = ['GET', 'POST'])
 def edit_post(category, id_post):
+    if not 'user' in session:
+        flash("Necesita iniciar sesion para editar el post!", "error")
+        return redirect(url_for('category', selected_category=category))
     if request.method == 'POST':
         title = request.form.get('post-title')
         post_content = request.form.get('post-content')
-        if not 'user' in session:
-            flash("Necesita iniciar sesion para editar el post!", "error")
-            return redirect(url_for('category', selected_category=category))
+
         data = {"title": title, "post": post_content, "username": session['user']['username']}
         response = requests.patch(API_URL + '/update_post/' + str(id_post), json=data)
         if response.status_code == 200:
