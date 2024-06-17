@@ -214,6 +214,19 @@ def create_post():
 
 @app.route('/delete_post/<int:id_post>', methods=['DELETE'])
 def delete_post(id_post):
+    '''
+Borra un post y sus respuestas e imagenes asociadas si existen.
+PRE: 
+    El post debe existir, el usuario debe estar logueado correctamente y ser el autor del posteo para que se le permita borrarlo.
+    
+POST: 
+    Si el usuario cumple las condiciones, se elimina el posteo, devolviéndose un 200 (OK) + mensaje que corrobora que se ha podido eliminar + un JSON con la direccion de la imagen si la hay.
+    Si el post no existe, se devuelve un 404 (Not Found) + mensaje que indica que el post no existe en la base de datos.
+    Si el usuario no tiene permisos para borrar el post, se devuelve un 403 (Forbidden) + mensaje indicando que no se tienen los permisos requeridos.
+    En caso de cualquier otro error, se devuelve un 500 (Internal Server Error).
+
+    '''
+    
     conn = engine.connect()
     data = request.json
     
