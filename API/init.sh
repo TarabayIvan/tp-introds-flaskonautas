@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir .venv
+pipenv install
 pipenv shell
-pipenv install -r requirements.txt
 flask run -p 5001

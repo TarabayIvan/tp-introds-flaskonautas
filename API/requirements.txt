@@ -1,5 +1,5 @@
+flask
 mysql-connector-python
 flask_sqlalchemy
-python-dotenv
 werkzeug
 requests
