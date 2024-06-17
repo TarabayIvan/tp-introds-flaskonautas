@@ -20,20 +20,18 @@ This project is a practical work for the "Introduction to Software Development" 
     cd tp-introds-flaskonautas
     cd Client
     ```
-
-2. Create a virtual environment for the front end and activate it:
+2. Install python-dotenv globally:
     ```bash
-    pipenv shell
+    pip install python-dotenv
+    ```
+    Install python-dotenv globally (on arch based distros):
+    ```bash
+    pacman -S python-dotenv
     ```
 
-3. Install the required dependencies:
+3. Run the init script:
     ```bash
-    pipenv install -r requirements.txt
-    ```
-
-4. Run the frontend:
-    ```bash
-    flask run
+    ./init.sh
     ```
 
 ## Back End Installation Guide
@@ -45,24 +43,9 @@ This project is a practical work for the "Introduction to Software Development" 
     cd API
     ```
 
-2. Create a virtual environment for the back end and activate it:
+2. Run the init script:
     ```bash
-    pipenv shell
-    ```
-
-3. Install the required dependencies:
-    ```bash
-    pipenv install -r requirements.txt
-    ```
-
-4. Run the back end:
-    ```bash
-    flask run -p 5001
-    ```
-
-5. Initialize the database:
-    ```bash
-    python database_initializer/init_db.py
+    ./init.sh
     ```
 
 ## DB Installation Guide
@@ -70,8 +53,7 @@ This project is a practical work for the "Introduction to Software Development" 
 1. Create the container:
     ```bash
     cd Database_initializer
-    cd docker
-    docker-compose up --build -d
+    ./init.sh
     ```
 
 2. Connect to the MySQL database:
