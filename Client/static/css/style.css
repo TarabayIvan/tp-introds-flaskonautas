@@ -159,6 +159,7 @@ nav .fa {
     display: none;
 }
 
+
 @media (max-width: 850px) {
     .text-box h1 {
         font-size: 20px;
@@ -171,7 +172,7 @@ nav .fa {
     .nav-links {
         position: absolute;
         background: #f44336;
-        height: 100vh;
+        height: 25rem;
         width: 200px;
         top: -800px;
         right: 0px;
