@@ -57,7 +57,7 @@ def login():
                 return redirect(url_for('index'))
             else:
                 flash("Login fallido!", "error")
-                return redirect(url_for('index'))
+                return redirect(url_for('login'))
     return render_template('login.html')
 
 
