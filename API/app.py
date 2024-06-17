@@ -369,16 +369,6 @@ def update_post(id_post):
 
 @app.route('/create_response', methods = ['POST'])
 def create_response():
-    '''
-    Sube una respuesta a la base de datos
-
-    PRE: Recibe en formato json los datos de la respuesta a crear (username, post, id_post)
-
-    POST: 
-    - devuelve un status code 201 si la respuesta se a creado correctamente.
-    - devuelve un 400 si falto algun dato requerido para la creacion de la respuesta, si
-    el usuario no existe o hubo algun SQLAlechmyError
-    '''
     connection = engine.connect()
     new_response = request.get_json()
     required_fields = ['username', 'post', 'id_post'] # valido que se reciben los campos necesarios
@@ -411,18 +401,18 @@ def create_response():
 @app.route('/get_complete_post/<id_post>', methods = ['GET']) 
 def get_complete_post (id_post): 
 
-    '''
-    Obtiene la información completa de un post y sus respuestas asociadas mediante su ID.
-    
-    PRE: 
-    El ID de la publicación debe existir en la db.
-    No se requiere autenticación para acceder a la información ya que el post es público.
-    
-    POST: 
-    Si el ID de la publicación existe en la db y la query se realiza correctamente, se devuelve un 200 (OK) + la información completa del post y sus respuestas (si las hay).
-    Si no se encuentra la publicación, se devuelve un 404 (Not Found) + un mensaje indicando que el post de ese ID no existe en la db.
-    En caso de cualquier otro error, se devuelve un 400 (Bad Request) + un mensaje de error.
-    '''
+'''
+Obtiene la información completa de un post y sus respuestas asociadas mediante su ID.
+
+PRE: 
+El ID de la publicación debe existir en la db.
+No se requiere autenticación para acceder a la información ya que el post es público.
+
+POST: 
+Si el ID de la publicación existe en la db y la query se realiza correctamente, se devuelve un 200 (OK) + la información completa del post y sus respuestas (si las hay).
+Si no se encuentra la publicación, se devuelve un 404 (Not Found) + un mensaje indicando que el post de ese ID no existe en la db.
+En caso de cualquier otro error, se devuelve un 400 (Bad Request) + un mensaje de error.
+'''
 
     
     connection = engine.connect() 
