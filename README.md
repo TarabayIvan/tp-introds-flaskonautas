@@ -1,43 +1,88 @@
-# Product Backlog
+# Foro "Los Flaskonautas"
 
-1. Registro y Autenticación de Usuarios
+Trabajo práctico para la materia "Introducción al desarrollo de software" de la Facultad de Ingeniería de la Universidad de Buenos Aires.
 
-   Los usuarios registrados tienen que poder registrarse con un nombre de usuario y contraseña.
-   Los usuarios registrados tienen que poder iniciar sesión con usuario y contraseña.
-   Los usuarios registrados tienen que poder poder cerrar sesión.
-	
-2. Gestión de Perfil de Usuario
+## Presentation
 
-   Los usuarios registrados tienen que poder actualizar su perfil, incluyendo nombre y foto de perfil.
-   Los usuarios registrados tienen que poder eliminar su cuenta.
-   Los usuarios registrados tienen que poder cambiar su contraseña.
+This project is a practical work for the "Introduction to Software Development" course at the Faculty of Engineering, University of Buenos Aires. It involves creating a full-fledged web application using Flask.
 
-4. Publicación de Contenidos
+## Features
 
-   Los usuarios registrados tienen que poder crear nuevos hilos con título, contenido y opcionalmente una imagen.
-   Los usuarios registrados tienen que poder comentar en un hilo.
+- Complete API functionality
+- User-friendly client interface
+- Database initialization and management
 
-6. Visualización de Contenidos
+## Front End Installation Guide
 
-   Los usuarios tienen que poder ver una lista de los hilos de cada categoría.
-   Los usuarios tienen que poder ver el perfil del autor de un post.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/TarabayIvan/tp-introds-flaskonautas.git
+    cd tp-introds-flaskonautas
+    cd Client
+    ```
+2. Install python-dotenv globally:
+    ```bash
+    pip install python-dotenv
+    ```
+    Install python-dotenv globally (on arch based distros):
+    ```bash
+    pacman -S python-dotenv
+    ```
 
-## Tareas Asociadas
+3. Run the init script:
+    ```bash
+    ./init.sh
+    ```
 
-| ID  | Tarea                                       | Descripción                                                        | Responsable | Estado    | Prioridad |
-|-----|---------------------------------------------|--------------------------------------------------------------------|-------------|-----------|-----------|
-| 1   | Crear base de datos                         | Diseñar y crear las tablas necesarias en la base de datos          | Backend     | Pendiente | Alta      |
-| 2   | Conexión de API con base de datos           | Configurar la conexión entre la API y la base de datos             | Backend     | Pendiente | Media      |
-| 3   | Diseñar formulario de registro              | Crear el formulario de registro para nuevos usuarios               | Frontend    | Pendiente | Media     |
-| 4   | Lógica de creación de nuevo usuario         | Implementar la lógica de registro de nuevos usuarios en la base de datos | Backend | Pendiente | Alta      |
-| 5   | Validación de usuario y contraseña          | Implementar la lógica para validar el usuario y la contraseña durante el inicio de sesión | Backend | Pendiente | Alta      |
-| 6   | Lógica de cambio de contraseña              | Implementar la lógica para permitir a los usuarios cambiar su contraseña | Backend | Pendiente | Media     |
-| 7   | Lógica de creación de hilos                 | Implementar la lógica para crear nuevos hilos en el foro           | Backend     | Pendiente | Alta      |
-| 8   | Lógica de creación de respuestas a hilos    | Implementar la lógica para agregar respuestas a los hilos existentes | Backend | Pendiente | Alta      |
-| 9   | Crear template base                         | Diseñar un template base que se pueda reutilizar en otros templates | Frontend    | Pendiente | Media     |
-| 10  | Crear template para registrarse             | Diseñar el template para la página de registro                     | Frontend    | Pendiente | Media     |
-| 11  | Crear template para iniciar sesión          | Diseñar el template para la página de inicio de sesión             | Frontend    | Pendiente | Media     |
-| 12  | Crear template para editar usuario          | Diseñar el template para la página de edición del perfil de usuario | Frontend    | Pendiente | Media     |
-| 13  | Diseñar CSS global                          | Diseñar el archivo CSS global para el estilo de la aplicación      | Frontend    | Pendiente | Baja      |
-| 14  | Conexión de front-end con la API            | Implementar la lógica para que el front-end se comunique con la API | Frontend    | Pendiente | Alta      |
+## Back End Installation Guide
 
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/TarabayIvan/tp-introds-flaskonautas.git
+    cd tp-introds-flaskonautas
+    cd API
+    ```
+
+2. Run the init script:
+    ```bash
+    ./init.sh
+    ```
+
+## DB Installation Guide
+
+1. Create the container:
+    ```bash
+    cd Database_initializer
+    ./init.sh
+    ```
+
+2. Connect to the MySQL database:
+    ```bash
+    docker exec -it docker-db-1 mysql -u root -p
+    ```
+
+## Dependencies
+
+- Flask
+- SQLAlchemy
+- Pillow
+- Werkzeug
+- dotenv
+- requests
+
+## API Endpoints
+
+- `POST /register_user`: Registrar un nuevo usuario.
+- `POST /login_user`: Iniciar sesión de usuario.
+- `POST /get_user`: Obtener información de usuario.
+- `POST /update-password`: Actualizar la contraseña del usuario.
+- `POST /create_post`: Crear una nueva publicación.
+- `POST /get_posts`: Obtener todas las publicaciones.
+- `POST /get_last_posts`: Obtener las publicaciones más recientes.
+- `POST /create_response`: Crear una nueva respuesta a una publicación.
+- `POST /get_complete_post`: Obtener una publicación con todas sus respuestas.(corregir no envia un erorr si un post es invalido).
+- `POST /delete_user`: Eliminar un usuario.
+- `PUT /update_post`: Actualizar una publicación.
+- `PATCH /update_response`: Actualizar una respuesta.
+- `DELETE /delete_post`: Eliminar una publicación.
+- `DELETE /delete_response`: Eliminar una respuesta.
