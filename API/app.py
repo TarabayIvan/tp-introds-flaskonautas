@@ -401,18 +401,18 @@ def create_response():
 @app.route('/get_complete_post/<id_post>', methods = ['GET']) 
 def get_complete_post (id_post): 
 
-'''
-Obtiene la información completa de un post y sus respuestas asociadas mediante su ID.
+    '''
+    Obtiene la información completa de un post y sus respuestas asociadas mediante su ID.
 
-PRE: 
-El ID de la publicación debe existir en la db.
-No se requiere autenticación para acceder a la información ya que el post es público.
+    PRE: 
+    El ID de la publicación debe existir en la db.
+    No se requiere autenticación para acceder a la información ya que el post es público.
 
-POST: 
-Si el ID de la publicación existe en la db y la query se realiza correctamente, se devuelve un 200 (OK) + la información completa del post y sus respuestas (si las hay).
-Si no se encuentra la publicación, se devuelve un 404 (Not Found) + un mensaje indicando que el post de ese ID no existe en la db.
-En caso de cualquier otro error, se devuelve un 400 (Bad Request) + un mensaje de error.
-'''
+    POST: 
+    Si el ID de la publicación existe en la db y la query se realiza correctamente, se devuelve un 200 (OK) + la información completa del post y sus respuestas (si las hay).
+    Si no se encuentra la publicación, se devuelve un 404 (Not Found) + un mensaje indicando que el post de ese ID no existe en la db.
+    En caso de cualquier otro error, se devuelve un 400 (Bad Request) + un mensaje de error.
+    '''
 
     
     connection = engine.connect() 
