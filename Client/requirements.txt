@@ -1,4 +1,4 @@
+flask
 pillow
-python-dotenv
 werkzeug
 requests

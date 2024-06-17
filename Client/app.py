@@ -4,16 +4,12 @@ from PIL import Image
 import requests
 import secrets #libreria de python para generar nombre random
 import os
-from dotenv import load_dotenv
 
 ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif'}
 ALLOWED_CATEGORIES = {'Technology', 'Science', 'Health', 'Music', 'Politics', 'Sports', 'Entertainment', 'Travel', 'Art'}
-# Cargar las variables de entorno desde el archivo .env
-load_dotenv()
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024 # Limita el peso de la imagen a 2mb
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 API_URL = 'http://localhost:5001'
