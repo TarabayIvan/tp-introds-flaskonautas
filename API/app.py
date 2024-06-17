@@ -369,6 +369,14 @@ def update_post(id_post):
 
 @app.route('/create_response', methods = ['POST'])
 def create_response():
+    '''
+    Sube una respuesta a la base de datos
+    PRE: Recibe en formato json los datos de la respuesta a crear (username, post, id_post)
+    POST: 
+    - devuelve un status code 201 si la respuesta se a creado correctamente.
+    - devuelve un 400 si falto algun dato requerido para la creacion de la respuesta, si
+    el usuario no existe o hubo algun SQLAlechmyError
+    '''
     connection = engine.connect()
     new_response = request.get_json()
     required_fields = ['username', 'post', 'id_post'] # valido que se reciben los campos necesarios
