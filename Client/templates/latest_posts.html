@@ -1,30 +1,30 @@
-{%extends "base.html" %} {% block title %}
-<title>Latest Posts</title>
-{% endblock %} {% block header %}
+{%extends "base.html" %}
+
+{% block header %}
 <header class="sub-header">
-  <div class="grid-container">
-    <!-- Se itera en los posts cargados y crea un elemento de la grilla para cada uno -->
-    {% for post in posts %}
-    <div class="grid-item">
-      <!-- Se muestra el titulo del post y este redirije hacia /category/id_post -->
-      <h2 class="grid-title">
-        <a
-          style="color: black"
-          href="/c/{{post['category']}}/post/{{post['id_post']}}"
-          >{{post['title']}}</a
-        >
-      </h2>
-      <!-- Verifica si el post tiene una imagen, si la tiene, la añade -->
-      {% if post['image_link'] %}
-      <img src="{{ url_for('static', filename='/images/posts-images/' + post['image_link']) }}"  class="img-lp"/>
-      {% endif %}
-      <!-- Autor del post -->
-      <p>Published by <span style="color: black">{{post['username']}}</span></p>
-      <!-- Contenido del post -->
-      <p class="grid-text">{{post['post']}}</p>
-    </div>
-    {% endfor %}
+  <div class="text-box">
+    <h1>Latest Posts</h1>
   </div>
-  <div class="footer-lp"></div>
 </header>
+{% endblock %}
+
+{% block body %}
+<section class="course">
+
+  <body>
+    <div class="divisor"></div>
+    {% for post in posts %}
+    <div class="post-container">
+      <p style="color: rgb(41, 41, 41);">Category: {{post['category']}}</p>
+      <h2>{{post['title']}}</h2>
+      <p>Published by <span style="color: black">{{post['username']}}</span></p>
+      <p>{{post['post']}}</p>
+      <a href="/c/{{post['category']}}/post/{{post['id_post']}}"> 
+        <button style="margin-left: 90%;">Go to post</button>
+      </a>
+    </div>
+    <div class="divisor"></div>
+    {% endfor %}
+  </body>
+</section>
 {% endblock %}
