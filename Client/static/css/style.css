@@ -691,7 +691,6 @@ button[type="submit"]:hover {
     width: 80%;
     margin: auto;
     padding: 50px 0;
-    background-image: url(../images/banner.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -720,11 +719,11 @@ button[type="submit"]:hover {
     color: white;
     border-radius: 20px;
     cursor: pointer;
-    border: 1px solid #f44336;
     padding: 10px;
     transition: 0.5s;
     background-color: #253760;
     margin-top: 5px;
+    border: none;
 }
 
 .btn-go-to:hover{
