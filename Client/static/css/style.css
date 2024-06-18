@@ -639,7 +639,7 @@ button[type="submit"]:hover {
     width: 80%;
     margin: auto;
     padding: 50px 0;
-    background-color: #253760;
+    background-color: #0b1d44;
     color: #c40000;
     border-radius: 20px;
     margin-bottom: 30px;
@@ -654,7 +654,7 @@ button[type="submit"]:hover {
 }
 
 .btn-go-to{
-    margin-left: 80%;
+    margin-left: 600px;
     font-size: 20px;
     color: #f44336;
     border-radius: 20px;
@@ -662,15 +662,22 @@ button[type="submit"]:hover {
     border: 1px solid #f44336;
     padding: 10px;
     transition: 0.5s;
-    background-color: #253760;
+    background-color: white;
 }
 
 .btn-go-to:hover{
     background-color: #f44336;
-    color: white;
+    color: #253760;
 }
 
 
+@media (max-width: 850px) {
+    .btn-go-to{
+        margin-left: 10rem;
+        font-size: 10rem;
+    }
+
+}
 
 
 
