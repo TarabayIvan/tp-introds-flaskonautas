@@ -22,18 +22,15 @@
         <nav>
             <a href="{{url_for ('index') }}"><img src="{{url_for('static', filename='/images/logoo.png')}}" alt="" /></a>
             <div class="nav-links" id="navLinks">
-                <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+
                 <ul>
-                  <li><a href="{{url_for ('index') }}">HOME</a></li>
-                  <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
-                  <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
-                  {% if 'user' not in session %}
-                  <li><a href="{{url_for('login')}}" class="hero-btn ">Sign in</a></li>
-                  <li><a href="{{url_for('signup')}}" class="hero-btn ">Sign up</a></li>
-                  {% else %}
-                  <li><a href="{{url_for ('get_user_data') }}" ><span class="material-symbols-outlined icon-user ">account_circle</span></a></li>
-                  <li><a href="{{url_for('logout')}}" class="hero-btn">Log out</a></li>
-                  {% endif %}
+                    <li><i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i></li>
+                    <li><a href="{{url_for ('index') }}">HOME</a></li>
+                    <li><a href="{{url_for ('categories') }}">CATEGORIES</a></li>
+                    <li><a href="{{url_for ('latest_posts') }}">LATEST POSTS</a></li>
+                    {% if 'user' not in session %}<li><a href="{{url_for('login')}}" class="hero-btn ">Sign in</a></li><li><a href="{{url_for('signup')}}" class="hero-btn ">Sign up</a></li>
+                    {% else %}<li><a href="{{url_for ('get_user_data') }}" ><span class="material-symbols-outlined icon-user ">account_circle</span></a></li><li><a href="{{url_for('logout')}}" class="hero-btn">Log out</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
