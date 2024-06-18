@@ -161,7 +161,7 @@ nav .fa {
 
 @media (max-width: 850px) {
     .text-box{
-        top: 30%;
+        top: 40%;
     }
     .nav img{
         width: 100px;
@@ -262,6 +262,9 @@ h3 {
 
     .row-category {
         margin-bottom: 400px;
+    }
+    .course{
+        padding: 20px 0;
     }
 }
 
@@ -391,9 +394,13 @@ input[type="submit"]:hover {
     transition: .5s;
 }
 
-@media (max-width: 250px) {
+@media (max-width: 850px) {
     .formlogin {
         top: 40%;
+        width: 20rem;
+    }
+    .formlogin h1{
+        font-size: 1.5rem;
     }
 }
 
