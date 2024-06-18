@@ -69,7 +69,6 @@ This project is a practical work for the "Introduction to Software Development" 
 - SQLAlchemy
 - Pillow
 - Werkzeug
-- dotenv
 - requests
 
 ## API Endpoints
