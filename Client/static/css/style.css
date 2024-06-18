@@ -869,7 +869,7 @@ footer h4 {
 
 /* Latest posts */
 
-.post-container{
+.last-post-container{
     height: auto;
     width: 60%;
     margin-left: 20%;
@@ -884,7 +884,7 @@ footer h4 {
     width: 70%;
     }
 
-.btn-go-to{
+.last-btn-go-to{
     color: white;
     border-radius: 17px;
     cursor: pointer;
@@ -894,7 +894,7 @@ footer h4 {
     margin-top: 5px;
 }
     
-.btn-go-to:hover{
+.last-btn-go-to:hover{
     background-color: #f44336;
     color: #253760;
 }
@@ -904,7 +904,7 @@ footer h4 {
         .btn{
             font-size: 1rem;
         }
-        .btn-go-to{
+        .last-btn-go-to{
             margin-left: 28rem;
             font-size: 0.8rem;
         }
@@ -912,7 +912,7 @@ footer h4 {
     }
     
     @media (max-width: 600px) {
-        .btn-go-to{
+        .last-btn-go-to{
             margin-left: 15rem;
             font-size: 0.8rem;
         }
