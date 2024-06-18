@@ -228,12 +228,65 @@ p {
 }
 
 .course-col {
-    background-color: #253760;
     border-radius: 10px;
     margin-bottom: 5%;
     padding: 40px 12px;
     box-sizing: border-box;
     transition: 0.5s;
+}
+.btn-tec{
+    background-image: url(../images/categorias-img/tec.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-sc{
+    background-image: url(../images/categorias-img/science.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-heal{
+    background-image: url(../images/categorias-img/health.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-tvel{
+    background-image: url(../images/categorias-img/travel.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-mv{
+    background-image: url(../images/categorias-img/entertainment.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-spot{
+    background-image: url(../images/categorias-img/sports.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-art{
+    background-image: url(../images/categorias-img/art.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-pol{
+    background-image: url(../images/categorias-img/politics.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.btn-mic{
+    background-image: url(../images/categorias-img/music.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 a {
@@ -273,7 +326,7 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url(./images/banner.jpg);
+    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url(../images/banner.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
@@ -578,7 +631,6 @@ form .secquestions {
     }
 
     .testimonial-col img {
-        margin-left: 0px;
         margin-right: 15px;
     }
 }
@@ -639,13 +691,18 @@ button[type="submit"]:hover {
     width: 80%;
     margin: auto;
     padding: 50px 0;
-    background-color: rgb(215, 12, 19);
+    background-image: url(../images/banner.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width:80%;
+    height: 300px;
     color: #c40000;
     border-radius: 20px;
     margin-bottom: 30px;
 }
 .post-container h2 {
-    color: #253760;
+    color: #c40000;
     font-weight: bold;
 }
 .post-container p{
@@ -667,6 +724,7 @@ button[type="submit"]:hover {
     padding: 10px;
     transition: 0.5s;
     background-color: #253760;
+    margin-top: 5px;
 }
 
 .btn-go-to:hover{
@@ -675,14 +733,24 @@ button[type="submit"]:hover {
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 950px) {
+    .btn{
+        font-size: 1rem;
+    }
     .btn-go-to{
-        margin-left: 5rem;
-        font-size: 0.6rem;
+        margin-left: 28rem;
+        font-size: 0.8rem;
     }
 
 }
 
+@media (max-width: 600px) {
+    .btn-go-to{
+        margin-left: 15rem;
+        font-size: 0.8rem;
+    }
+
+}
 
 
 
@@ -691,9 +759,8 @@ button[type="submit"]:hover {
 
 .user-info {
     width: 80%;
-    margin: auto;
     padding: 50px 0;
-    margin: 50px auto;
+    margen: 50px auto;
     text-align: center;
     background-color: #fff;
     border-radius: 10px;
@@ -996,9 +1063,10 @@ footer h4 {
     background-color: transparent;
 }
 .btn {
-    color: #eee;
+    color: floralwhite;
     background-color: #253760;
     border: 0;
+    font-size: 1rem;
 }
 
 .btn:hover{
