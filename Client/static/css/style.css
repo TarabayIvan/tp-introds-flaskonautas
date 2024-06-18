@@ -21,7 +21,7 @@ header {
 }
 @media (max-width: 700px) {
     header {
-        min-height: 45rem;
+        min-height: 60rem;
     }
 }
 
