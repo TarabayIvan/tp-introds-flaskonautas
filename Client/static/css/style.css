@@ -160,6 +160,9 @@ nav .fa {
 }
 
 @media (max-width: 850px) {
+    .text-box{
+        top: 30%;
+    }
     .nav img{
         width: 100px;
     }
@@ -386,6 +389,12 @@ input[type="submit"] {
 input[type="submit"]:hover {
     border-color: rgb(3, 7, 26);
     transition: .5s;
+}
+
+@media (max-width: 250px) {
+    .formlogin {
+        top: 40%;
+    }
 }
 
 /* Sign Up */
