@@ -12,22 +12,22 @@
 <section class="course">
 
   <body>
-    
-    <div class="divisor"></div>
-    
+
+    <div class="divisor-lp"></div>
+
     {% for post in posts %}
-    <div class="post-container">
+    <div class="post-container-lp">
       <p>Category: <span style="color: #253760;">{{post['category']}}</span></p>
       <h2>{{post['title']}}</h2>
       <p>Published by <span style="color: #253760">{{post['username']}}</span></p>
-      <p>{{post['post']}}</p>
-      <a href="/c/{{post['category']}}/post/{{post['id_post']}}"> 
-        <button class="btn-go-to" style="margin-left: 72%;">Go to post</button>
+      <p style="color: #253760">{{post['post']}}</p>
+      <a href="/c/{{post['category']}}/post/{{post['id_post']}}">
+        <button class="btn-go-to-lp" style="margin-left: 72%;">Go to post</button>
       </a>
     </div>
-    
-    <div class="divisor"></div>
-    
+
+    <div class="divisor-lp"></div>
+
     {% endfor %}
   </body>
 </section>
