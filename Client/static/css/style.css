@@ -19,6 +19,11 @@ header {
     background-size: cover;
     position: relative;
 }
+@media (max-width: 700px) {
+    header {
+        min-height: 45rem;
+    }
+}
 
 .sub-header {
     min-height: 20vh !important;
@@ -179,6 +184,9 @@ nav .fa {
         text-align: left;
         z-index: 2;
         transition: 0.7s;
+    }
+    nav img {
+        width: 100px;
     }
 
     nav .fa {
@@ -385,6 +393,16 @@ input[type="submit"] {
 input[type="submit"]:hover {
     border-color: rgb(3, 7, 26);
     transition: .5s;
+}
+
+@media (max-width: 700px) {
+    .formlogin {
+        top: 50%;
+        width: 19rem;
+    }
+    .formlogin h1 {
+        font-size: 2rem;
+    }
 }
 
 /* Sign Up */
@@ -696,7 +714,7 @@ footer h4 {
   
 /* ----- nav --------*/
 .sub-header {
-  height: 50vh;
+  height: 30vh;
   width: 100%;
   background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
   url(../images/banner.jpg);
