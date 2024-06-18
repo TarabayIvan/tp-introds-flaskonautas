@@ -2,5 +2,4 @@
 
 mkdir .venv
 pipenv install
-pipenv shell
-flask run -p 5000
+pipenv run flask run -p 5000
