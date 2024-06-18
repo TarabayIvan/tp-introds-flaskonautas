@@ -201,7 +201,7 @@ nav .fa {
     }
     .hero-btn {
         display: block;
-        margin: 20px auto;
+        margin: 20px 10rem;
     }
 }
 .course {
@@ -261,7 +261,7 @@ h3 {
     }
 
     .row-category {
-        margin-bottom: 400px;
+        margin-bottom: 40px;
     }
     .course{
         padding: 20px 0;
@@ -713,7 +713,7 @@ footer h4 {
 
 /* ----- nav --------*/
 .sub-header {
-  height: 20vh;
+  height: 30vh;
   width: 100%;
   background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
   url(../images/banner.jpg);
@@ -848,7 +848,10 @@ footer h4 {
     height: auto;
     min-height: 3.5rem;
 }
-@media (max-width: 800px) {
+@media (max-width: 850px) {
+    .sub-header {
+        height: 20vh;
+    }
     #inner-sidebar {
         display: none;
     }
