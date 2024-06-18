@@ -26,6 +26,11 @@ This project is a practical work for the "Introduction to Software Development" 
     ./init.sh
     ```
 
+3. Run app:
+    ```bash
+    flask run -p 5000
+    ```
+
 ## Back End Installation Guide
 
 1. Clone the repository:
@@ -38,6 +43,11 @@ This project is a practical work for the "Introduction to Software Development" 
 2. Run the init script:
     ```bash
     ./init.sh
+    ```
+
+3. Run app:
+    ```bash
+    flask run -p 5001
     ```
 
 ## DB Installation Guide
