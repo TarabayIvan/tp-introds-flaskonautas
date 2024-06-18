@@ -9,7 +9,7 @@
         {% endif %}
     {% endwith %}
     <div class="container mt-5">
-    <div class="row">
+    <div>
         <div class="col-lg-12">
             <!-- Itera sobre cada publicación -->
             {% for post in post %}
@@ -35,7 +35,7 @@
                 <section class="mb-5" style="text-align: justify;">
                     {{ post['body'] }}
                   {% if post['image_link'] %}
-                    <img src="{{ url_for('static', filename='/images/posts-images/' + post['image_link']) }}" />
+                    <img style="width:100%;" src="{{ url_for('static', filename='/images/posts-images/' + post['image_link']) }}" />
                     {% endif %}
                 </section>
                 <!-- Sección de comentarios -->
