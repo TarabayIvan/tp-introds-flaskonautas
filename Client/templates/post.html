@@ -59,7 +59,7 @@
                                 <div class="ms-3">
                                     <div class="fw-bold">{{ response['username'] }}</div>
                                     {{ response['post'] }}
-                                     {% if 'user' in session and session['user']['username'] == post['username'] %}
+                                     {% if 'user' in session and session['user']['username'] == response['username'] %}
                                     <div class="edit-post">
                                         <a href="{{url_for('remove_response', id_response=response['id_response'], id_post=post['id_post'], post_category=post['category'])}}">Borrar</a>
                                         <a href="{{url_for('update_response', id_response=response['id_response'], id_post=post['id_post'], post_category=post['category'])}}">Editar</a>
