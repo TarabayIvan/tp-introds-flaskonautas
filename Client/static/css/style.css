@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 body {
-    background-color: white;
+    background-color: #eee;
 }
 
 
@@ -852,8 +852,18 @@ footer h4 {
     .sub-header {
         height: 20vh;
     }
-    #inner-sidebar {
-        display: none;
+    .body-container {
+        padding: 3% 5% 0 5%;
+    }
+    .inner-sidebar-body {
+    display: none;
+    }
+    .inner-wrapper {
+    flex-direction: column;
+    }
+    .inner-sidebar-header {
+        padding: 0;
+        max-width: 70%;
     }
     #inner-main {
         left: 0;
@@ -891,11 +901,8 @@ footer h4 {
 .nav-link {
     color: #4a5568;
 }
-.card {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
 
-.card {
+.card-post {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -904,7 +911,8 @@ footer h4 {
     background-color: #fff;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
 
 .card-body {
@@ -917,9 +925,16 @@ footer h4 {
     display: flex;
     justify-content: space-between;
 }
+.info-post {
+    margin: 0;
+}
+.edit-post {
+    display: flex;
+    margin: 0;
+    gap: 10px;
+}
 .edit-post a {
     color: #3077c4;
-    padding: 0 10px;
 }
 
 .selected_category {
@@ -931,7 +946,7 @@ footer h4 {
     margin: 0;
 }
 .inner-sidebar {
-    background-color: #eee;
+    background-color: transparent;
 }
 .btn {
     color: #eee;
@@ -959,9 +974,7 @@ footer h4 {
 .inner-main-body .info-text p{
     font-size: 16px;
 }
-.card {
-    border-radius: 10px;
-}
+
 
 .text-body {
     font-weight: bold;
@@ -970,7 +983,9 @@ footer h4 {
 .post-title {
     padding: 0 10px;
 }
-
+.selected_category {
+    padding: 0 10px 0 0;
+}
 .post-text {
     color: #4d4d4d;
     margin-bottom: 0;
@@ -1008,16 +1023,7 @@ footer h4 {
 .post-title, .post-text {
     word-break: break-word;
 }
-.error_message {
-    font-size: 15px;
-    position: absolute;
-    color: #a00d08;
-}
-.success_message {
-    font-size: 15px;
-    position: absolute;
-    color: #08a081;
-}
+
 
 /* posts */
 
@@ -1182,4 +1188,21 @@ footer h4 {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.175);
   border-radius: 0.375rem;
+}
+
+.button-back:hover {
+    cursor: pointer;
+}
+
+
+ /* flashes */
+.error_message {
+    font-size: 15px;
+    margin: 0;
+    color: #a00d08;
+}
+.success_message {
+    font-size: 15px;
+    margin: 0;
+    color: #08a081;
 }
