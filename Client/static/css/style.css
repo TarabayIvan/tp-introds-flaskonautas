@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 body {
-    background-color: #eee;
+    background-color: white;
 }
 
 
@@ -18,11 +18,6 @@ header {
     background-position: center;
     background-size: cover;
     position: relative;
-}
-@media (max-width: 700px) {
-    header {
-        min-height: 60rem;
-    }
 }
 
 .sub-header {
@@ -65,7 +60,7 @@ nav img {
 
 .nav-links {
     flex: 1;
-    text-align: right;
+    text-align: center;
 }
 
 .nav-links ul li {
@@ -164,7 +159,6 @@ nav .fa {
     display: none;
 }
 
-
 @media (max-width: 850px) {
     .text-box h1 {
         font-size: 20px;
@@ -177,16 +171,12 @@ nav .fa {
     .nav-links {
         position: absolute;
         background: #f44336;
-        height: 25rem;
-        width: 200px;
+        height: 100vh;
+        width: 300px;
         top: -800px;
         right: 0px;
-        text-align: left;
         z-index: 2;
         transition: 0.7s;
-    }
-    nav img {
-        width: 100px;
     }
 
     nav .fa {
@@ -212,7 +202,7 @@ nav .fa {
     width: 100%;
     margin: auto;
     text-align: center;
-    padding-top: 2rem;
+    padding: 40px 0;
 }
 
 h1 {
@@ -259,10 +249,7 @@ h3 {
     box-shadow: 0 0 20px 0px rgba(212, 50, 10, 0.918);
 }
 
-@media (max-width: 850px) {
-    .course{
-        padding: 2rem;
-    }
+@media (max-width: 700px) {
     .row {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -270,7 +257,6 @@ h3 {
     .row-category {
         margin-bottom: 400px;
     }
-
 }
 
 /* 404 */
@@ -397,16 +383,6 @@ input[type="submit"] {
 input[type="submit"]:hover {
     border-color: rgb(3, 7, 26);
     transition: .5s;
-}
-
-@media (max-width: 700px) {
-    .formlogin {
-        top: 20rem;
-        width: 19rem;
-    }
-    .formlogin h1 {
-        font-size: 2rem;
-    }
 }
 
 /* Sign Up */
@@ -688,13 +664,13 @@ button[type="submit"]:hover {
   text-decoration: none;
   transition: color 0.3s;
 }
-  
+
 .user-info a:hover {
   color: #c40000;
 }
-  
+
 /* footer */
-  
+
 footer {
   width: 100%;
   text-align: center;
@@ -715,10 +691,10 @@ footer h4 {
 .fa-heart {
   color: #f44336;
 }
-  
+
 /* ----- nav --------*/
 .sub-header {
-  height: 30vh;
+  height: 20vh;
   width: 100%;
   background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)),
   url(../images/banner.jpg);
@@ -726,6 +702,9 @@ footer h4 {
   background-size: cover;
   text-align: center;
   color: #fff;
+}
+.sub-header h1 {
+  margin-top: 50px;
 }
 .about-us img {
   width: 80%;
@@ -755,23 +734,34 @@ footer h4 {
   color: #fff;
 }
 
-    /* Latest posts */
+/* Latest posts */
 
-    /* Latest posts */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+}
 
-.post-container{
-    height: auto;
-    width: 700px;
-    margin-left: 380px;
-    text-align: start;
-} 
+.grid-item {
+  width: 500px;
+  height: 750px;
+  background-color: #ccc;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+  overflow: hidden;
+  word-wrap: break-word;
+}
 
-.divisor{
-    border-top: 1.5px outset #bbbbbb;
-    margin: auto;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    width: 1200px;
+.img-2 {
+  padding-top: 20px;
+  width: 300px;
+  height: 300px;
+}
+
+.container-footer {
+  width: 100px;
+  height: 100px;
 }
 
 .hidden {
@@ -781,18 +771,10 @@ footer h4 {
 .material-symbols-outlined {
     cursor: pointer;
 }
-
-@media (max-width: 850px) {
-    .sub-header {
-        height: 20vh;
-    }
-}
-
 /* category */
 
 .inner-wrapper {
     display: flex;
-    
     position: relative;
     transition: transform 0.3s;
 }
@@ -848,18 +830,8 @@ footer h4 {
     min-height: 3.5rem;
 }
 @media (max-width: 800px) {
-    .body-container {
-        padding: 3% 5% 0 5%;
-    }
-    .inner-sidebar-body {
-    display: none;
-    }
-    .inner-wrapper {
-    flex-direction: column;
-    }
-    .inner-sidebar-header {
-        padding: 0;
-        max-width: 70%;
+    #inner-sidebar {
+        display: none;
     }
     #inner-main {
         left: 0;
@@ -897,8 +869,11 @@ footer h4 {
 .nav-link {
     color: #4a5568;
 }
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
 
-.card-post {
+.card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -907,8 +882,7 @@ footer h4 {
     background-color: #fff;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
-    border-radius: 10px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    border-radius: .25rem;
 }
 
 .card-body {
@@ -921,16 +895,9 @@ footer h4 {
     display: flex;
     justify-content: space-between;
 }
-.info-post {
-    margin: 0;
-}
-.edit-post {
-    display: flex;
-    margin: 0;
-    gap: 10px;
-}
 .edit-post a {
     color: #3077c4;
+    padding: 0 10px;
 }
 
 .selected_category {
@@ -942,7 +909,7 @@ footer h4 {
     margin: 0;
 }
 .inner-sidebar {
-    background-color: transparent;
+    background-color: #eee;
 }
 .btn {
     color: #eee;
@@ -970,6 +937,9 @@ footer h4 {
 .inner-main-body .info-text p{
     font-size: 16px;
 }
+.card {
+    border-radius: 10px;
+}
 
 .text-body {
     font-weight: bold;
@@ -977,9 +947,6 @@ footer h4 {
 
 .post-title {
     padding: 0 10px;
-}
-.selected_category {
-    padding: 0 10px 0 0;
 }
 
 .post-text {
@@ -1019,7 +986,16 @@ footer h4 {
 .post-title, .post-text {
     word-break: break-word;
 }
-
+.error_message {
+    font-size: 15px;
+    position: absolute;
+    color: #a00d08;
+}
+.success_message {
+    font-size: 15px;
+    position: absolute;
+    color: #08a081;
+}
 
 /* posts */
 
@@ -1105,7 +1081,7 @@ footer h4 {
   --bs-gutter-y: 0;
   display: grid;
   /* flex-wrap: wrap; */
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin-top: calc(-1 * var(--bs-gutter-y));
   margin-right: calc(1.5 * var(--bs-gutter-x));
   margin-left: calc(1.5 * var(--bs-gutter-x));
@@ -1125,16 +1101,29 @@ footer h4 {
   margin-top: 3rem !important;
 }
 
+@media (min-width: 250px) {
+    .row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
   }
+    .row{
+        grid-template-columns: repeat(2, 1fr);
+
+    }
 }
 @media (min-width: 768px) {
   .container {
     max-width: 720px;
   }
+    .row{
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 @media (min-width: 992px) {
   .container {
@@ -1172,26 +1161,3 @@ footer h4 {
   border: 1px solid rgba(0, 0, 0, 0.175);
   border-radius: 0.375rem;
 }
-
-.button-back:hover {
-    cursor: pointer;
-
-}
-
-
- /* flashes */
-.error_message {
-    font-size: 15px;
-    margin: 0;
-    color: #a00d08;
-}
-.success_message {
-    font-size: 15px;
-    margin: 0;
-    color: #08a081;
-}
-
-
-
-
-
