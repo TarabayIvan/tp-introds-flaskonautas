@@ -792,6 +792,7 @@ footer h4 {
 
 .inner-wrapper {
     display: flex;
+    
     position: relative;
     transition: transform 0.3s;
 }
@@ -847,8 +848,18 @@ footer h4 {
     min-height: 3.5rem;
 }
 @media (max-width: 800px) {
-    #inner-sidebar {
-        display: none;
+    .body-container {
+        padding: 3% 5% 0 5%;
+    }
+    .inner-sidebar-body {
+    display: none;
+    }
+    .inner-wrapper {
+    flex-direction: column;
+    }
+    .inner-sidebar-header {
+        padding: 0;
+        max-width: 70%;
     }
     #inner-main {
         left: 0;
