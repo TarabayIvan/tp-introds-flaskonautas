@@ -635,6 +635,46 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #c40000;
 }
+.post-container {
+    width: 80%;
+    margin: auto;
+    padding: 50px 0;
+    background-color: #253760;
+    color: #c40000;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+.post-container p{
+    color: white;
+}
+
+.post-container p span {
+    color: #f44336;
+    font-weight: bold;
+}
+
+.btn-go-to{
+    margin-left: 80%;
+    font-size: 20px;
+    color: #f44336;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid #f44336;
+    padding: 10px;
+    transition: 0.5s;
+    background-color: #253760;
+}
+
+.btn-go-to:hover{
+    background-color: #f44336;
+    color: white;
+}
+
+
+
+
+
+
 
 /* User Info */
 
