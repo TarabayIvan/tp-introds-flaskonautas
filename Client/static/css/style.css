@@ -921,9 +921,16 @@ footer h4 {
     display: flex;
     justify-content: space-between;
 }
+.info-post {
+    margin: 0;
+}
+.edit-post {
+    display: flex;
+    margin: 0;
+    gap: 10px;
+}
 .edit-post a {
     color: #3077c4;
-    padding: 0 10px;
 }
 
 .selected_category {
@@ -1175,12 +1182,12 @@ footer h4 {
  /* flashes */
 .error_message {
     font-size: 15px;
-    position: absolute;
+    margin: 0;
     color: #a00d08;
 }
 .success_message {
     font-size: 15px;
-    position: absolute;
+    margin: 0;
     color: #08a081;
 }
 
