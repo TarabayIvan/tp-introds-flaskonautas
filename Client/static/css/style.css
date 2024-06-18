@@ -869,33 +869,56 @@ footer h4 {
 
 /* Latest posts */
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 60px;
-}
+.post-container{
+    height: auto;
+    width: 60%;
+    margin-left: 20%;
+    text-align: start;
+    } 
 
-.grid-item {
-  width: 500px;
-  height: 750px;
-  background-color: #ccc;
-  padding: 20px;
-  margin: auto;
-  text-align: center;
-  overflow: hidden;
-  word-wrap: break-word;
-}
+.divisor{
+    border-top: 1.5px outset #bbbbbb;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    width: 70%;
+    }
 
-.img-2 {
-  padding-top: 20px;
-  width: 300px;
-  height: 300px;
+.btn-go-to{
+    color: white;
+    border-radius: 17px;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.5s;
+    background-color: #253760;
+    margin-top: 5px;
 }
+    
+.btn-go-to:hover{
+    background-color: #f44336;
+    color: #253760;
+}
+    
+    
+    @media (max-width: 950px) {
+        .btn{
+            font-size: 1rem;
+        }
+        .btn-go-to{
+            margin-left: 28rem;
+            font-size: 0.8rem;
+        }
+    
+    }
+    
+    @media (max-width: 600px) {
+        .btn-go-to{
+            margin-left: 15rem;
+            font-size: 0.8rem;
+        }
+    
+    }
 
-.container-footer {
-  width: 100px;
-  height: 100px;
-}
 
 .hidden {
     display: none;
