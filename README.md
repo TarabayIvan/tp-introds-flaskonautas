@@ -20,16 +20,8 @@ This project is a practical work for the "Introduction to Software Development" 
     cd tp-introds-flaskonautas
     cd Client
     ```
-2. Install python-dotenv globally:
-    ```bash
-    pip install python-dotenv
-    ```
-    Install python-dotenv globally (on arch based distros):
-    ```bash
-    pacman -S python-dotenv
-    ```
 
-3. Run the init script:
+2. Run the init script:
     ```bash
     ./init.sh
     ```
