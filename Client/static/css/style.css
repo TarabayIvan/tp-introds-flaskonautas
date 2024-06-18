@@ -868,54 +868,54 @@ footer h4 {
 
 /* Latest posts */
 
-.post-container{
+.post-container-lp{
     height: auto;
-    width: 60%;
-    margin-left: 20%;
+    width: 56%;
+    margin-left: 24%;
     text-align: start;
-    } 
+    }
 
-.divisor{
+.divisor-lp{
     border-top: 1.5px outset #bbbbbb;
     margin: auto;
     margin-top: 25px;
     margin-bottom: 15px;
-    width: 70%;
+    width: 58%;
     }
 
-.btn-go-to{
+.btn-go-to-lp{
     color: white;
     border-radius: 17px;
     cursor: pointer;
     padding: 10px;
     transition: 0.5s;
     background-color: #253760;
-    margin-top: 5px;
+    margin-top: 8px;
 }
-    
-.btn-go-to:hover{
+
+.btn-go-to-lp:hover{
     background-color: #f44336;
     color: #253760;
 }
-    
-    
+
+
     @media (max-width: 950px) {
         .btn{
             font-size: 1rem;
         }
-        .btn-go-to{
+        .btn-go-to-lp{
             margin-left: 28rem;
             font-size: 0.8rem;
         }
-    
+
     }
-    
+
     @media (max-width: 600px) {
-        .btn-go-to{
+        .btn-go-to-lp{
             margin-left: 15rem;
             font-size: 0.8rem;
         }
-    
+
     }
 
 
