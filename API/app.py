@@ -41,6 +41,19 @@ def register_user():
 
 @app.route('/login_user', methods=['POST'])
 def login_user():
+    '''
+    Busca un usuario en la base de datos y verifica la contraseña de acceso. En caso contrario, devuelve un error.
+    
+    PRE
+    Recibe mediante json un nombre de usuario, una contraseña (sin cifrar).
+
+    POST
+    Devuelve 400 en caso que no se envie el nombre de usuario o la contraseña.
+    Devuelve 401 en caso de que la contraseña no coincida.
+    Devuelve 404 en caso de que el usuario no exista en la base de datos.
+    Devuelve 500 en caso de que haya un error en el servidor.
+    Devuelve 200 en caso de que se haya logueado correctamente y devuelve un JSON con los datos del usuario.
+    '''
     conn = engine.connect()
     data = request.get_json()
     username = data.get('username')
@@ -78,6 +91,17 @@ def login_user():
 
 @app.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
+    '''
+    Busca un usuario en la base de datos y devuelve sus datos. En caso contrario, devuelve un error.
+    
+    PRE
+    Recibe por path el ID del usuario.
+
+    POST
+    Devuelve 404 en caso de que el usuario no exista en la base de datos.
+    Devuelve 500 en caso de que haya un error en el servidor.
+    Devuelve 200 en caso de que se haya encontrado el usuario y devuelve un JSON con los datos del usuario.
+    '''
     conn = engine.connect()
     query = f"SELECT id_user, username, security_answer_one, security_answer_two FROM users WHERE id_user = {user_id};"
     try:
@@ -215,11 +239,12 @@ def create_post():
 @app.route('/delete_post/<int:id_post>', methods=['DELETE'])
 def delete_post(id_post):
     '''
-Borra un post y sus respuestas e imagenes asociadas si existen.
-PRE: 
-    El post debe existir, el usuario debe estar logueado correctamente y ser el autor del posteo para que se le permita borrarlo.
+    Borra un post y sus respuestas e imagenes asociadas si existen.
     
-POST: 
+    PRE 
+    El post debe existir, el usuario debe estar logueado correctamente y ser el autor del posteo para que se le permita borrarlo.
+ 
+    POST
     Si el usuario cumple las condiciones, se elimina el posteo, devolviéndose un 200 (OK) + mensaje que corrobora que se ha podido eliminar + un JSON con la direccion de la imagen si la hay.
     Si el post no existe, se devuelve un 404 (Not Found) + mensaje que indica que el post no existe en la base de datos.
     Si el usuario no tiene permisos para borrar el post, se devuelve un 403 (Forbidden) + mensaje indicando que no se tienen los permisos requeridos.
@@ -336,6 +361,18 @@ def get_last_posts():
 
 @app.route('/update_post/<id_post>', methods = ['PATCH'])
 def update_post(id_post):
+    '''
+    Actualiza un post existente.
+    
+    PRE
+    El ID del post debe existir en la db. Recibe un JSON con los campos a actualizar (title, post) y el nombre de usuario.
+
+    POST
+    Devuelve 400 en caso que no se hayan proporcionado todos los campos requeridos.
+    Devuelve 403 en caso de que el usuario no sea el autor del post.
+    Devuelve 500 en caso de que haya un error en el servidor.
+    Devuelve 200 en caso de que se haya actualizado el post y devuelve un mensaje de exito.
+    '''
 
     connection = engine.connect()
 
@@ -361,7 +398,7 @@ def update_post(id_post):
         connection.commit()
         connection.close()
     except SQLAlchemyError as err:
-        return jsonify({'Error': str(err.__cause__)}), 400
+        return jsonify({'Error': str(err.__cause__)}), 500
     return jsonify({'message': 'Esta actualizado correctamente'}), 200
 
 
@@ -457,6 +494,18 @@ def get_complete_post (id_post):
 
 @app.route('/update_response', methods = ['PATCH'])
 def update_response():
+    '''
+    Actualiza la información de una respuesta.
+    
+    PRE
+    Recibe mediante json un ID de respuesta, un post, y el nombre de usuario.
+
+    POST
+    Devuelve 400 en caso que no se envie el ID de respuesta, el post o el nombre de usuario.
+    Devuelve 403 en caso de que no sea el autor de la respuesta.
+    Devuelve 500 en caso de que haya un error en el servidor.
+    Devuelve 200 en caso de que se actualice la respuesta y devuelve un mensaje de exito.
+    '''
     connection = engine.connect()
     new_response = request.get_json()
     required_fields = ['id_response', 'post', 'username'] # valido que se reciben los campos necesarios
@@ -481,7 +530,7 @@ def update_response():
         connection.commit()
         connection.close()
     except SQLAlchemyError as err:
-        return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 400
+        return jsonify({'message': 'Se ha producido un error ' + str(err.__cause__)}), 500
     return jsonify({'message': 'se ha actualizado correctamente ' + query}), 200
 
 
